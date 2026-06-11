@@ -19,100 +19,178 @@ tw-story {
   padding: 0 !important;
   margin: 0 !important;
   width: 100vw !important;
-  height: 100dvh !important; /* Usa 100dvh para não ser cortado nos telemóveis */
+  height: 100dvh !important;
   display: flex !important;
   justify-content: center !important;
   align-items: center !important;
-  background-color: #222 !important; /* Fundo escuro por precaução */
+  background-color: #222 !important;
   z-index: 1 !important;
-  overflow: hidden !important; /* Previne que a página deslize sem querer */
+  overflow: hidden !important; /* Previne scrollbar global irritante */
 }
 
-/* 3. A MAGIA DO FUNDO: Criar uma camada atrás, desfocar e escurecer */
+/* 3. A MAGIA DO FUNDO (A imagem desfocada) */
 tw-story::before {
   content: "" !important;
   position: fixed !important; 
-  top: -5% !important; /* Margem extra para o desfoque não criar bordas brancas */
+  top: -5% !important;
   left: -5% !important;
-  width: 110% !important; /* A imagem é um pouco maior que o ecrã para compensar o desfoque */
+  width: 110% !important;
   height: 110% !important;
   background-image: url("https://github.com/Lauracrcamacho/massador/blob/main/fundo.png?raw=true") !important;
   background-size: cover !important;
   background-position: center !important;
-  filter: blur(4px) brightness(0.6) !important; /* DESFOCA (blur) e ESCURECE (brightness) */
-  z-index: -1 !important; /* Garante que fica atrás de tudo */
+  filter: blur(4px) brightness(0.6) !important;
+  z-index: -1 !important;
 }
 
 /* 4. Limpar margens da passagem principal */
 tw-passage {
   width: 100% !important;
-  padding: 10px !important;
+  height: 100% !important;
+  padding: 0 !important; /* Sem padding para preencher o ecrã */
   box-sizing: border-box !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
 }
 
-/* 5. O Estilo dos teus botões pretos e redondos */
+/* 5. A CAIXA DE TEXTO (Ajustada para desktop e mobile) */
+.caixa-texto {
+  background-color: rgba(70, 35, 15, 0.85);
+  padding: 1vh 1vw;
+  line-height: 1.3;
+  border-radius: 15px;
+  color: white;
+  text-align: center;
+  font-size: clamp(8px, 1.8vw, 14px); /* Letra legível */
+  box-shadow: 0px 4px 10px rgba(0,0,0,0.5);
+  max-height: 45vh; /* Ocupa no máximo 45% do ecrã vertical */
+  overflow-y: auto; /* Scrollbar apenas aqui, se necessário */
+  box-sizing: border-box;
+  
+  /* Limites para Desktop */
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.texto-destaque {
+  color: #FFD700;
+  font-weight: bold;
+}
+
 .meus-botoes {
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 15px;
   flex-wrap: wrap; 
-  margin-top: 15px;
+  margin-top: 20px;
 }
 
 .meus-botoes tw-link {
+  display: flex !important; /* CRÍTICO: Força o botão a ser um bloco sólido que respeita as margens */
+  justify-content: center !important;
+  align-items: center !important;
   background-color: #8B4513 !important; 
   color: white !important;
-  /* Aumentei os limites mínimos para os dedos não falharem nos telemóveis */
-  padding: clamp(5px, 1.5vh, 10px) clamp(10px, 3vw, 12px) !important; 
+  padding: 10px 15px !important;
   border-radius: 30px !important;
   font-weight: bold !important;
-  /* Letra com limite mínimo de 14px para facilitar leitura no ecrã pequeno */
-  font-size: clamp(8px, 1.5vw, 18px) !important;
+  font-size: clamp(7px, 2vw, 13px) !important;
   text-decoration: none !important;
   transition: all 0.3s ease !important;
   border: 1px solid rgba(255,255,255,0.4) !important;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.3) !important; /* Sombra base para dar volume */
+  box-shadow: 0 4px 6px rgba(0,0,0,0.3) !important;
+  box-sizing: border-box !important; /* Garante que o padding não estraga a largura */
 }
 
 .meus-botoes tw-link:hover {
-  transform: translateY(-3px) scale(1.05) !important; /* Efeito 3D: o botão levanta um bocadinho */
+  transform: translateY(-3px) scale(1.05) !important;
   background-color: #A0522D !important; 
   box-shadow: 0 6px 12px rgba(0,0,0,0.5) !important;
 }
 
-/* 6. MEDIA QUERY: Otimização para telemóveis na vertical (Portrait) */
-@media screen and (orientation: portrait) and (max-width: 768px) {
+Bem visto! Tens "olhos de lince". Fizeste o diagnóstico perfeito: a nossa regra não estava a forçar o texto a encolher o suficiente, e a palavra "Esparguete" é bastante comprida para caber numa só linha num ecrã pequeno divido a meio.
+
+Se diminuirmos a letra até caber tudo à força numa só linha, o texto vai ficar minúsculo e ilegível. A solução profissional para isto é dupla: reduzir a letra visivelmente E permitir que o texto se divida em duas linhas dentro do próprio botão se o ecrã for muito apertado (ex: "O Clube do" em cima e "Esparguete" em baixo), mantendo os dois botões sempre lado a lado.
+
+Substitui a tua secção 7 inteira por esta versão final. Adicionei o "truque" do texto (white-space: normal) e uma altura mínima (min-height) para garantir que mesmo que um botão tenha duas linhas e o outro tenha uma, eles ficam com a mesma altura e simétricos.
+
+CSS
+/* 7. MEDIA QUERY: Otimização para telemóveis */
+@media screen and (max-width: 768px) {
   .meus-botoes {
-    flex-direction: column; /* Coloca os botões em lista vertical */
-    width: 100%;
-    gap: 10px;
+    flex-direction: row !important; /* Mantém lado a lado */
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    width: 100% !important;
+    gap: 8px !important; /* Margem ligeiramente menor para dar mais espaço aos botões */
   }
   
   .meus-botoes tw-link {
-    width: 90%; /* Os botões ocupam quase toda a largura para serem mais fáceis de carregar */
-    text-align: center;
+    flex: 1 1 45% !important; 
+    max-width: 48% !important; 
+    box-sizing: border-box !important;
+    text-align: center !important;
+    padding: 8px 4px !important; /* Encolhemos o preenchimento lateral */
+    
+    /* --- A CORREÇÃO DO TEXTO --- */
+    font-size: clamp(10px, 3vw, 13px) !important; /* Força a letra a diminuir bastante */
+    white-space: normal !important; /* Permite que o texto quebre para uma 2ª linha no botão */
+    line-height: 1.1 !important; /* Junta as linhas caso o texto quebre */
+    
+    /* Garante simetria perfeita */
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: 45px !important; /* Impede que um botão fique mais alto que o outro */
   }
-}</style><script role="script" id="twine-user-script" type="text/twine-javascript"></script><tw-passagedata pid="1" name="Passagem sem Título" tags="" position="575,225" size="100,100">{
-&lt;div style=&quot;display: flex; flex-direction: column; height: 95vh; width: 100%; box-sizing: border-box; max-width: 1200px; margin: 0 auto;&quot;&gt;
   
-  &lt;!-- A IMAGEM --&gt;
-  &lt;div style=&quot;flex: 1; display: flex; justify-content: center; align-items: center; overflow: hidden; padding-bottom: 2vh;&quot;&gt;
+  .caixa-texto {
+    padding: 15px !important; 
+    width: 95% !important; 
+    max-height: 55vh !important; 
+  }
+}
+
+/* 8. Preload seguro de imagens */
+.preloader {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  z-index: -100;
+  opacity: 0;
+}
+
+.caixa-texto p {
+  margin-top: 0 !important;
+  margin-bottom: 8px !important; /* Ajusta este valor (ex: 5px, 8px, 10px) como preferires */
+  line-height: 1.2 !important; /* Controla o espaço entre as linhas do MESMO parágrafo */
+  padding: 0 !important;
+}
+
+
+.caixa-texto br {
+  display: none !important;
+}</style><script role="script" id="twine-user-script" type="text/twine-javascript"></script><tw-passagedata pid="1" name="Passagem sem Título" tags="" position="575,225" size="100,100">&lt;div style=&quot;display: flex; flex-direction: column; height: 100%; width: 100%; justify-content: center; align-items: center; gap: 1vh;&quot;&gt;
+  
+  &lt;div style=&quot;flex: 1; display: flex; justify-content: center; align-items: flex-end; width: 100%; overflow: hidden; padding-top: 1vh;&quot;&gt;
     &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/inicio%20v4.png?raw=true&quot; style=&quot;max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0px 5px 20px rgba(0,0,0,0.8);&quot;&gt;
   &lt;/div&gt;
   
-  &lt;!-- O TEXTO E BOTÕES: Fundo Castanho Escuro com Rolagem de Segurança --&gt;
-  &lt;div style=&quot;flex: 0 0 auto; background-color: rgba(70, 35, 15, 0.85); padding: 3vh 3vw; border-radius: 15px; color: white; font-weight: bold; text-align: center; font-size: clamp(10px, 1.8vw, 14px); box-shadow: 0px 4px 10px rgba(0,0,0,0.5); max-height: 50vh; overflow-y: auto;&quot;&gt;
+  &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
     
-    &lt;p style=&quot;margin: 0 0 1.5vh 0; line-height: 1.4; color: #FFD700; &quot;&gt;Olá! Que massada que aqui vai! No mundo das massas está tudo em alvoroço.&lt;/p&gt;
+    &lt;p class=&quot;texto-destaque&quot;&gt;Olá! Que massada que aqui vai! No mundo das massas está tudo em alvoroço.&lt;/p&gt;
     
-    &lt;p style=&quot;margin: 0 0 1.5vh 0; line-height: 1.4;&quot;&gt;Tal como na escola, ser diferente é o que nos torna especiais. Mas há quem use palavras feias e empurre os outros para fora do prato... E isso não se faz!&lt;/p&gt;
+    &lt;p&gt;Tal como na escola, ser diferente é o que nos torna especiais. Mas há quem use palavras feias e empurre os outros para fora do prato... E isso não se faz!&lt;/p&gt;
     
-    &lt;p style=&quot;margin: 0 0 1.5vh 0; line-height: 1.4;&quot;&gt;Tu foste escolhido para ser o Chefe de Cozinha da Amizade. Cada escolha tua vai mudar o final da história! Ajuda as personagens a terem coragem quando o ambiente ficar &#39;massaDOR&#39;.&lt;/p&gt;
+    &lt;p&gt;Tu foste escolhido para ser o Chefe de Cozinha da Amizade. Cada escolha tua vai mudar o final da história! Ajuda as personagens a terem coragem quando o ambiente ficar &#39;massaDOR&#39;.&lt;/p&gt;
     
-    &lt;p style=&quot;margin: 0 0 2.5vh 0; line-height: 1.4; color: #FFD700; &quot;&gt;Pensa bem antes de clicar. Que história vais escolher?&lt;/p&gt;
+    &lt;p class=&quot;texto-destaque&quot; style=&quot;margin-bottom: 5px !important;&quot;&gt;Pensa bem antes de clicar. Que história vais escolher?&lt;/p&gt;
     
-    &lt;!-- Os Botões --&gt;
-    &lt;div class=&quot;meus-botoes&quot; style=&quot;display: flex; gap: 3vw; justify-content: center; align-items: center;&quot;&gt;
+    &lt;div class=&quot;meus-botoes&quot;&gt;
       [[O Clube do Esparguete-&gt;Clube do Esparguete]]
       [[Sopa de Letras-&gt;Sopa de Letras]]
     &lt;/div&gt;
@@ -121,22 +199,13 @@ tw-passage {
 
 &lt;/div&gt;
 
-&lt;div style=&quot;display: none;&quot;&gt;
-
-  
-   &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/clube-esparguete-1-v2.jpg?raw=true&quot;&gt;
-
+&lt;div class=&quot;preloader&quot;&gt;
+  &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/clube-esparguete-1-v2.jpg?raw=true&quot;&gt;
   &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/clube%20esparguete%202%20v3.png?raw=true&quot;&gt;
-  
   &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%201.png?raw=true&quot;&gt;
-  
-   &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%202.png?raw=true&quot;&gt;
-  
-     &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%203.png?raw=true&quot;&gt;
-  
-  
-&lt;/div&gt;
-}</tw-passagedata><tw-passagedata pid="2" name="Clube do Esparguete" tags="" position="637.5,350" size="100,100">{
+  &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%202.png?raw=true&quot;&gt;
+  &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%203.png?raw=true&quot;&gt;
+&lt;/div&gt;</tw-passagedata><tw-passagedata pid="2" name="Clube do Esparguete" tags="" position="637.5,350" size="100,100">{
 &lt;div style=&quot;display: flex; flex-direction: column; height: 95vh; width: 100%; box-sizing: border-box; max-width: 1200px; margin: 0 auto;&quot;&gt;
   
   &lt;div style=&quot;flex: 1; display: flex; justify-content: center; align-items: center; overflow: hidden; padding-bottom: 1vh;&quot;&gt;
