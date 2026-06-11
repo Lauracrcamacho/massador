@@ -87,22 +87,32 @@ tw-passage {
   flex-wrap: wrap; 
   margin-top: 20px;
 }
-
+.meus-botoes tw-link,
+.meus-botoes tw-link * {
+  font-size: clamp(8px, 1.8vw, 14px) !important;
+  line-height: 1.3 !important;
+}
 .meus-botoes tw-link {
-  display: flex !important; /* CRÍTICO: Força o botão a ser um bloco sólido que respeita as margens */
+  display: inline-flex !important; /* Muda de flex para inline-flex para respeitar o conteúdo */
   justify-content: center !important;
   align-items: center !important;
   background-color: #8B4513 !important; 
   color: white !important;
-  padding: 10px 15px !important;
+  
+  /* Controlo de proporção para nunca virar um círculo/ovo */
+  padding: 10px 20px !important; 
+  min-width: 140px !important;    /* Garante uma largura mínima decente em qualquer ecrã */
+  max-width: 90% !important;      /* Não deixa o botão transbordar a caixa de texto */
+  white-space: nowrap !important; /* Força o texto a ficar na mesma linha se houver espaço */
+  
   border-radius: 30px !important;
   font-weight: bold !important;
-  font-size: clamp(7px, 2vw, 13px) !important;
   text-decoration: none !important;
   transition: all 0.3s ease !important;
   border: 1px solid rgba(255,255,255,0.4) !important;
   box-shadow: 0 4px 6px rgba(0,0,0,0.3) !important;
-  box-sizing: border-box !important; /* Garante que o padding não estraga a largura */
+  box-sizing: border-box !important; 
+  text-align: center !important;
 }
 
 .meus-botoes tw-link:hover {
@@ -111,42 +121,24 @@ tw-passage {
   box-shadow: 0 6px 12px rgba(0,0,0,0.5) !important;
 }
 
-Bem visto! Tens "olhos de lince". Fizeste o diagnóstico perfeito: a nossa regra não estava a forçar o texto a encolher o suficiente, e a palavra "Esparguete" é bastante comprida para caber numa só linha num ecrã pequeno divido a meio.
-
-Se diminuirmos a letra até caber tudo à força numa só linha, o texto vai ficar minúsculo e ilegível. A solução profissional para isto é dupla: reduzir a letra visivelmente E permitir que o texto se divida em duas linhas dentro do próprio botão se o ecrã for muito apertado (ex: "O Clube do" em cima e "Esparguete" em baixo), mantendo os dois botões sempre lado a lado.
-
-Substitui a tua secção 7 inteira por esta versão final. Adicionei o "truque" do texto (white-space: normal) e uma altura mínima (min-height) para garantir que mesmo que um botão tenha duas linhas e o outro tenha uma, eles ficam com a mesma altura e simétricos.
-
-CSS
-/* 7. MEDIA QUERY: Otimização para telemóveis */
+/* Ajustes específicos para ecrãs pequenos (Mobile em pé) */
 @media screen and (max-width: 768px) {
   .meus-botoes {
-    flex-direction: row !important; /* Mantém lado a lado */
+    flex-direction: row !important; 
     flex-wrap: wrap !important;
     justify-content: center !important;
     width: 100% !important;
-    gap: 8px !important; /* Margem ligeiramente menor para dar mais espaço aos botões */
+    gap: 12px !important; 
   }
   
   .meus-botoes tw-link {
-    flex: 1 1 45% !important; 
-    max-width: 48% !important; 
-    box-sizing: border-box !important;
-    text-align: center !important;
-    padding: 8px 4px !important; /* Encolhemos o preenchimento lateral */
-    
-    /* --- A CORREÇÃO DO TEXTO --- */
-    font-size: clamp(10px, 3vw, 13px) !important; /* Força a letra a diminuir bastante */
-    white-space: normal !important; /* Permite que o texto quebre para uma 2ª linha no botão */
-    line-height: 1.1 !important; /* Junta as linhas caso o texto quebre */
-    
-    /* Garante simetria perfeita */
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    min-height: 45px !important; /* Impede que um botão fique mais alto que o outro */
+    /* Permitir que quebre linha apenas se o texto for gigante, mas mantendo boa área de clique */
+    white-space: normal !important; 
+    flex: 0 1 auto !important; 
+    min-height: 38px !important;
+    padding: 8px 16px !important;
   }
-  
+
   .caixa-texto {
     padding: 15px !important; 
     width: 95% !important; 
@@ -154,7 +146,67 @@ CSS
   }
 }
 
-/* 8. Preload seguro de imagens */
+/* 3. Estrutura das passagens (Imagens e Contentor) */
+.content-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  gap: 1vh;
+  box-sizing: border-box;
+  padding: 10px;
+}
+
+.img-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  width: 100%;
+  overflow: hidden;
+}
+
+.img-container img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 10px;
+  box-shadow: 0px 5px 20px rgba(0,0,0,0.8);
+}
+
+/* 4. COMPORTAMENTO QUANDO VIRAS O TELEMÓVEL (Horizontal / Landscape) */
+@media screen and (max-height: 500px) and (orientation: landscape) {
+  .content-container {
+    flex-direction: row !important; 
+    height: 100vh !important;
+    gap: 2vw !important;
+    padding: 2vh !important;
+  }
+
+  .img-container {
+    flex: 1 !important;
+    align-items: center !important; 
+    height: 100% !important;
+  }
+
+  .caixa-texto {
+    flex: 1 !important;
+    max-height: 90vh !important; 
+    overflow-y: auto !important;  
+    margin-bottom: 0 !important;
+  }
+  
+  /* Ajusta o botão e a letra especificamente para o ecrã deitado */
+  .meus-botoes tw-link {
+    font-size: clamp(9px, 2.5vh, 12px) !important; 
+    padding: 1vh 1.5vw !important;
+    min-height: 35px !important;
+  }
+}
+
+/* 5. Preload seguro de imagens */
 .preloader {
   position: absolute;
   width: 0;
@@ -164,19 +216,19 @@ CSS
   opacity: 0;
 }
 
+/* 6. Parágrafos */
 .caixa-texto p {
   margin-top: 0 !important;
-  margin-bottom: 8px !important; /* Ajusta este valor (ex: 5px, 8px, 10px) como preferires */
-  line-height: 1.2 !important; /* Controla o espaço entre as linhas do MESMO parágrafo */
+  margin-bottom: 8px !important; 
+  line-height: 1.2 !important; 
   padding: 0 !important;
 }
 
-
 .caixa-texto br {
   display: none !important;
-}</style><script role="script" id="twine-user-script" type="text/twine-javascript"></script><tw-passagedata pid="1" name="Passagem sem Título" tags="" position="575,225" size="100,100">&lt;div style=&quot;display: flex; flex-direction: column; height: 100%; width: 100%; justify-content: center; align-items: center; gap: 1vh;&quot;&gt;
+}</style><script role="script" id="twine-user-script" type="text/twine-javascript"></script><tw-passagedata pid="1" name="Passagem sem Título" tags="" position="250,225" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
-  &lt;div style=&quot;flex: 1; display: flex; justify-content: center; align-items: flex-end; width: 100%; overflow: hidden; padding-top: 1vh;&quot;&gt;
+  &lt;div class=&quot;img-container&quot;&gt;
     &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/inicio%20v4.png?raw=true&quot; style=&quot;max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0px 5px 20px rgba(0,0,0,0.8);&quot;&gt;
   &lt;/div&gt;
   
@@ -205,625 +257,488 @@ CSS
   &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%201.png?raw=true&quot;&gt;
   &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%202.png?raw=true&quot;&gt;
   &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%203.png?raw=true&quot;&gt;
-&lt;/div&gt;</tw-passagedata><tw-passagedata pid="2" name="Clube do Esparguete" tags="" position="637.5,350" size="100,100">{
-&lt;div style=&quot;display: flex; flex-direction: column; height: 95vh; width: 100%; box-sizing: border-box; max-width: 1200px; margin: 0 auto;&quot;&gt;
+&lt;/div&gt;</tw-passagedata><tw-passagedata pid="2" name="Clube do Esparguete" tags="" position="637.5,350" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
-  &lt;div style=&quot;flex: 1; display: flex; justify-content: center; align-items: center; overflow: hidden; padding-bottom: 1vh;&quot;&gt;
+  &lt;div class=&quot;img-container&quot;&gt;
     &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/clube-esparguete-1-v2.jpg?raw=true&quot; style=&quot;max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0px 5px 20px rgba(0,0,0,0.8);&quot;&gt;
   &lt;/div&gt;
   
-  &lt;div style=&quot;flex: 0 0 auto; background-color: rgba(70, 35, 15, 0.85); padding: 3vh 3vw; border-radius: 15px; color: white; text-align: center; font-size: clamp(10px, 1.8vw, 14px); box-shadow: 0px 4px 10px rgba(0,0,0,0.5);&quot;&gt;
+  &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;Este lacinho que vocês veem aqui é o Leo. A espécie dele chama-se &lt;i&gt;Farfalle&lt;/i&gt; mas é o nosso laço, e Leo para os amigos. É um laço muito catita e bem-disposto, que adora mergulhar na piscina de molho de tomate que tem no recreio da sua escola.&lt;/p&gt;
+    &lt;p&gt;Este lacinho que vocês veem aqui é o Leo. A espécie dele chama-se &lt;i&gt;Farfalle&lt;/i&gt; mas é o nosso laço, e Leo para os amigos. É um laço muito catita e bem-disposto, que adora mergulhar na piscina de molho de tomate que tem no recreio da sua escola.&lt;/p&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;O Leo chegou este ano a esta escola e ainda não conhece muitos amigos.&lt;/p&gt;
+    &lt;p&gt;O Leo chegou este ano a esta escola e ainda não conhece muitos amigos.&lt;/p&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; font-weight: bold;&quot;&gt;O que deve o Leo fazer agora?&lt;/p&gt;
+    &lt;p class=&quot;texto-destaque&quot; style=&quot;margin-bottom: 5px !important;&quot;&gt;O que deve o Leo fazer agora?&lt;/p&gt;
     
-    &lt;div class=&quot;meus-botoes&quot; style=&quot;display: flex; gap: 3vw; justify-content: center; align-items: center;&quot;&gt;
+    &lt;div class=&quot;meus-botoes&quot;&gt;
       [[Procurar alguém com quem brincar-&gt;Procurar Brincar]]
       [[Ficar sozinho num canto do recreio-&gt;Ficar Sozinho]]
     &lt;/div&gt;
-&lt;/div&gt;
-  &lt;/div&gt;
-    &lt;div style=&quot;display: none;&quot;&gt;
-  &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/clube-esparguete-3-v2.png?raw=true&quot;&gt;
-  
 
+  &lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;div class=&quot;preloader&quot;&gt;
+  &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/clube-esparguete-3-v2.png?raw=true&quot;&gt;
   &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/clube%20do%20esparguete%2010%20v2.png?raw=true&quot;&gt;
   &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/clube%20do%20esparguete%2011%20v2.png?raw=true&quot;&gt;
-
   &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/clube%20do%20esparguete%2012%20v3.png?raw=true&quot;&gt;
-    &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/clube%20do%20esparguete%2013%20v2.png?raw=true&quot;&gt;
+  &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/clube%20do%20esparguete%2013%20v2.png?raw=true&quot;&gt;
+  &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/clube%20do%20esparguete%2014%20v2.png?raw=true&quot;&gt;
+  &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/clube%20do%20esparguete%204%20v2.png?raw=true&quot;&gt;
+  &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/clube%20do%20esparguete%206%20v2.png?raw=true&quot;&gt;
+  &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/clube%20do%20esparguete%207%20v2.png?raw=true&quot;&gt;
+  &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/clube%20do%20esparguete%209%20v2.png?raw=true&quot;&gt;
+&lt;/div&gt;</tw-passagedata><tw-passagedata pid="3" name="Sopa de Letras" tags="" position="1175,225" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
-      &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/clube%20do%20esparguete%2014%20v2.png?raw=true&quot;&gt;
-      
-         &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/clube%20do%20esparguete%204%20v2.png?raw=true&quot;&gt;
-  
-           &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/clube%20do%20esparguete%206%20v2.png?raw=true&quot;&gt;
-  
-             &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/clube%20do%20esparguete%207%20v2.png?raw=true&quot;&gt;
-              
-              &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/clube%20do%20esparguete%209%20v2.png?raw=true&quot;&gt;
-  
-&lt;/div&gt;
-}</tw-passagedata><tw-passagedata pid="3" name="Sopa de Letras" tags="" position="1175,225" size="100,100">{
-&lt;div style=&quot;display: flex; flex-direction: column; height: 95vh; width: 100%; box-sizing: border-box; max-width: 1200px; margin: 0 auto;&quot;&gt;
-  
-
-  &lt;div style=&quot;flex: 1; display: flex; justify-content: center; align-items: center; overflow: hidden; padding-bottom: 2vh;&quot;&gt;
-
+  &lt;div class=&quot;img-container&quot;&gt;
     &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%201.png?raw=true&quot; style=&quot;max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0px 5px 20px rgba(0,0,0,0.8);&quot;&gt;
   &lt;/div&gt;
   
-  &lt;!-- O TEXTO E BOTÕES --&gt;
-  &lt;div style=&quot;flex: 0 0 auto; background-color: rgba(70, 35, 15, 0.85); padding: 3vh 3vw; border-radius: 15px; color: white; text-align: left; font-size: clamp(10px, 1.8vw, 14px); box-shadow: 0px 4px 10px rgba(0,0,0,0.5); max-height: 50vh; overflow-y: auto;&quot;&gt;
+  &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4; text-align: center; font-size: 1.1em;&quot;&gt;Esta estrelinha que tu vês aqui é a &lt;strong&gt;Mia&lt;/strong&gt;.&lt;/p&gt;
+    &lt;p&gt;Esta estrelinha que tu vês aqui é a &lt;strong&gt;Mia&lt;/strong&gt;.&lt;/p&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;De pontas arredondadas, bem pequenina, tímida e com uma luz bonita que faz brilhar o caminho por onde passa, é assim a nossa estrelinha.&lt;/p&gt;
+    &lt;p&gt;De pontas arredondadas, bem pequenina, tímida e com uma luz bonita que faz brilhar o caminho por onde passa, é assim a nossa estrelinha.&lt;/p&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;Mia é doce e meiga e na escola tem muitos amigos. Depois das aulas costuma brincar com as suas manas estrelinhas e há dias em que a Mia tem atividades extracurriculares.&lt;/p&gt;
+    &lt;p&gt;Mia é doce e meiga e na escola tem muitos amigos. Depois das aulas costuma brincar com as suas manas estrelinhas e há dias em que a Mia tem atividades extracurriculares.&lt;/p&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4; font-weight: bold; text-align: center; color: #FFD700;&quot;&gt;Hoje é dia de ...&lt;/p&gt;
+    &lt;p class=&quot;texto-destaque&quot; style=&quot;margin-bottom: 5px !important;&quot;&gt;Hoje é dia de ...&lt;/p&gt;
     
-    &lt;!-- Os Botões --&gt;
-    &lt;div class=&quot;meus-botoes&quot; style=&quot;display: flex; gap: 3vw; justify-content: center; align-items: center;&quot;&gt;
+    &lt;div class=&quot;meus-botoes&quot;&gt;
       [[Natação-&gt;Natacao]]
       [[Ginástica-&gt;Ginastica]]
-     &lt;/div&gt;
+    &lt;/div&gt;
 
   &lt;/div&gt;
 
 &lt;/div&gt;
 
-&lt;div style=&quot;display: none;&quot;&gt;
-
-   &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%204.png?raw=true&quot;&gt;
-
+&lt;!-- Pré-carregamento seguro das imagens da Sopa de Letras --&gt;
+&lt;div class=&quot;preloader&quot;&gt;
+  &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%204.png?raw=true&quot;&gt;
   &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%205.png?raw=true&quot;&gt;
-
- &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%206.png?raw=true&quot;&gt;
-
- &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%207.png?raw=true&quot;&gt;
- 
+  &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%206.png?raw=true&quot;&gt;
+  &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%207.png?raw=true&quot;&gt;
   &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%208.png?raw=true&quot;&gt;
-
   &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%209.png?raw=true&quot;&gt;
-
   &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%2010.png?raw=true&quot;&gt;
-
- &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%2011.png?raw=true&quot;&gt;
-
- &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%2012.png?raw=true&quot;&gt;
- 
+  &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%2011.png?raw=true&quot;&gt;
+  &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%2012.png?raw=true&quot;&gt;
   &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%2013.png?raw=true&quot;&gt;
-
   &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%2014.png?raw=true&quot;&gt;
-
-  &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%2015.jpg?raw=true&quot;&gt;
-
+  &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/Gemini_Generated_Image_dqqcnxdqqcnxdqqc.png?raw=true&quot;&gt;
   &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%2016.png?raw=true&quot;&gt;
+  &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%2017.png?raw=true&quot;&gt;
+  &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%2018.png?raw=true&quot;&gt;
+  &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%2019.png?raw=true&quot;&gt;
+  &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%2020.png?raw=true&quot;&gt;
+&lt;/div&gt;</tw-passagedata><tw-passagedata pid="4" name="Procurar Brincar" tags="" position="575,475" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
-    &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%2017.png?raw=true&quot;&gt;
-
-    &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%2018.png?raw=true&quot;&gt;
-
-    &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%2019.png?raw=true&quot;&gt;
-
-    &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%2020.png?raw=true&quot;&gt;
-
-&lt;/div&gt;
-}</tw-passagedata><tw-passagedata pid="4" name="Procurar Brincar" tags="" position="575,475" size="100,100">{
-&lt;div style=&quot;display: flex; flex-direction: column; height: 95vh; width: 100%; box-sizing: border-box; max-width: 1200px; margin: 0 auto;&quot;&gt;
-  
-
-  &lt;div style=&quot;flex: 1; display: flex; justify-content: center; align-items: center; overflow: hidden; padding-bottom: 2vh;&quot;&gt;
-  
+  &lt;div class=&quot;img-container&quot;&gt;
     &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/clube%20esparguete%202%20v3.png?raw=true&quot; style=&quot;max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0px 5px 20px rgba(0,0,0,0.8);&quot;&gt;
   &lt;/div&gt;
   
-  &lt;div style=&quot;flex: 0 0 auto; background-color: rgba(70, 35, 15, 0.85); padding: 3vh 3vw; border-radius: 15px; color: white; text-align: center; font-size: clamp(10px, 1.8vw, 14px); box-shadow: 0px 4px 10px rgba(0,0,0,0.5);&quot;&gt;
+  &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;A passear pelo recreio, o nosso lacinho encontrou um grupo de esparguetes a combinar ir mergulhar:&lt;/p&gt;
+    &lt;p&gt;A passear pelo recreio, o nosso lacinho encontrou um grupo de esparguetes a combinar ir mergulhar:&lt;/p&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;— &quot;Olá massas, ouvi-vos a combinar ir dar um mergulho, posso ir convosco? Já agora, eu sou o Leo e vocês?&quot;&lt;/p&gt;
+    &lt;p&gt;— &quot;Olá massas, ouvi-vos a combinar ir dar um mergulho, posso ir convosco? Já agora, eu sou o Leo e vocês?&quot;&lt;/p&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;Os esparguetes olharam todas umas para as outras e riram-se:&lt;/p&gt;
+    &lt;p&gt;Os esparguetes olharam todas umas para as outras e riram-se:&lt;/p&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;— &quot;Olha-me este armado em janota.&quot;&lt;/p&gt;
+    &lt;p&gt;— &quot;Olha-me este armado em janota.&quot;&lt;/p&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;— &quot;Tem juízo minorca, nem chegas com os pés ao fundo do prato!&quot;&lt;/p&gt;
+    &lt;p style=&quot;margin-bottom: 5px !important;&quot;&gt;— &quot;Tem juízo minorca, nem chegas com os pés ao fundo do prato!&quot;&lt;/p&gt;
     
-    &lt;!-- Os Botões (Altera para as tuas opções reais) --&gt;
-    &lt;div class=&quot;meus-botoes&quot; style=&quot;display: flex; gap: 3vw; justify-content: center; align-items: center;&quot;&gt;
+    &lt;div class=&quot;meus-botoes&quot;&gt;
       [[Responder-&gt;Ação Responder]]
       [[Ignorar-&gt;Ação Ignorar]]
     &lt;/div&gt;
 
   &lt;/div&gt;
 
-&lt;/div&gt;
-}</tw-passagedata><tw-passagedata pid="5" name="Ficar Sozinho" tags="" position="700,475" size="100,100">{
-&lt;div style=&quot;display: flex; flex-direction: column; height: 95vh; width: 100%; box-sizing: border-box; max-width: 1200px; margin: 0 auto;&quot;&gt;
+&lt;/div&gt;</tw-passagedata><tw-passagedata pid="5" name="Ficar Sozinho" tags="" position="700,475" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
-  &lt;!-- A IMAGEM --&gt;
-  &lt;div style=&quot;flex: 1; display: flex; justify-content: center; align-items: center; overflow: hidden; padding-bottom: 2vh;&quot;&gt;
-    &lt;!-- Substitui o link abaixo pelo link da imagem desta cena --&gt;
+  &lt;div class=&quot;img-container&quot;&gt;
     &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/clube-esparguete-3-v2.png?raw=true&quot; style=&quot;max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0px 5px 20px rgba(0,0,0,0.8);&quot;&gt;
   &lt;/div&gt;
   
-  &lt;!-- O TEXTO E BOTÕES --&gt;
-  &lt;div style=&quot;flex: 0 0 auto; background-color: rgba(70, 35, 15, 0.85); padding: 3vh 3vw; border-radius: 15px; color: white; text-align: center; font-size: clamp(10px, 1.8vw, 14px); box-shadow: 0px 4px 10px rgba(0,0,0,0.5);&quot;&gt;
+  &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;Sentou-se no banco de jardim a pensar no quanto tinham sido boas as últimas férias, ansioso para fazer amigos e poder contar-lhes tudo. Até que aparecem um grupo de esparguetes:&lt;/p&gt;
+    &lt;p&gt;Sentou-se no banco de jardim a pensar no quanto tinham sido boas as últimas férias, ansioso para fazer amigos e poder contar-lhes tudo. Até que aparecem um grupo de esparguetes:&lt;/p&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;— &quot;Então laçarote? És novo aqui, de que prenda saíste?&quot;&lt;/p&gt;
+    &lt;p&gt;— &quot;Então laçarote? És novo aqui, de que prenda saíste?&quot;&lt;/p&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;Os outros riram-se. Leo ficou intimidado, eles eram grandes e eram muitos e ele estava sozinho.&lt;/p&gt;
+    &lt;p style=&quot;margin-bottom: 5px !important;&quot;&gt;Os outros riram-se. Leo ficou intimidado, eles eram grandes e eram muitos e ele estava sozinho.&lt;/p&gt;
     
-    &lt;!-- Os Botões que unem a história --&gt;
-    &lt;div class=&quot;meus-botoes&quot; style=&quot;display: flex; gap: 3vw; justify-content: center; align-items: center;&quot;&gt;
+    &lt;div class=&quot;meus-botoes&quot;&gt;
       [[Responder-&gt;Ação Responder]]
       [[Ignorar-&gt;Ação Ignorar]]
     &lt;/div&gt;
 
   &lt;/div&gt;
 
-&lt;/div&gt;
-}</tw-passagedata><tw-passagedata pid="6" name="Ação Responder" tags="" position="575,700" size="100,100">{
-&lt;div style=&quot;display: flex; flex-direction: column; height: 95vh; width: 100%; box-sizing: border-box; max-width: 1200px; margin: 0 auto;&quot;&gt;
+&lt;/div&gt;</tw-passagedata><tw-passagedata pid="6" name="Ação Responder" tags="" position="575,700" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
-  &lt;!-- A IMAGEM --&gt;
-  &lt;div style=&quot;flex: 1; display: flex; justify-content: center; align-items: center; overflow: hidden; padding-bottom: 2vh;&quot;&gt;
-    &lt;!-- Substitui o link abaixo pelo link da imagem desta cena --&gt;
+  &lt;div class=&quot;img-container&quot;&gt;
     &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/clube%20do%20esparguete%205%20v2.png?raw=true&quot; style=&quot;max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0px 5px 20px rgba(0,0,0,0.8);&quot;&gt;
   &lt;/div&gt;
   
-  &lt;!-- O TEXTO E BOTÕES --&gt;
-  &lt;div style=&quot;flex: 0 0 auto; background-color: rgba(70, 35, 15, 0.85); padding: 3vh 3vw; border-radius: 15px; color: white; text-align: center; font-size: clamp(10px, 1.8vw, 14px); box-shadow: 0px 4px 10px rgba(0,0,0,0.5);&quot;&gt;
+  &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;— &quot;Ei, com quem é que pensas que estás a falar?&quot; — respondeu o Leo. — &quot;Nem penses que lá porque és grande falas assim comigo!&quot;&lt;/p&gt;
+    &lt;p&gt;— &quot;Ei, com quem é que pensas que estás a falar?&quot; — respondeu o Leo. — &quot;Nem penses que lá porque és grande falas assim comigo!&quot;&lt;/p&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;Os esparguetes riram-se ainda mais.&lt;/p&gt;
+    &lt;p&gt;Os esparguetes riram-se ainda mais.&lt;/p&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;— &quot;A formiga agora tem catarro? Ouve lá, oh engomadinho, chegaste aqui agora mas é bom que aprendas que quem manda aqui é o Clube do Esparguete.&quot;&lt;/p&gt;
+    &lt;p&gt;— &quot;A formiga agora tem catarro? Ouve lá, oh engomadinho, chegaste aqui agora mas é bom que aprendas que quem manda aqui é o Clube do Esparguete.&quot;&lt;/p&gt;
 
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;— &quot;E não voltas a responder, ou não respondemos por nós!&quot;&lt;/p&gt;
+    &lt;p style=&quot;margin-bottom: 5px !important;&quot;&gt;— &quot;E não voltas a responder, ou não respondemos por nós!&quot;&lt;/p&gt;
     
-    &lt;!-- Os Botões (Substitui pelas tuas próximas opções) --&gt;
-    &lt;div class=&quot;meus-botoes&quot; style=&quot;display: flex; gap: 3vw; justify-content: center; align-items: center;&quot;&gt;
+    &lt;div class=&quot;meus-botoes&quot;&gt;
       [[Continuar-&gt;Continuar]]
     &lt;/div&gt;
 
   &lt;/div&gt;
 
-&lt;/div&gt;
-}</tw-passagedata><tw-passagedata pid="7" name="Ação Ignorar" tags="" position="800,675" size="100,100">{
-&lt;div style=&quot;display: flex; flex-direction: column; height: 95vh; width: 100%; box-sizing: border-box; max-width: 1200px; margin: 0 auto;&quot;&gt;
+&lt;/div&gt;</tw-passagedata><tw-passagedata pid="7" name="Ação Ignorar" tags="" position="800,675" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
-  &lt;!-- A IMAGEM --&gt;
-  &lt;div style=&quot;flex: 1; display: flex; justify-content: center; align-items: center; overflow: hidden; padding-bottom: 2vh;&quot;&gt;
-    &lt;!-- Substitui o link abaixo pelo link da imagem desta cena --&gt;
+  &lt;div class=&quot;img-container&quot;&gt;
     &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/clube%20do%20esparguete%204%20v2.png?raw=true&quot; style=&quot;max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0px 5px 20px rgba(0,0,0,0.8);&quot;&gt;
   &lt;/div&gt;
   
-  &lt;!-- O TEXTO E BOTÕES --&gt;
-  &lt;div style=&quot;flex: 0 0 auto; background-color: rgba(70, 35, 15, 0.85); padding: 3vh 3vw; border-radius: 15px; color: white; text-align: center; font-size: clamp(10px, 1.8vw, 14px); box-shadow: 0px 4px 10px rgba(0,0,0,0.5);&quot;&gt;
+  &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;O Leo nem lhes respondeu, sabia que nem valia a pena. A mãe já lhe tinha explicado que haviam massas mal-intencionadas, ou que então estavam num dia mau, e ele decidiu não dar importância a este Clube do Esparguete.&lt;/p&gt;
+    &lt;p style=&quot;margin-bottom: 5px !important;&quot;&gt;O Leo nem lhes respondeu, sabia que nem valia a pena. A mãe já lhe tinha explicado que haviam massas mal-intencionadas, ou que então estavam num dia mau, e ele decidiu não dar importância a este Clube do Esparguete.&lt;/p&gt;
     
-    &lt;!-- Os Botões (Substitui pelas tuas próximas opções) --&gt;
-    &lt;div class=&quot;meus-botoes&quot; style=&quot;display: flex; gap: 3vw; justify-content: center; align-items: center;&quot;&gt;
+    &lt;div class=&quot;meus-botoes&quot;&gt;
       [[Continuar-&gt;Continuar]]
     &lt;/div&gt;
 
   &lt;/div&gt;
 
-&lt;/div&gt;
-}</tw-passagedata><tw-passagedata pid="8" name="Continuar" tags="" position="800,825" size="100,100">{
-&lt;div style=&quot;display: flex; flex-direction: column; height: 95vh; width: 100%; box-sizing: border-box; max-width: 1200px; margin: 0 auto;&quot;&gt;
+&lt;/div&gt;</tw-passagedata><tw-passagedata pid="8" name="Continuar" tags="" position="800,825" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
-  &lt;!-- A IMAGEM --&gt;
-  &lt;div style=&quot;flex: 1; display: flex; justify-content: center; align-items: center; overflow: hidden; padding-bottom: 2vh;&quot;&gt;
-    &lt;!-- Substitui o link abaixo pelo link da imagem desta cena --&gt;
+  &lt;div class=&quot;img-container&quot;&gt;
     &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/clube%20do%20esparguete%206%20v2.png?raw=true&quot; style=&quot;max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0px 5px 20px rgba(0,0,0,0.8);&quot;&gt;
   &lt;/div&gt;
   
-  &lt;!-- O TEXTO E BOTÕES --&gt;
-  &lt;div style=&quot;flex: 0 0 auto; background-color: rgba(70, 35, 15, 0.85); padding: 3vh 3vw; border-radius: 15px; color: white; text-align: center; font-size: clamp(10px, 1.8vw, 14px); box-shadow: 0px 4px 10px rgba(0,0,0,0.5);&quot;&gt;
+  &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;No dia seguinte o Leo passou pela piscina de molho de tomate decidido a dar um mergulho. Estava um belo dia e parecia-lhe ser o momento ideal para conhecer amigos.&lt;/p&gt;
+    &lt;p&gt;No dia seguinte o Leo passou pela piscina de molho de tomate decidido a dar um mergulho. Estava um belo dia e parecia-lhe ser o momento ideal para conhecer amigos.&lt;/p&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;Estava a relaxar quando ouviu: &quot;Olhem, está ali o lacinho!&quot; — reconheceu logo a voz, eram os esparguetes.&lt;/p&gt;
+    &lt;p&gt;Estava a relaxar quando ouviu: &quot;Olhem, está ali o lacinho!&quot; — reconheceu logo a voz, eram os esparguetes.&lt;/p&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;— &quot;Que fazes aqui?&quot; — perguntou um deles ao mesmo tempo que empurrou o Leo. — &quot;Nem massa és, pareces mais um gancho para o cabelo.&quot;&lt;/p&gt;
+    &lt;p&gt;— &quot;Que fazes aqui?&quot; — perguntou um deles ao mesmo tempo que empurrou o Leo. — &quot;Nem massa és, pareces mais um gancho para o cabelo.&quot;&lt;/p&gt;
 
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;— &quot;Sai daqui&quot; — disse o outro enquanto o encostava à parede —, &quot;que esta é a piscina das massas compridas!&quot;&lt;/p&gt;
+    &lt;p style=&quot;margin-bottom: 5px !important;&quot;&gt;— &quot;Sai daqui&quot; — disse o outro enquanto o encostava à parede —, &quot;que esta é a piscina das massas compridas!&quot;&lt;/p&gt;
     
-
-    &lt;div class=&quot;meus-botoes&quot; style=&quot;display: flex; gap: 3vw; justify-content: center; align-items: center;&quot;&gt;
+    &lt;div class=&quot;meus-botoes&quot;&gt;
       [[Tentar integrar-se-&gt;Tentar integrar-se]]
       [[Sair-&gt;Sair]]
     &lt;/div&gt;
 
   &lt;/div&gt;
 
-&lt;/div&gt;
-}</tw-passagedata><tw-passagedata pid="9" name="Sair" tags="" position="650,975" size="100,100">{
-&lt;div style=&quot;display: flex; flex-direction: column; height: 95vh; width: 100%; box-sizing: border-box; max-width: 1200px; margin: 0 auto;&quot;&gt;
+&lt;/div&gt;</tw-passagedata><tw-passagedata pid="9" name="Sair" tags="" position="650,975" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
-  &lt;!-- A IMAGEM --&gt;
-  &lt;div style=&quot;flex: 1; display: flex; justify-content: center; align-items: center; overflow: hidden; padding-bottom: 2vh;&quot;&gt;
-    &lt;!-- Substitui o link abaixo pelo link da imagem desta cena --&gt;
+  &lt;div class=&quot;img-container&quot;&gt;
     &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/clube%20do%20esparguete%208%20v2.png?raw=true&quot; style=&quot;max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0px 5px 20px rgba(0,0,0,0.8);&quot;&gt;
   &lt;/div&gt;
   
-  &lt;!-- O TEXTO E BOTÕES --&gt;
-  &lt;div style=&quot;flex: 0 0 auto; background-color: rgba(70, 35, 15, 0.85); padding: 3vh 3vw; border-radius: 15px; color: white; text-align: center; font-size: clamp(10px, 1.8vw, 14px); box-shadow: 0px 4px 10px rgba(0,0,0,0.5);&quot;&gt;
+  &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;O Leo recolheu-se no canto da piscina, triste e sozinho. Não tinha feito nada para que o tratassem assim. Olhava à volta e havia muitos grupos de massas, mas eram todos uns iguais aos outros.&lt;/p&gt;
+    &lt;p&gt;O Leo recolheu-se no canto da piscina, triste e sozinho. Não tinha feito nada para que o tratassem assim. Olhava à volta e havia muitos grupos de massas, mas eram todos uns iguais aos outros.&lt;/p&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;— &quot;Mas porque é que não podemos brincar todos juntos, mesmo que sejamos diferentes uns dos outros?&quot;&lt;/p&gt;
+    &lt;p&gt;— &quot;Mas porque é que não podemos brincar todos juntos, mesmo que sejamos diferentes uns dos outros?&quot;&lt;/p&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;Sentia-se invisível, todos ignoravam a sua tristeza. Só havia uma solução.&lt;/p&gt;
+    &lt;p style=&quot;margin-bottom: 5px !important;&quot;&gt;Sentia-se invisível, todos ignoravam a sua tristeza. Só havia uma solução.&lt;/p&gt;
     
-      &lt;!-- Os Botões (Substitui pelas tuas próximas opções) --&gt;
-    &lt;div class=&quot;meus-botoes&quot; style=&quot;display: flex; gap: 3vw; justify-content: center; align-items: center;&quot;&gt;
+    &lt;div class=&quot;meus-botoes&quot;&gt;
       [[Tentar integrar-se-&gt;Tentar integrar-se]]
     &lt;/div&gt;
 
   &lt;/div&gt;
 
-&lt;/div&gt;
-}</tw-passagedata><tw-passagedata pid="10" name="Tentar integrar-se" tags="" position="875,975" size="100,100">{
-&lt;div style=&quot;display: flex; flex-direction: column; height: 95vh; width: 100%; box-sizing: border-box; max-width: 1200px; margin: 0 auto;&quot;&gt;
+&lt;/div&gt;</tw-passagedata><tw-passagedata pid="10" name="Tentar integrar-se" tags="" position="875,975" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
-  &lt;!-- A IMAGEM --&gt;
-  &lt;div style=&quot;flex: 1; display: flex; justify-content: center; align-items: center; overflow: hidden; padding-bottom: 2vh;&quot;&gt;
-    &lt;!-- Substitui o link abaixo pelo link da imagem desta cena --&gt;
+  &lt;div class=&quot;img-container&quot;&gt;
     &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/clube%20do%20esparguete%207%20v2.png?raw=true&quot; style=&quot;max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0px 5px 20px rgba(0,0,0,0.8);&quot;&gt;
   &lt;/div&gt;
   
-  &lt;!-- O TEXTO E BOTÕES --&gt;
-  &lt;div style=&quot;flex: 0 0 auto; background-color: rgba(70, 35, 15, 0.85); padding: 3vh 3vw; border-radius: 15px; color: white; text-align: center; font-size: clamp(10px, 1.8vw, 14px); box-shadow: 0px 4px 10px rgba(0,0,0,0.5);&quot;&gt;
+  &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;O Leo achou que o melhor seria ser igual aos outros para poder passar a pertencer ao Clube do Esparguete.&lt;/p&gt;
+    &lt;p&gt;O Leo achou que o melhor seria ser igual aos outros para poder passar a pertencer ao Clube do Esparguete.&lt;/p&gt;
     
-    &lt;p style=&quot;margin: 0 0 2vh 0; line-height: 1.4;&quot;&gt;Então começou a esticar-se, a esticar-se, a esticar-se. Doía muito, mas continuou a esticar-se.&lt;/p&gt;
+    &lt;p style=&quot;margin-bottom: 5px !important;&quot;&gt;Então começou a esticar-se, a esticar-se, a esticar-se. Doía muito, mas continuou a esticar-se.&lt;/p&gt;
     
-    &lt;!-- O Botão Único --&gt;
-    &lt;div class=&quot;meus-botoes&quot; style=&quot;display: flex; gap: 3vw; justify-content: center; align-items: center;&quot;&gt;
+    &lt;div class=&quot;meus-botoes&quot;&gt;
       [[Continuar a esticar-se-&gt;Continuar Esticar]]
     &lt;/div&gt;
 
   &lt;/div&gt;
 
-&lt;/div&gt;
-}</tw-passagedata><tw-passagedata pid="11" name="Continuar Esticar" tags="" position="800,1150" size="100,100">{
-&lt;div style=&quot;display: flex; flex-direction: column; height: 95vh; width: 100%; box-sizing: border-box; max-width: 1200px; margin: 0 auto;&quot;&gt;
+&lt;/div&gt;</tw-passagedata><tw-passagedata pid="11" name="Continuar Esticar" tags="" position="800,1150" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
-  &lt;!-- A IMAGEM --&gt;
-  &lt;div style=&quot;flex: 1; display: flex; justify-content: center; align-items: center; overflow: hidden; padding-bottom: 2vh;&quot;&gt;
-    &lt;!-- Substitui o link abaixo pelo link da imagem do Leo esticado ao espelho --&gt;
+  &lt;div class=&quot;img-container&quot;&gt;
     &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/clube%20do%20esparguete%209%20v2.png?raw=true&quot; style=&quot;max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0px 5px 20px rgba(0,0,0,0.8);&quot;&gt;
   &lt;/div&gt;
   
-  &lt;!-- O TEXTO E BOTÕES --&gt;
-  &lt;div style=&quot;flex: 0 0 auto; background-color: rgba(70, 35, 15, 0.85); padding: 3vh 3vw; border-radius: 15px; color: white; text-align: center; font-size: clamp(10px, 1.8vw, 14px); box-shadow: 0px 4px 10px rgba(0,0,0,0.5);&quot;&gt;
+  &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;Até que ficou mesmo fininho. Olhou-se ao espelho e nem se reconheceu a si próprio.&lt;/p&gt;
+    &lt;p&gt;Até que ficou mesmo fininho. Olhou-se ao espelho e nem se reconheceu a si próprio.&lt;/p&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;Sobravam apenas as ondulações nas extremidades, eram os únicos vestígios do Leo enquanto lacinho.&lt;/p&gt;
+    &lt;p style=&quot;margin-bottom: 5px !important;&quot;&gt;Sobravam apenas as ondulações nas extremidades, eram os únicos vestígios do Leo enquanto lacinho.&lt;/p&gt;
     
-    &lt;!-- O Botão Único --&gt;
-    &lt;div class=&quot;meus-botoes&quot; style=&quot;display: flex; gap: 3vw; justify-content: center; align-items: center;&quot;&gt;
+    &lt;div class=&quot;meus-botoes&quot;&gt;
       [[Continuar-&gt;Regresso à Escola]]
     &lt;/div&gt;
 
   &lt;/div&gt;
 
-&lt;/div&gt;
-}</tw-passagedata><tw-passagedata pid="12" name="Regresso à Escola" tags="" position="825,1275" size="100,100">{
-&lt;div style=&quot;display: flex; flex-direction: column; height: 95vh; width: 100%; box-sizing: border-box; max-width: 1200px; margin: 0 auto;&quot;&gt;
+&lt;/div&gt;</tw-passagedata><tw-passagedata pid="12" name="Regresso à Escola" tags="" position="825,1275" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
-  &lt;!-- A IMAGEM --&gt;
-  &lt;div style=&quot;flex: 1; display: flex; justify-content: center; align-items: center; overflow: hidden; padding-bottom: 2vh;&quot;&gt;
-    &lt;!-- Substitui o link abaixo pelo link da imagem desta cena --&gt;
+  &lt;div class=&quot;img-container&quot;&gt;
     &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/clube%20do%20esparguete%2010%20v2.png?raw=true&quot; style=&quot;max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0px 5px 20px rgba(0,0,0,0.8);&quot;&gt;
   &lt;/div&gt;
   
-  &lt;!-- O TEXTO E BOTÕES --&gt;
-  &lt;div style=&quot;flex: 0 0 auto; background-color: rgba(70, 35, 15, 0.85); padding: 3vh 3vw; border-radius: 15px; color: white; text-align: left; font-size: clamp(10px, 1.8vw, 14px); box-shadow: 0px 4px 10px rgba(0,0,0,0.5);&quot;&gt;
+  &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
     
-    &lt;p style=&quot;margin: 0 0 1.5vh 0; line-height: 1.4;&quot;&gt;Quando voltou à escola, todos olhavam para si. &quot;Uau&quot; — pensou ele —, &quot;antes era invisível, agora que vou pertencer ao Clube do Esparguete, finalmente olham para mim. Fiz mesmo a escolha certa&quot;. Um grupo de espirais e de macarronetes veio abordá-lo.&lt;/p&gt;
+    &lt;p&gt;Quando voltou à escola, todos olhavam para si. &quot;Uau&quot; — pensou ele —, &quot;antes era invisível, agora que vou pertencer ao Clube do Esparguete, finalmente olham para mim. Fiz mesmo a escolha certa&quot;. Um grupo de espirais e de macarronetes veio abordá-lo.&lt;/p&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;— &quot;Olá Leo, temos estado a observar-te e queríamos pedir-te desculpa.&quot;&lt;/p&gt;
+    &lt;p&gt;— &quot;Olá Leo, temos estado a observar-te e queríamos pedir-te desculpa.&quot;&lt;/p&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;— &quot;Desculpa? Então porquê?&quot;&lt;/p&gt;
+    &lt;p&gt;— &quot;Desculpa? Então porquê?&quot;&lt;/p&gt;
 
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;— &quot;Assistimos às maldades que os esparguetes te fizeram e ficámos apáticas&quot; — disse a espiral.&lt;/p&gt;
+    &lt;p&gt;— &quot;Assistimos às maldades que os esparguetes te fizeram e ficámos apáticas&quot; — disse a espiral.&lt;/p&gt;
 
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;— &quot;Mas agora ver-te assim, fez-nos refletir que já devíamos ter vindo falar contigo mais cedo.&quot;&lt;/p&gt;
+    &lt;p&gt;— &quot;Mas agora ver-te assim, fez-nos refletir que já devíamos ter vindo falar contigo mais cedo.&quot;&lt;/p&gt;
 
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;— &quot;Assim como? Eu agora sou um esparguete e estou pronto para pertencer ao Clube!&quot;&lt;/p&gt;
+    &lt;p style=&quot;margin-bottom: 5px !important;&quot;&gt;— &quot;Assim como? Eu agora sou um esparguete e estou pronto para pertencer ao Clube!&quot;&lt;/p&gt;
     
-    &lt;!-- Os Botões --&gt;
-    &lt;div class=&quot;meus-botoes&quot; style=&quot;display: flex; gap: 3vw; justify-content: center; align-items: center;&quot;&gt;
+    &lt;div class=&quot;meus-botoes&quot;&gt;
       [[Continuar a ouvir a espiral e o macarronete-&gt;Ouvir Espiral]]
       [[Procurar os esparguetes-&gt;Procurar Esparguetes]]
     &lt;/div&gt;
 
   &lt;/div&gt;
 
-&lt;/div&gt;
-}</tw-passagedata><tw-passagedata pid="13" name="Ouvir Espiral" tags="" position="650,1450" size="100,100">{
-&lt;div style=&quot;display: flex; flex-direction: column; height: 95vh; width: 100%; box-sizing: border-box; max-width: 1200px; margin: 0 auto;&quot;&gt;
+&lt;/div&gt;</tw-passagedata><tw-passagedata pid="13" name="Ouvir Espiral" tags="" position="650,1450" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
-  &lt;!-- A IMAGEM --&gt;
-  &lt;div style=&quot;flex: 1; display: flex; justify-content: center; align-items: center; overflow: hidden; padding-bottom: 2vh;&quot;&gt;
-    &lt;!-- Substitui o link abaixo pelo link da imagem desta cena --&gt;
+  &lt;div class=&quot;img-container&quot;&gt;
     &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/clube%20do%20esparguete%2011%20v2.png?raw=true&quot; style=&quot;max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0px 5px 20px rgba(0,0,0,0.8);&quot;&gt;
   &lt;/div&gt;
   
-  &lt;!-- O TEXTO E BOTÕES --&gt;
-  &lt;div style=&quot;flex: 0 0 auto; background-color: rgba(70, 35, 15, 0.85); padding: 3vh 3vw; border-radius: 15px; color: white; text-align: left; font-size: clamp(10px, 1.8vw, 14px); box-shadow: 0px 4px 10px rgba(0,0,0,0.5);&quot;&gt;
+  &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;— &quot;Não, Leo! Claro que não, tu não és um esparguete e nunca serás! Tu és um laço, agora deformado, mas continuas a ser um laço&quot; — esclareceu o Macarronete.&lt;/p&gt;
+    &lt;p&gt;— &quot;Não, Leo! Claro que não, tu não és um esparguete e nunca serás! Tu és um laço, agora deformado, mas continuas a ser um laço&quot; — esclareceu o Macarronete.&lt;/p&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;— &quot;Não tens de deixar de ser quem és para ficares igual a alguém&quot; — justificou a Espiral.&lt;/p&gt;
+    &lt;p&gt;— &quot;Não tens de deixar de ser quem és para ficares igual a alguém&quot; — justificou a Espiral.&lt;/p&gt;
 
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;— &quot;Mudar-te a ti próprio só para agradar o outro nunca corre bem&quot; — acrescentou o Macarronete.&lt;/p&gt;
+    &lt;p&gt;— &quot;Mudar-te a ti próprio só para agradar o outro nunca corre bem&quot; — acrescentou o Macarronete.&lt;/p&gt;
 
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;O Leo percebeu, afinal, que não devia ter-se esticado tanto ao ponto de se magoar para que pudesse ser incluído num grupo.&lt;/p&gt;
+    &lt;p&gt;O Leo percebeu, afinal, que não devia ter-se esticado tanto ao ponto de se magoar para que pudesse ser incluído num grupo.&lt;/p&gt;
 
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;— &quot;Os esparguetes precisam de uma lição, para que não voltem a fazer isto com mais ninguém&quot; — decidiu o Leo.&lt;/p&gt;
+    &lt;p style=&quot;margin-bottom: 5px !important;&quot;&gt;— &quot;Os esparguetes precisam de uma lição, para que não voltem a fazer isto com mais ninguém&quot; — decidiu o Leo.&lt;/p&gt;
     
-    &lt;!-- O Botão Único --&gt;
-    &lt;div class=&quot;meus-botoes&quot; style=&quot;display: flex; gap: 3vw; justify-content: center; align-items: center;&quot;&gt;
+    &lt;div class=&quot;meus-botoes&quot;&gt;
       [[Procurar os esparguetes-&gt;Procurar Esparguetes]]
     &lt;/div&gt;
 
   &lt;/div&gt;
 
-&lt;/div&gt;
-}</tw-passagedata><tw-passagedata pid="14" name="Procurar Esparguetes" tags="" position="850,1425" size="100,100">{
-&lt;div style=&quot;display: flex; flex-direction: column; height: 95vh; width: 100%; box-sizing: border-box; max-width: 1200px; margin: 0 auto;&quot;&gt;
+&lt;/div&gt;</tw-passagedata><tw-passagedata pid="14" name="Procurar Esparguetes" tags="" position="850,1425" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
-  &lt;!-- A IMAGEM --&gt;
-  &lt;div style=&quot;flex: 1; display: flex; justify-content: center; align-items: center; overflow: hidden; padding-bottom: 2vh;&quot;&gt;
-    &lt;!-- Substitui o link abaixo pelo link da imagem desta cena --&gt;
+  &lt;div class=&quot;img-container&quot;&gt;
     &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/clube%20do%20esparguete%2012%20v3.png?raw=true&quot; style=&quot;max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0px 5px 20px rgba(0,0,0,0.8);&quot;&gt;
   &lt;/div&gt;
   
-  &lt;!-- O TEXTO E BOTÕES --&gt;
-  &lt;div style=&quot;flex: 0 0 auto; background-color: rgba(70, 35, 15, 0.85); padding: 3vh 3vw; border-radius: 15px; color: white; text-align: left; font-size: clamp(10px, 1.8vw, 14px); box-shadow: 0px 4px 10px rgba(0,0,0,0.5);&quot;&gt;
+  &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4; &quot;&gt;O Leo encontrou os esparguetes reunidos à beira da piscina de molho de tomate, que quando o viram desataram a rir-se à gargalhada!&lt;/p&gt;
+    &lt;p&gt;O Leo encontrou os esparguetes reunidos à beira da piscina de molho de tomate, que quando o viram desataram a rir-se à gargalhada!&lt;/p&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;— &quot;Que massa és, oh rapaz?&quot;&lt;/p&gt;
+    &lt;p&gt;— &quot;Que massa és, oh rapaz?&quot;&lt;/p&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;A espiral e o macarronete, que seguiram o Leo, interromperam a conversa:&lt;br&gt;— &quot;O que vocês estão a fazer não está correto&quot; — disse o macarronete.&lt;/p&gt;
+    &lt;p&gt;A espiral e o macarronete, que seguiram o Leo, interromperam a conversa:&lt;/p&gt;
 
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;— &quot;Vocês bateram e intimidaram o Leo só porque ele não é igual a vocês&quot; — exclamou a espiral —, &quot;mas olhem, nós somos todos diferentes, e qual é o problema?&quot;&lt;/p&gt;
+    &lt;p&gt;— &quot;O que vocês estão a fazer não está correto&quot; — disse o macarronete.&lt;/p&gt;
 
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;Com o alvoroço, todas as massas, de todas as espécies, juntaram-se à beira da piscina.&lt;/p&gt;
-    
-  &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;— &quot;Sim, qual é o problema?&quot; — perguntou o &lt;i&gt;penne&lt;/i&gt;.&lt;/p&gt;
+    &lt;p&gt;— &quot;Vocês bateram e intimidaram o Leo só porque ele não é igual a vocês&quot; — exclamou a espiral —, &quot;mas olhem, nós somos todos diferentes, e qual é o problema?&quot;&lt;/p&gt;
 
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;— &quot;Mete-te com gente do teu tamanho!&quot; — protestou a &lt;i&gt;tagliatelle&lt;/i&gt;.&lt;/p&gt;
+    &lt;p&gt;Com o alvoroço, todas as massas, de todas as espécies, juntaram-se à beira da piscina.&lt;/p&gt;
     
-    &lt;!-- O Botão Único --&gt;
-    &lt;div class=&quot;meus-botoes&quot; style=&quot;display: flex; gap: 3vw; justify-content: center; align-items: center;&quot;&gt;
+    &lt;p&gt;— &quot;Sim, qual é o problema?&quot; — perguntou o &lt;i&gt;penne&lt;/i&gt;.&lt;/p&gt;
+
+    &lt;p style=&quot;margin-bottom: 5px !important;&quot;&gt;— &quot;Mete-te com gente do teu tamanho!&quot; — protestou a &lt;i&gt;tagliatelle&lt;/i&gt;.&lt;/p&gt;
+    
+    &lt;div class=&quot;meus-botoes&quot;&gt;
       [[Continuar-&gt;Desfecho Final]]
       [[Desatar à Pancada-&gt;Desatar à Pancada]]
     &lt;/div&gt;
 
   &lt;/div&gt;
 
-&lt;/div&gt;
-}</tw-passagedata><tw-passagedata pid="15" name="Desfecho Final" tags="" position="750,1625" size="100,100">{
-&lt;div style=&quot;display: flex; flex-direction: column; height: 95vh; width: 100%; box-sizing: border-box; max-width: 1200px; margin: 0 auto;&quot;&gt;
+&lt;/div&gt;</tw-passagedata><tw-passagedata pid="15" name="Desfecho Final" tags="" position="475,1675" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
-  &lt;div style=&quot;flex: 1; display: flex; justify-content: center; align-items: center; overflow: hidden; padding-bottom: 2vh;&quot;&gt;
+  &lt;div class=&quot;img-container&quot;&gt;
     &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/clube%20do%20esparguete%2013%20v2.png?raw=true&quot; style=&quot;max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0px 5px 20px rgba(0,0,0,0.8);&quot;&gt;
   &lt;/div&gt;
   
-  &lt;div style=&quot;flex: 0 0 auto; background-color: rgba(70, 35, 15, 0.85); padding: 3vh 3vw; border-radius: 15px; color: white; text-align: center; font-size: clamp(10px, 1.8vw, 18px); box-shadow: 0px 4px 10px rgba(0,0,0,0.5);&quot;&gt;
+  &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;Os esparguetes ao aperceberem-se de que todas as outras massas estavam revoltadas, pediram desculpa ao Leo e reconheceram que não tinham o direito de o perturbá-lo, humilhá-lo e nem a bater-lhe.&lt;/p&gt;
+    &lt;p&gt;Os esparguetes ao aperceberem-se de que todas as outras massas estavam revoltadas, pediram desculpa ao Leo e reconheceram que não tinham o direito de o perturbá-lo, humilhá-lo e nem a bater-lhe.&lt;/p&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;Ficaram muito envergonhados e decidiram substituir o Clube do Esparguete pelo Clube da Amizade, do qual todas as massas pudessem fazer parte.&lt;/p&gt;
+    &lt;p&gt;Ficaram muito envergonhados e decidiram substituir o Clube do Esparguete pelo Clube da Amizade, do qual todas as massas pudessem fazer parte.&lt;/p&gt;
     
-    &lt;p style=&quot;margin: 0 0 2vh 0; line-height: 1.4; color: #FFD700; font-size: 1.1em; font-weight: bold;&quot;&gt;Parabéns!!! És oficialmente o Chef da Amizade!&lt;br&gt;Contigo ninguém fez farinha e provaste que o Bullying é Maçador/MassaDOR!!!&lt;/p&gt;
+    &lt;p class=&quot;texto-destaque&quot;&gt;Parabéns!!! És oficialmente o Chef da Amizade!&lt;/p&gt;
+    &lt;p class=&quot;texto-destaque&quot; style=&quot;margin-bottom: 5px !important;&quot;&gt;Contigo ninguém fez farinha e provaste que o Bullying é Maçador/MassaDOR!!!&lt;/p&gt;
     
-    &lt;div class=&quot;meus-botoes&quot; style=&quot;display: flex; gap: 3vw; justify-content: center; align-items: center;&quot;&gt;
-      [[Voltar ao inicio-&gt;Passagem sem Título
-]]
+    &lt;div class=&quot;meus-botoes&quot;&gt;
+      [[Voltar ao inicio-&gt;Passagem sem Título]]
     &lt;/div&gt;
 
   &lt;/div&gt;
 
-&lt;/div&gt;
-}</tw-passagedata><tw-passagedata pid="16" name="Desatar à Pancada" tags="" position="1025,1625" size="100,100">{
-&lt;div style=&quot;display: flex; flex-direction: column; height: 95vh; width: 100%; box-sizing: border-box; max-width: 1200px; margin: 0 auto;&quot;&gt;
+&lt;/div&gt;</tw-passagedata><tw-passagedata pid="16" name="Desatar à Pancada" tags="" position="1025,1625" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
-  &lt;!-- A IMAGEM --&gt;
-  &lt;div style=&quot;flex: 1; display: flex; justify-content: center; align-items: center; overflow: hidden; padding-bottom: 2vh;&quot;&gt;
-    &lt;!-- Substitui o link abaixo pelo link da imagem desta cena de confusão --&gt;
+  &lt;div class=&quot;img-container&quot;&gt;
     &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/clube%20do%20esparguete%2014%20v2.png?raw=true&quot; style=&quot;max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0px 5px 20px rgba(0,0,0,0.8);&quot;&gt;
   &lt;/div&gt;
   
-  &lt;!-- O TEXTO E BOTÕES --&gt;
-  &lt;div style=&quot;flex: 0 0 auto; background-color: rgba(70, 35, 15, 0.85); padding: 3vh 3vw; border-radius: 15px; color: white; text-align: left; font-size: clamp(10px, 1.8vw, 14px); box-shadow: 0px 4px 10px rgba(0,0,0,0.5);&quot;&gt;
+  &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4; text-align: center; font-weight: bold; color: #ffcccc;&quot;&gt;Oh não!!!&lt;/p&gt;
+    &lt;p style=&quot;color: #ffcccc; font-weight: bold;&quot;&gt;Oh não!!!&lt;/p&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4; text-align: center;&quot;&gt;A violência nunca é solução!&lt;/p&gt;
+    &lt;p&gt;A violência nunca é solução!&lt;/p&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4; text-align: center;&quot;&gt;Os esparguetes desataram à pancada com todas as massas. Não aprenderam a lição. Não entenderam que o Bullying é MassaDOR!&lt;/p&gt;
+    &lt;p&gt;Os esparguetes desataram à pancada com todas as massas. Não aprenderam a lição. Não entenderam que o Bullying é MassaDOR!&lt;/p&gt;
 
-    &lt;p style=&quot;margin: 0 0 2vh 0; line-height: 1.4; font-weight: bold; text-align: center; color: #FFD700;&quot;&gt;Tenta outra vez!!&lt;/p&gt;
+    &lt;p class=&quot;texto-destaque&quot; style=&quot;margin-bottom: 5px !important;&quot;&gt;Tenta outra vez!!&lt;/p&gt;
     
-    &lt;!-- O Botão Único --&gt;
-    &lt;div class=&quot;meus-botoes&quot; style=&quot;display: flex; gap: 3vw; justify-content: center; align-items: center;&quot;&gt;
-          [[Voltar ao inicio-&gt;Passagem sem Título
-]]
+    &lt;div class=&quot;meus-botoes&quot;&gt;
+      [[Voltar ao inicio-&gt;Passagem sem Título]]
     &lt;/div&gt;
 
   &lt;/div&gt;
 
-&lt;/div&gt;
-}</tw-passagedata><tw-passagedata pid="17" name="Natacao" tags="" position="1125,350" size="100,100">{
-&lt;div style=&quot;display: flex; flex-direction: column; height: 95vh; width: 100%; box-sizing: border-box; max-width: 1200px; margin: 0 auto;&quot;&gt;
+&lt;/div&gt;</tw-passagedata><tw-passagedata pid="17" name="Natacao" tags="" position="1125,350" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
-  &lt;!-- A IMAGEM --&gt;
-  &lt;div style=&quot;flex: 1; display: flex; justify-content: center; align-items: center; overflow: hidden; padding-bottom: 2vh;&quot;&gt;
-
+  &lt;div class=&quot;img-container&quot;&gt;
     &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%202.png?raw=true&quot; style=&quot;max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0px 5px 20px rgba(0,0,0,0.8);&quot;&gt;
   &lt;/div&gt;
   
-  &lt;!-- O TEXTO E BOTÕES --&gt;
-  &lt;div style=&quot;flex: 0 0 auto; background-color: rgba(70, 35, 15, 0.85); padding: 3vh 3vw; border-radius: 15px; color: white; text-align: left; font-size: clamp(10px, 1.8vw, 14px); box-shadow: 0px 4px 10px rgba(0,0,0,0.5); max-height: 50vh; overflow-y: auto;&quot;&gt;
+  &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;A &lt;strong&gt;Mia&lt;/strong&gt; adora natação e desliza na água com uma agilidade fantástica! Mesmo nos dias mais frios, a piscina aquecida recebe-a como um abraço quentinho.&lt;/p&gt;
+    &lt;p&gt;A &lt;strong&gt;Mia&lt;/strong&gt; adora natação e desliza na água com uma agilidade fantástica! Mesmo nos dias mais frios, a piscina aquecida recebe-a como um abraço quentinho.&lt;/p&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;Depois de muitas braçadas, o seu momento preferido é relaxar e flutuar levemente.&lt;/p&gt;
+    &lt;p&gt;Depois de muitas braçadas, o seu momento preferido é relaxar e flutuar levemente.&lt;/p&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4; font-weight: bold; color: #FFD700;&quot;&gt;A piscina é, sem dúvida, o sítio onde esta estrelinha se sente leve, livre e feliz.&lt;/p&gt;
+    &lt;p class=&quot;texto-destaque&quot; style=&quot;margin-bottom: 5px !important;&quot;&gt;A piscina é, sem dúvida, o sítio onde esta estrelinha se sente leve, livre e feliz.&lt;/p&gt;
     
-    &lt;!-- Os Botões --&gt;
-    &lt;div class=&quot;meus-botoes&quot; style=&quot;display: flex; gap: 3vw; justify-content: center; align-items: center;&quot;&gt;
+    &lt;div class=&quot;meus-botoes&quot;&gt;
       [[Continuar-&gt;MiaNatacaoContinua]]
     &lt;/div&gt;
 
   &lt;/div&gt;
 
-&lt;/div&gt;
-}</tw-passagedata><tw-passagedata pid="18" name="Ginastica" tags="" position="1450,350" size="100,100">{
-&lt;div style=&quot;display: flex; flex-direction: column; height: 95vh; width: 100%; box-sizing: border-box; max-width: 1200px; margin: 0 auto;&quot;&gt;
- 
-  &lt;div style=&quot;flex: 1; display: flex; justify-content: center; align-items: center; overflow: hidden; padding-bottom: 2vh;&quot;&gt;
+&lt;/div&gt;</tw-passagedata><tw-passagedata pid="18" name="Ginastica" tags="" position="1450,350" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
+  &lt;div class=&quot;img-container&quot;&gt;
     &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%203.png?raw=true&quot; style=&quot;max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0px 5px 20px rgba(0,0,0,0.8);&quot;&gt;
   &lt;/div&gt;
   
-
-  &lt;div style=&quot;flex: 0 0 auto; background-color: rgba(70, 35, 15, 0.85); padding: 3vh 3vw; border-radius: 15px; color: white; text-align: left; font-size: clamp(10px, 1.8vw, 14px); box-shadow: 0px 4px 10px rgba(0,0,0,0.5); max-height: 50vh; overflow-y: auto;&quot;&gt;
+  &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;A &lt;strong&gt;Mia&lt;/strong&gt; é uma ginasta exímia, sabe fazer saltos e acrobacias e claro... adora fazer a estrela.&lt;/p&gt;
+    &lt;p&gt;A &lt;strong&gt;Mia&lt;/strong&gt; é uma ginasta exímia, sabe fazer saltos e acrobacias e claro... adora fazer a estrela.&lt;/p&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;É muito flexível e empenhada, treina muito para ser uma estrela a sério, como aquelas dos campeonatos de ginástica que dão na televisão.&lt;/p&gt;
+    &lt;p&gt;É muito flexível e empenhada, treina muito para ser uma estrela a sério, como aquelas dos campeonatos de ginástica que dão na televisão.&lt;/p&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4; font-weight: bold;  color: #FFD700;&quot;&gt;No dia seguinte é dia de ...&lt;/p&gt;
+    &lt;p class=&quot;texto-destaque&quot; style=&quot;margin-bottom: 5px !important;&quot;&gt;No dia seguinte é dia de ...&lt;/p&gt;
     
-    &lt;!-- Os Botões --&gt;
-    &lt;div class=&quot;meus-botoes&quot; style=&quot;display: flex; gap: 3vw; justify-content: center; align-items: center;&quot;&gt;
+    &lt;div class=&quot;meus-botoes&quot;&gt;
       [[Natação-&gt;Natacao]]
     &lt;/div&gt;
 
   &lt;/div&gt;
 
-&lt;/div&gt;
-}</tw-passagedata><tw-passagedata pid="19" name="MiaNatacaoContinua" tags="" position="1100,550" size="100,100">{
-&lt;div style=&quot;display: flex; flex-direction: column; height: 95vh; width: 100%; box-sizing: border-box; max-width: 1200px; margin: 0 auto;&quot;&gt;
+&lt;/div&gt;</tw-passagedata><tw-passagedata pid="19" name="MiaNatacaoContinua" tags="" position="1100,550" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
-  &lt;!-- A IMAGEM --&gt;
-  &lt;div style=&quot;flex: 1; display: flex; justify-content: center; align-items: center; overflow: hidden; padding-bottom: 2vh;&quot;&gt;
-    &lt;!-- Substitui o link abaixo pelo link do GitHub para a imagem desta cena --&gt;
+  &lt;div class=&quot;img-container&quot;&gt;
     &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%204.png?raw=true&quot; style=&quot;max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0px 5px 20px rgba(0,0,0,0.8);&quot;&gt;
   &lt;/div&gt;
   
-  &lt;!-- O TEXTO E BOTÕES --&gt;
-  &lt;div style=&quot;flex: 0 0 auto; background-color: rgba(70, 35, 15, 0.85); padding: 3vh 3vw; border-radius: 15px; color: white; text-align: left; font-size: clamp(10px, 1.8vw, 14px); box-shadow: 0px 4px 10px rgba(0,0,0,0.5); max-height: 50vh; overflow-y: auto;&quot;&gt;
+  &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;A piscina onde a Mia treina tem estado muito mais concorrida, já que a piscina da cidade mais próxima fechou para obras.&lt;/p&gt;
+    &lt;p&gt;A piscina onde a Mia treina tem estado muito mais concorrida, já que a piscina da cidade mais próxima fechou para obras.&lt;/p&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;Mas a Mia vê nisto uma oportunidade fantástica: observar as massas mais experientes para aprender a nadar ainda melhor e espalhar sorrisos para conquistar novos amigos entre uma braçada e outra.&lt;/p&gt;
+    &lt;p&gt;Mas a Mia vê nisto uma oportunidade fantástica: observar as massas mais experientes para aprender a nadar ainda melhor e espalhar sorrisos para conquistar novos amigos entre uma braçada e outra.&lt;/p&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4; font-weight: bold;  color: #FFD700;&quot;&gt;Por isso vai assistir aos treinos ...&lt;/p&gt;
+    &lt;p class=&quot;texto-destaque&quot; style=&quot;margin-bottom: 5px !important;&quot;&gt;Por isso vai assistir aos treinos ...&lt;/p&gt;
     
-    &lt;!-- Os Botões --&gt;
-    &lt;div class=&quot;meus-botoes&quot; style=&quot;display: flex; gap: 3vw; justify-content: center; align-items: center;&quot;&gt;
+    &lt;div class=&quot;meus-botoes&quot;&gt;
       [[Dos Macarrões-&gt;TreinoMacarroes]]
       [[Das Letras-&gt;TreinoLetras]]
     &lt;/div&gt;
 
   &lt;/div&gt;
 
-&lt;/div&gt;
-}</tw-passagedata><tw-passagedata pid="20" name="TreinoMacarroes" tags="" position="1037.5,675" size="100,100">{
-&lt;div style=&quot;display: flex; flex-direction: column; height: 95vh; width: 100%; box-sizing: border-box; max-width: 1200px; margin: 0 auto;&quot;&gt;
+&lt;/div&gt;</tw-passagedata><tw-passagedata pid="20" name="TreinoMacarroes" tags="" position="1037.5,675" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
-  &lt;!-- A IMAGEM --&gt;
-  &lt;div style=&quot;flex: 1; display: flex; justify-content: center; align-items: center; overflow: hidden; padding-bottom: 2vh;&quot;&gt;
-    &lt;!-- Substitui o link abaixo pelo link da imagem desta cena do teu GitHub --&gt;
+  &lt;div class=&quot;img-container&quot;&gt;
     &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%205.png?raw=true&quot; style=&quot;max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0px 5px 20px rgba(0,0,0,0.8);&quot;&gt;
   &lt;/div&gt;
   
-  &lt;!-- O TEXTO E BOTÕES --&gt;
-  &lt;div style=&quot;flex: 0 0 auto; background-color: rgba(70, 35, 15, 0.85); padding: 3vh 3vw; border-radius: 15px; color: white; text-align: left; font-size: clamp(10px, 1.8vw, 14px); box-shadow: 0px 4px 10px rgba(0,0,0,0.5); max-height: 50vh; overflow-y: auto;&quot;&gt;
+  &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;A Mia ficou fascinada a ver os macarrões nadar.&lt;/p&gt;
+    &lt;p&gt;A Mia ficou fascinada a ver os macarrões nadar.&lt;/p&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;Por serem longos e ocos por dentro, eles deslizavam pela piscina com uma leveza única, ondulando na água como autênticas serpentinas numa festa olímpica!&lt;/p&gt;
+    &lt;p&gt;Por serem longos e ocos por dentro, eles deslizavam pela piscina com uma leveza única, ondulando na água como autênticas serpentinas numa festa olímpica!&lt;/p&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4; &quot;&gt;Sentindo o carinho daquele olhar atento, os macarrões retribuíram com um grande e caloroso sorriso, mostrando que ali a amizade fluía ao sabor da onda.&lt;/p&gt;
+    &lt;p style=&quot;margin-bottom: 5px !important;&quot;&gt;Sentindo o carinho daquele olhar atento, os macarrões retribuíram com um grande e caloroso sorriso, mostrando que ali a amizade fluía ao sabor da onda.&lt;/p&gt;
     
-    &lt;!-- Os Botões --&gt;
-    &lt;div class=&quot;meus-botoes&quot; style=&quot;display: flex; gap: 3vw; justify-content: center; align-items: center;&quot;&gt;
+    &lt;div class=&quot;meus-botoes&quot;&gt;
       [[Continuar-&gt;Nadam]]
     &lt;/div&gt;
 
   &lt;/div&gt;
 
-&lt;/div&gt;
-}</tw-passagedata><tw-passagedata pid="21" name="TreinoLetras" tags="" position="1162.5,675" size="100,100">{
-&lt;div style=&quot;display: flex; flex-direction: column; height: 95vh; width: 100%; box-sizing: border-box; max-width: 1200px; margin: 0 auto;&quot;&gt;
+&lt;/div&gt;</tw-passagedata><tw-passagedata pid="21" name="TreinoLetras" tags="" position="1162.5,675" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
-  &lt;!-- A IMAGEM --&gt;
-  &lt;div style=&quot;flex: 1; display: flex; justify-content: center; align-items: center; overflow: hidden; padding-bottom: 2vh;&quot;&gt;
-    &lt;!-- Substitui o link abaixo pelo link da imagem desta cena do teu GitHub --&gt;
+  &lt;div class=&quot;img-container&quot;&gt;
     &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%207.png?raw=true&quot; style=&quot;max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0px 5px 20px rgba(0,0,0,0.8);&quot;&gt;
   &lt;/div&gt;
   
-  &lt;!-- O TEXTO E BOTÕES --&gt;
-  &lt;div style=&quot;flex: 0 0 auto; background-color: rgba(70, 35, 15, 0.85); padding: 3vh 3vw; border-radius: 15px; color: white; text-align: left; font-size: clamp(10px, 1.8vw, 14px); box-shadow: 0px 4px 10px rgba(0,0,0,0.5); max-height: 50vh; overflow-y: auto;&quot;&gt;
+  &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;A Mia aproximou-se da zona dos saltos para ver as Letrinhas mergulhar, mas... que grande confusão!!&lt;/p&gt;
+    &lt;p&gt;A Mia aproximou-se da zona dos saltos para ver as Letrinhas mergulhar, mas... que grande confusão!!&lt;/p&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;Elas eram barulhentas e não se entendiam. Era uma competição constante para ver quem saltava primeiro e fazia o maior splash! Atropelavam-se na prancha e, ao caírem na água, misturavam-se e formavam palavras sem nexo, como &#39;XZTOP&#39; ou &#39;BLUFT&#39;.&lt;/p&gt;
+    &lt;p&gt;Elas eram barulhentas e não se entendiam. Era uma competição constante para ver quem saltava primeiro e fazia o maior splash! Atropelavam-se na prancha e, ao caírem na água, misturavam-se e formavam palavras sem nexo, como &#39;XZTOP&#39; ou &#39;BLUFT&#39;.&lt;/p&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4; &quot;&gt;Mesmo assim, a Mia achou graça a tanta originalidade. Sorriu e ficou cheia de curiosidade: &quot;Uau, quando elas aprenderem a trabalhar em equipa, esta aula vai ser incrível!&quot;, pensou ela.&lt;/p&gt;
+    &lt;p style=&quot;margin-bottom: 5px !important;&quot;&gt;Mesmo assim, a Mia achou graça a tanta originalidade. Sorriu e ficou cheia de curiosidade: &quot;Uau, quando elas aprenderem a trabalhar em equipa, esta aula vai ser incrível!&quot;, pensou ela.&lt;/p&gt;
     
-    &lt;!-- Os Botões --&gt;
-    &lt;div class=&quot;meus-botoes&quot; style=&quot;display: flex; gap: 3vw; justify-content: center; align-items: center;&quot;&gt;
+    &lt;div class=&quot;meus-botoes&quot;&gt;
       [[Continuar-&gt;Nadam]]
     &lt;/div&gt;
 
   &lt;/div&gt;
 
-&lt;/div&gt;
-}</tw-passagedata><tw-passagedata pid="22" name="Nadam" tags="" position="1037.5,800" size="100,100">{
-&lt;div style=&quot;display: flex; flex-direction: column; height: 95vh; width: 100%; box-sizing: border-box; max-width: 1200px; margin: 0 auto;&quot;&gt;
+&lt;/div&gt;</tw-passagedata><tw-passagedata pid="22" name="Nadam" tags="" position="1037.5,800" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
-  &lt;!-- A IMAGEM --&gt;
-  &lt;div style=&quot;flex: 1; display: flex; justify-content: center; align-items: center; overflow: hidden; padding-bottom: 2vh;&quot;&gt;
-    &lt;!-- Substitui o link abaixo pelo link da imagem desta cena do teu GitHub --&gt;
+  &lt;div class=&quot;img-container&quot;&gt;
     &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%208.png?raw=true&quot; style=&quot;max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0px 5px 20px rgba(0,0,0,0.8);&quot;&gt;
   &lt;/div&gt;
   
-  &lt;!-- O TEXTO E BOTÕES --&gt;
-  &lt;div style=&quot;flex: 0 0 auto; background-color: rgba(70, 35, 15, 0.85); padding: 3vh 3vw; border-radius: 15px; color: white; text-align: left; font-size: clamp(10px, 1.8vw, 14px); box-shadow: 0px 4px 10px rgba(0,0,0,0.5); max-height: 50vh; overflow-y: auto;&quot;&gt;
+  &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;Na sua aula a Mia também se sentiu observada. Da bancada, várias massas olhavam fascinadas para a forma como ela rodopiava e usava as suas cinco pontas para planar sobre a água.&lt;/p&gt;
+    &lt;p&gt;Na sua aula a Mia também se sentiu observada. Da bancada, várias massas olhavam fascinadas para a forma como ela rodopiava e usava as suas cinco pontas para planar sobre a água.&lt;/p&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;Com a sua graciosidade, a Mia abrilhantava a piscina, deixando um rasto cintilante por onde passava.&lt;/p&gt;
+    &lt;p&gt;Com a sua graciosidade, a Mia abrilhantava a piscina, deixando um rasto cintilante por onde passava.&lt;/p&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4; font-weight: bold;  color: #FFD700;&quot;&gt;No fim da aula algumas massas quiseram falar com ela....&lt;/p&gt;
+    &lt;p class=&quot;texto-destaque&quot; style=&quot;margin-bottom: 5px !important;&quot;&gt;No fim da aula algumas massas quiseram falar com ela....&lt;/p&gt;
     
-    &lt;!-- Os Botões --&gt;
-    &lt;div class=&quot;meus-botoes&quot; style=&quot;display: flex; gap: 3vw; justify-content: center; align-items: center;&quot;&gt;
+    &lt;div class=&quot;meus-botoes&quot;&gt;
       [[Ouvir os macarrões-&gt;OuvirMacarroes]]
       [[Ouvir as conchas-&gt;OuvirConchas]]
       [[Ouvir as letras-&gt;OuvirLetras]]
@@ -831,339 +746,266 @@ CSS
 
   &lt;/div&gt;
 
-&lt;/div&gt;
-}</tw-passagedata><tw-passagedata pid="23" name="OuvirMacarroes" tags="" position="1075,1025" size="100,100">{
-&lt;div style=&quot;display: flex; flex-direction: column; height: 95vh; width: 100%; box-sizing: border-box; max-width: 1200px; margin: 0 auto;&quot;&gt;
+&lt;/div&gt;</tw-passagedata><tw-passagedata pid="23" name="OuvirMacarroes" tags="" position="1075,1025" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
-  &lt;!-- A IMAGEM --&gt;
-  &lt;div style=&quot;flex: 1; display: flex; justify-content: center; align-items: center; overflow: hidden; padding-bottom: 2vh;&quot;&gt;
-    &lt;!-- Substitui o link abaixo pelo link da imagem desta cena do teu GitHub --&gt;
+  &lt;div class=&quot;img-container&quot;&gt;
     &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%209.png?raw=true&quot; style=&quot;max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0px 5px 20px rgba(0,0,0,0.8);&quot;&gt;
   &lt;/div&gt;
   
-  &lt;!-- O TEXTO E BOTÕES --&gt;
-  &lt;div style=&quot;flex: 0 0 auto; background-color: rgba(70, 35, 15, 0.85); padding: 3vh 3vw; border-radius: 15px; color: white; text-align: left; font-size: clamp(10px, 1.8vw, 14px); box-shadow: 0px 4px 10px rgba(0,0,0,0.5); max-height: 50vh; overflow-y: auto;&quot;&gt;
+  &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;-&quot;Uau estrelinha, estiveste maravilhosamente bem!!&quot; - disse-lhe um macarrão.&lt;/p&gt;
+    &lt;p&gt;— &quot;Uau estrelinha, estiveste maravilhosamente bem!!&quot; — disse-lhe um macarrão.&lt;/p&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;-&quot;Tens de nos ensinar a rodopiar assim&quot;, elogiou outro.&lt;/p&gt;
+    &lt;p&gt;— &quot;Tens de nos ensinar a rodopiar assim&quot;, elogiou outro.&lt;/p&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;-&quot;Olá macarrões, sou a Mia. Obrigada&quot; - respondeu envergonhada - &quot;Também fiquei entusiasmada com a vossa aula. Também estiveram muito bem.&quot;&lt;/p&gt;
+    &lt;p style=&quot;margin-bottom: 5px !important;&quot;&gt;— &quot;Olá macarrões, sou a Mia. Obrigada&quot; — respondeu envergonhada — &quot;Também fiquei entusiasmada com a vossa aula. Também estiveram muito bem.&quot;&lt;/p&gt;
     
-    &lt;!-- Os Botões --&gt;
-    &lt;div class=&quot;meus-botoes&quot; style=&quot;display: flex; gap: 3vw; justify-content: center; align-items: center;&quot;&gt;
+    &lt;div class=&quot;meus-botoes&quot;&gt;
       [[Ouvir as letras-&gt;OuvirLetras]]
     &lt;/div&gt;
 
   &lt;/div&gt;
 
-&lt;/div&gt;
-}</tw-passagedata><tw-passagedata pid="24" name="OuvirConchas" tags="" position="1275,1050" size="100,100">{
-&lt;div style=&quot;display: flex; flex-direction: column; height: 95vh; width: 100%; box-sizing: border-box; max-width: 1200px; margin: 0 auto;&quot;&gt;
+&lt;/div&gt;</tw-passagedata><tw-passagedata pid="24" name="OuvirConchas" tags="" position="1275,1050" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
-  &lt;!-- A IMAGEM --&gt;
-  &lt;div style=&quot;flex: 1; display: flex; justify-content: center; align-items: center; overflow: hidden; padding-bottom: 2vh;&quot;&gt;
-
-    &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%2010.png?raw=true&quot; style=&quot;max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0px 5px 20px rgba(0,0,0,0.8);&quot;&gt;
+  &lt;div class=&quot;img-container&quot;&gt;
+    &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%2010.png?raw=true&quot;&gt;
   &lt;/div&gt;
   
-  &lt;!-- O TEXTO E BOTÕES --&gt;
-  &lt;div style=&quot;flex: 0 0 auto; background-color: rgba(70, 35, 15, 0.85); padding: 3vh 3vw; border-radius: 15px; color: white; text-align: left; font-size: clamp(10px, 1.8vw, 14px); box-shadow: 0px 4px 10px rgba(0,0,0,0.5); max-height: 50vh; overflow-y: auto;&quot;&gt;
+  &lt;div class=&quot;caixa-texto&quot;&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;-&quot;Uau estrelinha, estiveste maravilhosamente bem!!&quot; - disse-lhe uma concha.&lt;/p&gt;
+    &lt;p&gt;— &quot;Uau estrelinha, estiveste maravilhosamente bem!!&quot; — disse-lhe uma concha.&lt;/p&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;-&quot;Tens de nos ensinar a rodopiar assim&quot;, elogiou a outra.&lt;/p&gt;
+    &lt;p&gt;— &quot;Tens de nos ensinar a rodopiar assim&quot;, elogiou a outra.&lt;/p&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;-&quot;Olá conchas, sou a Mia. Obrigada&quot; - respondeu envergonhada - &quot;Claro que ensino e tenho a certeza que vocês também têm habilidades para me ensinar.&quot;&lt;/p&gt;
+    &lt;p style=&quot;margin-bottom: 5px !important;&quot;&gt;— &quot;Olá conchas, sou a Mia. Obrigada&quot; — respondeu envergonhada — &quot;Claro que ensino e tenho a certeza que vocês também têm habilidades para me ensinar.&quot;&lt;/p&gt;
     
-    &lt;!-- Os Botões --&gt;
-    &lt;div class=&quot;meus-botoes&quot; style=&quot;display: flex; gap: 3vw; justify-content: center; align-items: center;&quot;&gt;
+    &lt;div class=&quot;meus-botoes&quot;&gt;
       [[Ouvir as letras-&gt;OuvirLetras]]
     &lt;/div&gt;
 
   &lt;/div&gt;
 
-&lt;/div&gt;
-}</tw-passagedata><tw-passagedata pid="25" name="OuvirLetras" tags="" position="1500,975" size="100,100">{
-&lt;div style=&quot;display: flex; flex-direction: column; height: 95vh; width: 100%; box-sizing: border-box; max-width: 1200px; margin: 0 auto;&quot;&gt;
+&lt;/div&gt;</tw-passagedata><tw-passagedata pid="25" name="OuvirLetras" tags="" position="1500,975" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
-  &lt;!-- A IMAGEM --&gt;
-  &lt;div style=&quot;flex: 1; display: flex; justify-content: center; align-items: center; overflow: hidden; padding-bottom: 2vh;&quot;&gt;
-  
+  &lt;div class=&quot;img-container&quot;&gt;
     &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%2011.png?raw=true&quot; style=&quot;max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0px 5px 20px rgba(0,0,0,0.8);&quot;&gt;
   &lt;/div&gt;
   
-  &lt;!-- O TEXTO E BOTÕES --&gt;
-  &lt;div style=&quot;flex: 0 0 auto; background-color: rgba(70, 35, 15, 0.85); padding: 3vh 3vw; border-radius: 15px; color: white; text-align: left; font-size: clamp(10px, 1.8vw, 14px); box-shadow: 0px 4px 10px rgba(0,0,0,0.5); max-height: 50vh; overflow-y: auto;&quot;&gt;
+  &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;— Olha quem é ela — disse a letra O, com um sorriso maldoso.&lt;/p&gt;
+    &lt;p&gt;— Olha quem é ela — disse a letra O, com um sorriso maldoso.&lt;/p&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;— Armada em estrela! Uma exibicionista que só quer dar nas vistas e pensa que brilha mais do que nós — intimidou a letra A.&lt;/p&gt;
+    &lt;p&gt;— Armada em estrela! Uma exibicionista que só quer dar nas vistas e pensa que brilha mais do que nós — intimidou a letra A.&lt;/p&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;A Mia tentou defender-se :&lt;/p&gt;
+    &lt;p&gt;A Mia tentou defender-se :&lt;/p&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;— Malta, calma... Não é nada disso. Há espaço para todas e vocês também são ótimas nadadoras!&lt;/p&gt;
+    &lt;p&gt;— Malta, calma... Não é nada disso. Há espaço para todas e vocês também são ótimas nadadoras!&lt;/p&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;— Pensa o que quiseres, mas ficas já avisada: as Letrinhas dizem o que querem, quando querem e a quem querem! — rematou a letra A virando-lhe as costas.&lt;/p&gt;
+    &lt;p style=&quot;margin-bottom: 5px !important;&quot;&gt;— Pensa o que quiseres, mas ficas já avisada: as Letrinhas dizem o que querem, quando querem e a quem querem! — rematou a letra A virando-lhe as costas.&lt;/p&gt;
     
-    &lt;!-- Os Botões --&gt;
-    &lt;div class=&quot;meus-botoes&quot; style=&quot;display: flex; gap: 3vw; justify-content: center; align-items: center;&quot;&gt;
+    &lt;div class=&quot;meus-botoes&quot;&gt;
       [[Continuar-&gt;ConversaLetrasContinua]]
     &lt;/div&gt;
 
   &lt;/div&gt;
 
-&lt;/div&gt;
-}</tw-passagedata><tw-passagedata pid="26" name="ConversaLetrasContinua" tags="" position="1500,1100" size="100,100">{
-&lt;div style=&quot;display: flex; flex-direction: column; height: 95vh; width: 100%; box-sizing: border-box; max-width: 1200px; margin: 0 auto;&quot;&gt;
+&lt;/div&gt;</tw-passagedata><tw-passagedata pid="26" name="ConversaLetrasContinua" tags="" position="1500,1100" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
-  &lt;!-- A IMAGEM --&gt;
-  &lt;div style=&quot;flex: 1; display: flex; justify-content: center; align-items: center; overflow: hidden; padding-bottom: 2vh;&quot;&gt;
-    &lt;!-- Substitui o link abaixo pelo link da imagem desta cena do teu GitHub --&gt;
+  &lt;div class=&quot;img-container&quot;&gt;
     &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%2012.png?raw=true&quot; style=&quot;max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0px 5px 20px rgba(0,0,0,0.8);&quot;&gt;
   &lt;/div&gt;
   
-  &lt;!-- O TEXTO E BOTÕES --&gt;
-  &lt;div style=&quot;flex: 0 0 auto; background-color: rgba(70, 35, 15, 0.85); padding: 3vh 3vw; border-radius: 15px; color: white; text-align: left; font-size: clamp(10px, 1.8vw, 14px); box-shadow: 0px 4px 10px rgba(0,0,0,0.5); max-height: 50vh; overflow-y: auto;&quot;&gt;
+  &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;Nesse dia a Mia foi triste para casa, não era justo que a tratassem assim.&lt;/p&gt;
+    &lt;p&gt;Nesse dia a Mia foi triste para casa, não era justo que a tratassem assim.&lt;/p&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;Sabia muito bem que a piscina era grande o suficiente para ali caber o talento de todos.&lt;/p&gt;
+    &lt;p&gt;Sabia muito bem que a piscina era grande o suficiente para ali caber o talento de todos.&lt;/p&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;As letrinhas eram admiradas por todos, donas de todo o vocabulário, achava que ninguém conhecia esta faceta das letras.&lt;/p&gt;
+    &lt;p style=&quot;margin-bottom: 5px !important;&quot;&gt;As letrinhas eram admiradas por todos, donas de todo o vocabulário, achava que ninguém conhecia esta faceta das letras.&lt;/p&gt;
     
-    &lt;!-- Os Botões --&gt;
-    &lt;div class=&quot;meus-botoes&quot; style=&quot;display: flex; gap: 3vw; justify-content: center; align-items: center;&quot;&gt;
+    &lt;div class=&quot;meus-botoes&quot;&gt;
       [[Desistir da natação-&gt;DesistirNatacao]]
       [[Ir à próxima aula-&gt;ProximaAula]]
     &lt;/div&gt;
 
   &lt;/div&gt;
 
-&lt;/div&gt;
-}</tw-passagedata><tw-passagedata pid="27" name="DesistirNatacao" tags="" position="1275,1275" size="100,100">{
-&lt;div style=&quot;display: flex; flex-direction: column; height: 95vh; width: 100%; box-sizing: border-box; max-width: 1200px; margin: 0 auto;&quot;&gt;
+&lt;/div&gt;</tw-passagedata><tw-passagedata pid="27" name="DesistirNatacao" tags="" position="1275,1275" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
-  &lt;!-- A IMAGEM --&gt;
-  &lt;div style=&quot;flex: 1; display: flex; justify-content: center; align-items: center; overflow: hidden; padding-bottom: 2vh;&quot;&gt;
-    &lt;!-- Substitui o link abaixo pelo link da imagem desta cena do teu GitHub --&gt;
+  &lt;div class=&quot;img-container&quot;&gt;
     &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%2013.png?raw=true&quot; style=&quot;max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0px 5px 20px rgba(0,0,0,0.8);&quot;&gt;
   &lt;/div&gt;
   
-  &lt;!-- O TEXTO E BOTÕES --&gt;
-  &lt;div style=&quot;flex: 0 0 auto; background-color: rgba(70, 35, 15, 0.85); padding: 3vh 3vw; border-radius: 15px; color: white; text-align: left; font-size: clamp(10px, 1.8vw, 14px); box-shadow: 0px 4px 10px rgba(0,0,0,0.5); max-height: 50vh; overflow-y: auto;&quot;&gt;
+  &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;Quando chegou a casa procurou a mãe e contou-lhe o que se tinha passado.&lt;/p&gt;
+    &lt;p&gt;Quando chegou a casa procurou a mãe e contou-lhe o que se tinha passado.&lt;/p&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;— &quot;Foi horrível mãe, fizeram sentir-me mal.&quot; — choramingou a Mia — &quot;Elas são muitas, não quero voltar à natação.&quot;&lt;/p&gt;
+    &lt;p&gt;— &quot;Foi horrível mãe, fizeram sentir-me mal.&quot; — choramingou a Mia — &quot;Elas são muitas, não quero voltar à natação.&quot;&lt;/p&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;— &quot;Nem pensar, Mia&quot; — ripostou a mãe — &quot;Tu adoras a natação. Pensa em todos os elogios que recebeste e não dês importância às letrinhas.&quot;&lt;/p&gt;
+    &lt;p style=&quot;margin-bottom: 5px !important;&quot;&gt;— &quot;Nem pensar, Mia&quot; — ripostou a mãe — &quot;Tu adoras a natação. Pensa em todos os elogios que recebeste e não dês importância às letrinhas.&quot;&lt;/p&gt;
     
-    &lt;!-- Os Botões --&gt;
-    &lt;div class=&quot;meus-botoes&quot; style=&quot;display: flex; gap: 3vw; justify-content: center; align-items: center;&quot;&gt;
+    &lt;div class=&quot;meus-botoes&quot;&gt;
       [[Ir à próxima aula-&gt;ProximaAula]]
     &lt;/div&gt;
 
   &lt;/div&gt;
 
-&lt;/div&gt;
-}</tw-passagedata><tw-passagedata pid="28" name="ProximaAula" tags="" position="1625,1275" size="100,100">{
-&lt;div style=&quot;display: flex; flex-direction: column; height: 95vh; width: 100%; box-sizing: border-box; max-width: 1200px; margin: 0 auto;&quot;&gt;
+&lt;/div&gt;</tw-passagedata><tw-passagedata pid="28" name="ProximaAula" tags="" position="1625,1275" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
-  &lt;div style=&quot;flex: 1; display: flex; justify-content: center; align-items: center; overflow: hidden; padding-bottom: 2vh;&quot;&gt;
+  &lt;div class=&quot;img-container&quot;&gt;
     &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%2014.png?raw=true&quot; style=&quot;max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0px 5px 20px rgba(0,0,0,0.8);&quot;&gt;
   &lt;/div&gt;
   
-  &lt;div style=&quot;flex: 0 0 auto; background-color: rgba(70, 35, 15, 0.85); padding: 3vh 3vw; border-radius: 15px; color: white; text-align: left; font-size: clamp(10px, 1.8vw, 14px); box-shadow: 0px 4px 10px rgba(0,0,0,0.5); max-height: 50vh; overflow-y: auto;&quot;&gt;
+  &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;Na aula seguinte, Mia estava decidida a não dar importância ao que tinha acontecido mas logo que entrou na piscina estavam as letras a cochilar entre elas e depressa se baralharam e formaram uma palavra na água:&lt;/p&gt;
+    &lt;p style=&quot;margin-bottom: 5px !important;&quot;&gt;Na aula seguinte, Mia estava decidida a não dar importância ao que tinha acontecido mas logo que entrou na piscina estavam as letras a cochilar entre elas e depressa se baralharam e formaram uma palavra na água:&lt;/p&gt;
     
-    &lt;div class=&quot;meus-botoes&quot; style=&quot;display: flex; gap: 3vw; justify-content: center; align-items: center;&quot;&gt;
+    &lt;div class=&quot;meus-botoes&quot;&gt;
       [[FEIA-&gt;PalavraFeia]]
       [[RIDÍCULA-&gt;PalavraRidicula]]
     &lt;/div&gt;
 
   &lt;/div&gt;
 
-&lt;/div&gt;
-}</tw-passagedata><tw-passagedata pid="29" name="PalavraFeia" tags="" position="1562.5,1400" size="100,100">{
-&lt;div style=&quot;display: flex; flex-direction: column; height: 95vh; width: 100%; box-sizing: border-box; max-width: 1200px; margin: 0 auto;&quot;&gt;
+&lt;/div&gt;</tw-passagedata><tw-passagedata pid="29" name="PalavraFeia" tags="" position="1562.5,1400" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
-  &lt;div style=&quot;flex: 1; display: flex; justify-content: center; align-items: center; overflow: hidden; padding-bottom: 2vh;&quot;&gt;
-    &lt;!-- Substitui o link abaixo pelo link da imagem desta cena do teu GitHub --&gt;
-    &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%2015.jpg?raw=true&quot; style=&quot;max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0px 5px 20px rgba(0,0,0,0.8);&quot;&gt;
+  &lt;div class=&quot;img-container&quot;&gt;
+    &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/Gemini_Generated_Image_dqqcnxdqqcnxdqqc.png?raw=true&quot; style=&quot;max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0px 5px 20px rgba(0,0,0,0.8);&quot;&gt;
   &lt;/div&gt;
   
-  &lt;div style=&quot;flex: 0 0 auto; background-color: rgba(70, 35, 15, 0.85); padding: 3vh 3vw; border-radius: 15px; color: white; text-align: left; font-size: clamp(10px, 1.8vw, 14px); box-shadow: 0px 4px 10px rgba(0,0,0,0.5); max-height: 50vh; overflow-y: auto;&quot;&gt;
+  &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;&quot;Feia? Como assim feia?&quot;&lt;/p&gt;
+    &lt;p&gt;&quot;Feia? Como assim feia?&quot;&lt;/p&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;Pensou a Mia. Por momentos ignorou e quis pensar que aquilo não era para ela, mas as letrinhas estavam todas a olhar para ela a rir-se, felizes por ver que a tinham deixado triste.&lt;/p&gt;
+    &lt;p&gt;Pensou a Mia. Por momentos ignorou e quis pensar que aquilo não era para ela, mas as letrinhas estavam todas a olhar para ela a rir-se, felizes por ver que a tinham deixado triste.&lt;/p&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;Não satisfeitas ainda voltaram reorganizar-se e coladas à beira da piscina formaram:&lt;/p&gt;
+    &lt;p style=&quot;margin-bottom: 5px !important;&quot;&gt;Não satisfeitas ainda voltaram reorganizar-se e coladas à beira da piscina formaram:&lt;/p&gt;
     
-    &lt;div class=&quot;meus-botoes&quot; style=&quot;display: flex; gap: 3vw; justify-content: center; align-items: center;&quot;&gt;
+    &lt;div class=&quot;meus-botoes&quot;&gt;
       [[SAI DAQUI, ESTA É A SOPA DAS LETRAS-&gt;SaiDaqui]]
     &lt;/div&gt;
 
   &lt;/div&gt;
 
-&lt;/div&gt;
-}</tw-passagedata><tw-passagedata pid="30" name="PalavraRidicula" tags="" position="1687.5,1400" size="100,100">{
-&lt;div style=&quot;display: flex; flex-direction: column; height: 95vh; width: 100%; box-sizing: border-box; max-width: 1200px; margin: 0 auto;&quot;&gt;
+&lt;/div&gt;</tw-passagedata><tw-passagedata pid="30" name="PalavraRidicula" tags="" position="1687.5,1400" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
-  &lt;!-- A IMAGEM --&gt;
-  &lt;div style=&quot;flex: 1; display: flex; justify-content: center; align-items: center; overflow: hidden; padding-bottom: 2vh;&quot;&gt;
-    &lt;!-- Substitui o link abaixo pelo link da imagem desta cena do teu GitHub --&gt;
-    &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%2015.jpg?raw=true&quot; style=&quot;max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0px 5px 20px rgba(0,0,0,0.8);&quot;&gt;
+  &lt;div class=&quot;img-container&quot;&gt;
+    &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/Gemini_Generated_Image_dqqcnxdqqcnxdqqc.png?raw=true&quot; style=&quot;max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0px 5px 20px rgba(0,0,0,0.8);&quot;&gt;
   &lt;/div&gt;
   
-  &lt;!-- O TEXTO E BOTÕES --&gt;
-  &lt;div style=&quot;flex: 0 0 auto; background-color: rgba(70, 35, 15, 0.85); padding: 3vh 3vw; border-radius: 15px; color: white; text-align: left; font-size: clamp(10px, 1.8vw, 14px); box-shadow: 0px 4px 10px rgba(0,0,0,0.5); max-height: 50vh; overflow-y: auto;&quot;&gt;
+  &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;&quot;Ridícula? Como assim ridícula?&quot;&lt;/p&gt;
+    &lt;p&gt;&quot;Ridícula? Como assim ridícula?&quot;&lt;/p&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;Pensou a Mia. Por momentos ignorou e quis pensar que aquilo nao era para ela, mas as letrinhas estavam todas a olhar para ela a rir-se, felizes por ver que a tinham deixado triste.&lt;/p&gt;
+    &lt;p&gt;Pensou a Mia. Por momentos ignorou e quis pensar que aquilo não era para ela, mas as letrinhas estavam todas a olhar para ela a rir-se, felizes por ver que a tinham deixado triste.&lt;/p&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;Não satisfeitas ainda voltaram reorganizar-se e coladas à beira da piscina formaram:&lt;/p&gt;
+    &lt;p style=&quot;margin-bottom: 5px !important;&quot;&gt;Não satisfeitas ainda voltaram reorganizar-se e coladas à beira da piscina formaram:&lt;/p&gt;
     
- &lt;div class=&quot;meus-botoes&quot; style=&quot;display: flex; gap: 3vw; justify-content: center; align-items: center;&quot;&gt;
+    &lt;div class=&quot;meus-botoes&quot;&gt;
       [[SAI DAQUI, ESTA É A SOPA DAS LETRAS-&gt;SaiDaqui]]
     &lt;/div&gt;
 
   &lt;/div&gt;
 
-&lt;/div&gt;
-}</tw-passagedata><tw-passagedata pid="31" name="SaiDaqui" tags="" position="1562.5,1525" size="100,100">{
-&lt;div style=&quot;display: flex; flex-direction: column; height: 95vh; width: 100%; box-sizing: border-box; max-width: 1200px; margin: 0 auto;&quot;&gt;
+&lt;/div&gt;</tw-passagedata><tw-passagedata pid="31" name="SaiDaqui" tags="" position="1562.5,1525" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
-  &lt;!-- A IMAGEM --&gt;
-  &lt;div style=&quot;flex: 1; display: flex; justify-content: center; align-items: center; overflow: hidden; padding-bottom: 2vh;&quot;&gt;
-    &lt;!-- Substitui o link abaixo pelo link da imagem desta cena do teu GitHub --&gt;
+  &lt;div class=&quot;img-container&quot;&gt;
     &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%2016.png?raw=true&quot; style=&quot;max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0px 5px 20px rgba(0,0,0,0.8);&quot;&gt;
   &lt;/div&gt;
   
-  &lt;!-- O TEXTO E BOTÕES --&gt;
-  &lt;div style=&quot;flex: 0 0 auto; background-color: rgba(70, 35, 15, 0.85); padding: 3vh 3vw; border-radius: 15px; color: white; text-align: left; font-size: clamp(10px, 1.8vw, 14px); box-shadow: 0px 4px 10px rgba(0,0,0,0.5); max-height: 50vh; overflow-y: auto;&quot;&gt;
+  &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;Mia, aconselhada pela mãe estava decidida a não desistir da natação, só porque as letras estavam incomodadas com ela.&lt;/p&gt;
+    &lt;p&gt;Mia, aconselhada pela mãe estava decidida a não desistir da natação, só because as letras estavam incomodadas com ela.&lt;/p&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;Também não lhes respondia, apenas ignorava, na esperança que aquela atitude parasse mas as letrinhas em todas as aulas voltavam a escrever palavras feias de modo a ofender a estrelinha.&lt;/p&gt;
+    &lt;p style=&quot;margin-bottom: 5px !important;&quot;&gt;Também não lhes respondia, apenas ignorava, na esperança que aquela atitude parasse mas as letrinhas em todas as aulas voltavam a escrever palavras feias de modo a ofender a estrelinha.&lt;/p&gt;
     
-    &lt;!-- Os Botões --&gt;
-    &lt;div class=&quot;meus-botoes&quot; style=&quot;display: flex; gap: 3vw; justify-content: center; align-items: center;&quot;&gt;
+    &lt;div class=&quot;meus-botoes&quot;&gt;
       [[Continuar-&gt;ContinuarIgnorando]]
     &lt;/div&gt;
 
   &lt;/div&gt;
 
-&lt;/div&gt;
-}</tw-passagedata><tw-passagedata pid="32" name="ContinuarIgnorando" tags="" position="1562.5,1650" size="100,100">{
-&lt;div style=&quot;display: flex; flex-direction: column; height: 95vh; width: 100%; box-sizing: border-box; max-width: 1200px; margin: 0 auto;&quot;&gt;
+&lt;/div&gt;</tw-passagedata><tw-passagedata pid="32" name="ContinuarIgnorando" tags="" position="1562.5,1650" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
-  &lt;!-- A IMAGEM --&gt;
-  &lt;div style=&quot;flex: 1; display: flex; justify-content: center; align-items: center; overflow: hidden; padding-bottom: 2vh;&quot;&gt;
-    &lt;!-- Substitui o link abaixo pelo link da imagem desta cena do teu GitHub --&gt;
+  &lt;div class=&quot;img-container&quot;&gt;
     &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%2017.png?raw=true&quot; style=&quot;max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0px 5px 20px rgba(0,0,0,0.8);&quot;&gt;
   &lt;/div&gt;
   
-  &lt;!-- O TEXTO E BOTÕES --&gt;
-  &lt;div style=&quot;flex: 0 0 auto; background-color: rgba(70, 35, 15, 0.85); padding: 3vh 3vw; border-radius: 15px; color: white; text-align: left; font-size: clamp(10px, 1.8vw, 14px); box-shadow: 0px 4px 10px rgba(0,0,0,0.5); max-height: 50vh; overflow-y: auto;&quot;&gt;
+  &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;Mas um dia, muito cansada de ler tantos insultos sobre si, e sem conseguir ignorar mais, Mia encolheu as cinco pontas e começou a afundar-se na água.&lt;/p&gt;
+    &lt;p&gt;Mas um dia, muito cansada de ler tantos insultos sobre si, e sem conseguir ignorar mais, Mia encolheu as cinco pontas e começou a afundar-se na água.&lt;/p&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;O seu rasto brilhante apagou-se por completo. Um macarrão que assistia decidiu:&lt;/p&gt;
+    &lt;p style=&quot;margin-bottom: 5px !important;&quot;&gt;O seu rasto brilhante apagou-se por completo. Um macarrão que assistia decidiu:&lt;/p&gt;
     
-    &lt;!-- Os Botões --&gt;
-    &lt;div class=&quot;meus-botoes&quot; style=&quot;display: flex; gap: 3vw; justify-content: center; align-items: center;&quot;&gt;
+    &lt;div class=&quot;meus-botoes&quot;&gt;
       [[Fingir que não tinha visto nada-&gt;FingirNaoVer]]
       [[Ajudar a Mia-&gt;AjudarMia]]
     &lt;/div&gt;
 
   &lt;/div&gt;
 
-&lt;/div&gt;
-}</tw-passagedata><tw-passagedata pid="33" name="FingirNaoVer" tags="" position="1500,1775" size="100,100">{
-&lt;div style=&quot;display: flex; flex-direction: column; height: 95vh; width: 100%; box-sizing: border-box; max-width: 1200px; margin: 0 auto;&quot;&gt;
+&lt;/div&gt;</tw-passagedata><tw-passagedata pid="33" name="FingirNaoVer" tags="" position="1500,1775" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
-  &lt;!-- A IMAGEM --&gt;
-  &lt;div style=&quot;flex: 1; display: flex; justify-content: center; align-items: center; overflow: hidden; padding-bottom: 2vh;&quot;&gt;
-
+  &lt;div class=&quot;img-container&quot;&gt;
     &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%2018.png?raw=true&quot; style=&quot;max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0px 5px 20px rgba(0,0,0,0.8);&quot;&gt;
   &lt;/div&gt;
   
-  &lt;!-- O TEXTO E BOTÕES --&gt;
-  &lt;div style=&quot;flex: 0 0 auto; background-color: rgba(70, 35, 15, 0.85); padding: 3vh 3vw; border-radius: 15px; color: white; text-align: left; font-size: clamp(10px, 1.8vw, 14px); box-shadow: 0px 4px 10px rgba(0,0,0,0.5); max-height: 50vh; overflow-y: auto;&quot;&gt;
+  &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh; text-align: center;&quot;&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4; font-weight: bold; color: #ff6b6b; text-align: center; font-size: 1.2em;&quot;&gt;Oh não!!&lt;/p&gt;
+    &lt;p style=&quot;color: #ff6b6b; font-weight: bold; font-size: 1.2em;&quot;&gt;Oh não!!&lt;/p&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4; text-align: center;&quot;&gt;Assistir a comportamentos errados e continuar sem nada fazer é tão grave como praticá-los!!&lt;/p&gt;
+    &lt;p&gt;Assistir a comportamentos errados e continuar sem nada fazer é tão grave como praticá-los!!&lt;/p&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4; text-align: center;&quot;&gt;No mínimo o macarrão tinha de pedir ajuda a um adulto. Não entendeu que o &lt;strong&gt;Bullying é MassaDOR&lt;/strong&gt;!&lt;/p&gt;
+    &lt;p&gt;No mínimo o macarrão tinha de pedir ajuda a um adulto. Não entendeu que o &lt;strong&gt;Bullying é MassaDOR&lt;/strong&gt;!&lt;/p&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4; text-align: center; font-weight: bold; color: #FFD700;&quot;&gt;Tenta outra vez!&lt;/p&gt;
+    &lt;p class=&quot;texto-destaque&quot; style=&quot;margin-bottom: 5px !important;&quot;&gt;Tenta outra vez!&lt;/p&gt;
     
-    &lt;!-- Os Botões --&gt;
-    &lt;div class=&quot;meus-botoes&quot; style=&quot;display: flex; gap: 3vw; justify-content: center; align-items: center;&quot;&gt;
-           [[Voltar ao inicio-&gt;Passagem sem Título
-]]
+    &lt;div class=&quot;meus-botoes&quot;&gt;
+      [[Voltar ao inicio-&gt;Passagem sem Título]]
     &lt;/div&gt;
 
   &lt;/div&gt;
 
-&lt;/div&gt;
-}</tw-passagedata><tw-passagedata pid="34" name="AjudarMia" tags="" position="1625,1775" size="100,100">{
-&lt;div style=&quot;display: flex; flex-direction: column; height: 95vh; width: 100%; box-sizing: border-box; max-width: 1200px; margin: 0 auto;&quot;&gt;
+&lt;/div&gt;</tw-passagedata><tw-passagedata pid="34" name="AjudarMia" tags="" position="1625,1775" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
-  &lt;!-- A IMAGEM --&gt;
-  &lt;div style=&quot;flex: 1; display: flex; justify-content: center; align-items: center; overflow: hidden; padding-bottom: 2vh;&quot;&gt;
-    &lt;!-- Substitui o link abaixo pelo link da imagem desta cena do teu GitHub --&gt;
+  &lt;div class=&quot;img-container&quot;&gt;
     &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%2019.png?raw=true&quot; style=&quot;max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0px 5px 20px rgba(0,0,0,0.8);&quot;&gt;
   &lt;/div&gt;
   
-  &lt;!-- O TEXTO E BOTÕES --&gt;
-  &lt;div style=&quot;flex: 0 0 auto; background-color: rgba(70, 35, 15, 0.85); padding: 3vh 3vw; border-radius: 15px; color: white; text-align: left; font-size: clamp(10px, 1.8vw, 14px); box-shadow: 0px 4px 10px rgba(0,0,0,0.5); max-height: 50vh; overflow-y: auto;&quot;&gt;
+  &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;O macarrão mergulhou o mais fundo que pôde e nadou até chegar à Mia.&lt;/p&gt;
+    &lt;p&gt;O macarrão mergulhou o mais fundo que pôde e nadou até chegar à Mia.&lt;/p&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;&quot;&gt;Puxou-a até à superfície e assim que ela estava a salvo, viu que os outros macarrões estavam todos a chapinhar perto das letras de modo a baralhá-las e obrigando-as a formar palavras mais simpáticas.&lt;/p&gt;
+    &lt;p style=&quot;margin-bottom: 5px !important;&quot;&gt;Puxou-a até à superfície e assim que ela estava a salvo, viu que os outros macarrões estavam todos a chapinhar perto das letras de modo a baralhá-las e obrigando-as a formar palavras mais simpáticas.&lt;/p&gt;
     
-    &lt;!-- Os Botões --&gt;
-    &lt;div class=&quot;meus-botoes&quot; style=&quot;display: flex; gap: 3vw; justify-content: center; align-items: center;&quot;&gt;
+    &lt;div class=&quot;meus-botoes&quot;&gt;
       [[DESCULPA-&gt;DesculpaMia]]
     &lt;/div&gt;
 
   &lt;/div&gt;
 
-&lt;/div&gt;
-}</tw-passagedata><tw-passagedata pid="35" name="DesculpaMia" tags="" position="1625,1900" size="100,100">{
-&lt;div style=&quot;display: flex; flex-direction: column; height: 95vh; width: 100%; box-sizing: border-box; max-width: 1200px; margin: 0 auto;&quot;&gt;
+&lt;/div&gt;</tw-passagedata><tw-passagedata pid="35" name="DesculpaMia" tags="" position="1625,1900" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
-  &lt;!-- A IMAGEM --&gt;
-  &lt;div style=&quot;flex: 1; display: flex; justify-content: center; align-items: center; overflow: hidden; padding-bottom: 2vh;&quot;&gt;
-   
+  &lt;div class=&quot;img-container&quot;&gt;
     &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%2020.png?raw=true&quot; style=&quot;max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0px 5px 20px rgba(0,0,0,0.8);&quot;&gt;
   &lt;/div&gt;
   
-  &lt;!-- O TEXTO E BOTÕES --&gt;
-  &lt;div style=&quot;flex: 0 0 auto; background-color: rgba(70, 35, 15, 0.85); padding: 3vh 3vw; border-radius: 15px; color: white; text-align: left; font-size: clamp(10px, 1.8vw, 14px); box-shadow: 0px 4px 10px rgba(0,0,0,0.5); max-height: 50vh; overflow-y: auto;&quot;&gt;
+  &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh; text-align: center;&quot;&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4;text-align: center;&quot;&gt;Formaram a palavra DESCULPA e comprometeram-se a trabalhar melhor em equipa e de forma positiva!&lt;/p&gt;
+    &lt;p&gt;Formaram a palavra DESCULPA e comprometeram-se a trabalhar melhor em equipa e de forma positiva!&lt;/p&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4; font-weight: bold; color: #FFD700; font-size: 1.5em; text-align: center;&quot;&gt;PARABÉNS!&lt;/p&gt;
+    &lt;p style=&quot;color: #FFD700; font-weight: bold; font-size: 1.5em; margin: 1vh 0 !important;&quot;&gt;PARABÉNS!&lt;/p&gt;
     
-    &lt;p style=&quot;margin: 0 0 1vh 0; line-height: 1.4; text-align: center;&quot;&gt;És oficialmente o Chef da Amizade, contigo ninguém fez farinha e provaste que o Bullying é Maçador/ MassaDOR!!!&lt;/p&gt;
+    &lt;p style=&quot;margin-bottom: 5px !important;&quot;&gt;És oficialmente o Chef da Amizade, contigo ninguém fez farinha e provaste que o Bullying é Maçador/ MassaDOR!!!&lt;/p&gt;
     
-    &lt;!-- Os Botões --&gt;
-    &lt;div class=&quot;meus-botoes&quot; style=&quot;display: flex; gap: 3vw; justify-content: center; align-items: center;&quot;&gt;
-                [[Voltar ao inicio-&gt;Passagem sem Título
-]]
+    &lt;div class=&quot;meus-botoes&quot;&gt;
+      [[Voltar ao inicio-&gt;Passagem sem Título]]
     &lt;/div&gt;
 
   &lt;/div&gt;
 
-&lt;/div&gt;
-}</tw-passagedata></tw-storydata>
+&lt;/div&gt;</tw-passagedata></tw-storydata>
 <script title="Twine engine code" data-main="harlowe">(function(){"use strict";
 var require,define;!function(){var e={},r={};require=function(i){var n=e[i];return n&&(r[i]=n[1].apply(void 0,n[0].map(require)),e[i]=void 0),r[i]},(define=function(r,i,n){if("function"==typeof r)return r();e[r]=[i,n]}).amd=!0}();/*!
  * https://github.com/paulmillr/es6-shim
