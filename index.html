@@ -85,54 +85,45 @@ tw-passage {
   flex-wrap: wrap; 
   margin-top: 20px;
 }
-.meus-botoes tw-link,
-.meus-botoes tw-link * {
-  font-size: clamp(8px, 1.8vw, 14px) !important;
-  line-height: 1.3 !important;
-}
 .meus-botoes tw-link {
   display: inline-flex !important; 
   justify-content: center !important;
   align-items: center !important;
   background-color: #8B4513 !important; 
   color: white !important;
-  
- 
   padding: 10px 20px !important; 
   min-width: 140px !important;    
   max-width: 90% !important;      
   white-space: nowrap !important; 
-  
   border-radius: 30px !important;
   font-weight: bold !important;
   text-decoration: none !important;
+  
+  /* Carga base cravada no lugar para não haver dúvidas */
   transition: all 0.3s ease !important;
+  transform: translateY(0) scale(1) !important; 
   border: 1px solid rgba(255,255,255,0.4) !important;
   box-shadow: 0 4px 6px rgba(0,0,0,0.3) !important;
   box-sizing: border-box !important; 
   text-align: center !important;
-  animation: none !important; 
-  -webkit-touch-callout: none !important; /* Evita menus de contexto ao clicar muito tempo */
-  user-select: none !important;
-}
-
-.meus-botoes tw-link:hover {
-  transform: translateY(-3px) scale(1.05) !important;
-  background-color: #A0522D !important; 
-  box-shadow: 0 6px 12px rgba(0,0,0,0.5) !important;
+  
+  /* Limpeza anti-mobile */
+  -webkit-tap-highlight-color: transparent !important; 
+  outline: none !important; 
 }
 
 
-.meus-botoes tw-link:focus,
-.meus-botoes tw-link:focus-visible,
-.meus-botoes tw-link:visited {
-  outline: none !important;
-  background-color: #8B4513 !important; /* Força a voltar sempre à cor original */
-  color: white !important;
-  transform: translateY(0) scale(1) !important; /* Garante que não fica "encolhido" */
-  box-shadow: 0 4px 6px rgba(0,0,0,0.3) !important; /* Repõe a sombra original */
+@media (hover: none), (pointer: coarse) {
+  .meus-botoes tw-link:hover,
+  .meus-botoes tw-link:focus,
+  .meus-botoes tw-link:active,
+  .meus-botoes tw-link:visited {
+    transform: translateY(0) scale(1) !important; /* Nunca cresce */
+    background-color: #8B4513 !important; /* Nunca muda de cor */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3) !important; /* Sombra inalterada */
+    color: white !important;
+  }
 }
-
 
 @media (hover: hover) and (pointer: fine) {
   .meus-botoes tw-link:hover {
