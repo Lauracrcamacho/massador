@@ -36,39 +36,37 @@ tw-story::before {
   left: -5% !important;
   width: 110% !important;
   height: 110% !important;
-  background-image: url("https://github.com/Lauracrcamacho/massador/blob/main/fundo.png?raw=true") !important;
+  background-image: url("https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/fundo.png") !important;
   background-size: cover !important;
   background-position: center !important;
   filter: blur(4px) brightness(0.6) !important;
   z-index: -1 !important;
 }
 
-/* 4. Limpar margens da passagem principal */
+
 tw-passage {
   width: 100% !important;
   height: 100% !important;
-  padding: 0 !important; /* Sem padding para preencher o ecrã */
+  padding: 0 !important; 
   box-sizing: border-box !important;
   display: flex !important;
   justify-content: center !important;
   align-items: center !important;
 }
 
-/* 5. A CAIXA DE TEXTO (Ajustada para desktop e mobile) */
 .caixa-texto {
   background-color: rgba(70, 35, 15, 0.85);
   padding: 1vh 1vw;
-  line-height: 1.3;
+  line-height: 1.2;
   border-radius: 15px;
+  font-size: 0 !important;
   color: white;
   text-align: center;
-  font-size: clamp(8px, 1.8vw, 14px); /* Letra legível */
   box-shadow: 0px 4px 10px rgba(0,0,0,0.5);
-  max-height: 45vh; /* Ocupa no máximo 45% do ecrã vertical */
-  overflow-y: auto; /* Scrollbar apenas aqui, se necessário */
+  max-height: 45vh; 
+  overflow-y: auto; 
   box-sizing: border-box;
-  
-  /* Limites para Desktop */
+ 
   width: 90%;
   max-width: 1200px;
   margin: 0 auto;
@@ -93,17 +91,17 @@ tw-passage {
   line-height: 1.3 !important;
 }
 .meus-botoes tw-link {
-  display: inline-flex !important; /* Muda de flex para inline-flex para respeitar o conteúdo */
+  display: inline-flex !important; 
   justify-content: center !important;
   align-items: center !important;
   background-color: #8B4513 !important; 
   color: white !important;
   
-  /* Controlo de proporção para nunca virar um círculo/ovo */
+ 
   padding: 10px 20px !important; 
-  min-width: 140px !important;    /* Garante uma largura mínima decente em qualquer ecrã */
-  max-width: 90% !important;      /* Não deixa o botão transbordar a caixa de texto */
-  white-space: nowrap !important; /* Força o texto a ficar na mesma linha se houver espaço */
+  min-width: 140px !important;    
+  max-width: 90% !important;      
+  white-space: nowrap !important; 
   
   border-radius: 30px !important;
   font-weight: bold !important;
@@ -121,7 +119,7 @@ tw-passage {
   box-shadow: 0 6px 12px rgba(0,0,0,0.5) !important;
 }
 
-/* Ajustes específicos para ecrãs pequenos (Mobile em pé) */
+
 @media screen and (max-width: 768px) {
   .meus-botoes {
     flex-direction: row !important; 
@@ -132,17 +130,17 @@ tw-passage {
   }
   
   .meus-botoes tw-link {
-    /* Permitir que quebre linha apenas se o texto for gigante, mas mantendo boa área de clique */
+   
     white-space: normal !important; 
     flex: 0 1 auto !important; 
     min-height: 38px !important;
     padding: 8px 16px !important;
   }
-.img-container img {
+  .img-container img {
     aspect-ratio: 4 / 3 !important;
-    object-fit: cover !important; /* Preenche o novo formato 4:3 cortando o excesso lateral */
-    width: 100% !important; /* Garante que ocupa a largura disponível */
-    max-height: 40vh !important; /* Evita que a imagem empurre o texto para fora do ecrã */
+    object-fit: cover !important; 
+    width: 100% !important; 
+    max-height: 40vh !important; 
   }
 
   .caixa-texto {
@@ -152,7 +150,7 @@ tw-passage {
   }
 }
 
-/* 3. Estrutura das passagens (Imagens e Contentor) */
+
 .content-container {
   display: flex;
   flex-direction: column;
@@ -182,7 +180,7 @@ tw-passage {
   box-shadow: 0px 5px 20px rgba(0,0,0,0.8);
 }
 
-/* 4. COMPORTAMENTO QUANDO VIRAS O TELEMÓVEL (Horizontal / Landscape) */
+
 @media screen and (max-height: 500px) and (orientation: landscape) {
   .content-container {
     flex-direction: row !important; 
@@ -199,8 +197,8 @@ tw-passage {
 .img-container img {
     width: 100% !important;
     height: 100% !important;
-    object-fit: cover !important; /* Preenche a metade do ecrã cortando os excessos suavemente */
-    aspect-ratio: auto !important; /* Remove qualquer proporção forçada (como o 4:3 anterior) */
+    object-fit: cover !important; 
+    aspect-ratio: auto !important;
   }
   .caixa-texto {
     flex: 1 !important;
@@ -209,7 +207,7 @@ tw-passage {
     margin-bottom: 0 !important;
   }
   
-  /* Ajusta o botão e a letra especificamente para o ecrã deitado */
+ 
   .meus-botoes tw-link {
     font-size: clamp(9px, 2.5vh, 12px) !important; 
     padding: 1vh 1.5vw !important;
@@ -217,7 +215,7 @@ tw-passage {
   }
 }
 
-/* 5. Preload seguro de imagens */
+
 .preloader {
   position: absolute;
   width: 0;
@@ -227,20 +225,113 @@ tw-passage {
   opacity: 0;
 }
 
-/* 6. Parágrafos */
+
 .caixa-texto p {
+  font-size: clamp(8px, 1.8vw, 14px) !important;
   margin-top: 0 !important;
-  margin-bottom: 8px !important; 
-  line-height: 1.2 !important; 
+  margin-bottom: 0 !important; 
+  line-height: 1.3 !important; 
   padding: 0 !important;
 }
 
 .caixa-texto br {
   display: none !important;
-}</style><script role="script" id="twine-user-script" type="text/twine-javascript"></script><tw-passagedata pid="1" name="Passagem sem Título" tags="" position="250,225" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
+}
+
+/*-----------fumo */
+.smoke-container {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 9999 !important; /* Força a ficar mesmo à frente de tudo */
+  pointer-events: none !important; /* Não bloqueia os cliques nos botões */
+  overflow: hidden !important;
+}
+
+.smoke-particle {
+  position: absolute !important;
+  background-color: rgba(255, 255, 255, 0.6) !important; /* Fumo ligeiramente mais denso */
+  border-radius: 50% !important;
+  filter: blur(15px) !important;
+  opacity: 0; /* Base invisível até a animação arrancar */
+  pointer-events: none !important;
+}
+
+@keyframes smokeRise {
+  0% { transform: translateY(110vh) scale(1); opacity: 0; }
+  20% { opacity: 0.6; }
+  80% { opacity: 0.3; }
+  100% { transform: translateY(-20vh) scale(3); opacity: 0; }
+}
+
+/* Tamanhos e Tempos */
+.smoke-particle.p1 { width: 150px !important; height: 150px !important; animation: smokeRise 10s infinite linear !important; }
+.smoke-particle.p2 { width: 100px !important; height: 100px !important; animation: smokeRise 12s infinite linear !important; }
+.smoke-particle.p3 { width: 250px !important; height: 250px !important; animation: smokeRise 8s infinite linear !important; }
+
+/* Posições exatas e Atrasos (Para não subirem todos ao mesmo tempo) */
+.smoke-particle.c1 { left: 10% !important; animation-delay: 0s !important; }
+.smoke-particle.c2 { left: 30% !important; animation-delay: 2s !important; }
+.smoke-particle.c3 { left: 50% !important; animation-delay: 4s !important; }
+.smoke-particle.c4 { left: 70% !important; animation-delay: 1s !important; }
+.smoke-particle.c5 { left: 85% !important; animation-delay: 3s !important; }
+
+
+
+/* ==========================================================================
+   EFEITO DE CONFETIS CSS (PARA VITÓRIAS)
+   ========================================================================== */
+
+/* O Contentor invisível que segura os confetis */
+.confetti-container {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 9999 !important; /* Sempre à frente de tudo */
+  pointer-events: none !important; /* Para não bloquear cliques */
+  overflow: hidden !important;
+}
+
+/* Base do formato do confeti (um pequeno retângulo) */
+.confetti {
+  position: absolute !important;
+  top: -20px !important; /* Começam escondidos acima do ecrã */
+  width: 12px !important;
+  height: 24px !important;
+  opacity: 0;
+  pointer-events: none !important;
+}
+
+/* Animação: Cair até ao fundo do ecrã e rodar loucamente */
+@keyframes confettiFall {
+  0% { transform: translateY(0) rotateX(0) rotateY(0); opacity: 1; }
+  100% { transform: translateY(110vh) rotateX(720deg) rotateY(360deg); opacity: 1; }
+}
+
+/* --- AS CORES (Podes alterar os códigos HEX se quiseres outras) --- */
+.confetti.p1 { background-color: #FFD700 !important; } /* Dourado */
+.confetti.p2 { background-color: #FF6B6B !important; } /* Vermelho/Rosa */
+.confetti.p3 { background-color: #4ECDC4 !important; } /* Azul Ciano */
+.confetti.p4 { background-color: #A8E6CF !important; } /* Verde Claro */
+
+/* --- AS POSIÇÕES E VELOCIDADES (Para não caírem todos ao mesmo tempo) --- */
+.confetti.c1  { left: 10% !important; animation: confettiFall 3s infinite linear 0s !important; }
+.confetti.c2  { left: 20% !important; animation: confettiFall 4s infinite linear 0.5s !important; }
+.confetti.c3  { left: 30% !important; animation: confettiFall 3.5s infinite linear 1s !important; }
+.confetti.c4  { left: 40% !important; animation: confettiFall 4.5s infinite linear 0.2s !important; }
+.confetti.c5  { left: 50% !important; animation: confettiFall 3s infinite linear 1.5s !important; }
+.confetti.c6  { left: 60% !important; animation: confettiFall 4s infinite linear 0.7s !important; }
+.confetti.c7  { left: 70% !important; animation: confettiFall 3.2s infinite linear 1.2s !important; }
+.confetti.c8  { left: 80% !important; animation: confettiFall 4.2s infinite linear 0.4s !important; }
+.confetti.c9  { left: 90% !important; animation: confettiFall 3.8s infinite linear 1.8s !important; }
+.confetti.c10 { left: 95% !important; animation: confettiFall 3.5s infinite linear 0.9s !important; }</style><script role="script" id="twine-user-script" type="text/twine-javascript"></script><tw-passagedata pid="1" name="Passagem sem Título" tags="" position="250,225" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
   &lt;div class=&quot;img-container&quot;&gt;
-    &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/inicio%20v4.png?raw=true&quot; style=&quot;max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0px 5px 20px rgba(0,0,0,0.8);&quot;&gt;
+    &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/inicio%20v4.png&quot; &gt;
   &lt;/div&gt;
   
   &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
@@ -263,15 +354,15 @@ tw-passage {
 &lt;/div&gt;
 
 &lt;div class=&quot;preloader&quot;&gt;
-  &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/clube-esparguete-1-v2.jpg?raw=true&quot;&gt;
-  &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/clube%20esparguete%202%20v3.png?raw=true&quot;&gt;
-  &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%201.png?raw=true&quot;&gt;
-  &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%202.png?raw=true&quot;&gt;
-  &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%203.png?raw=true&quot;&gt;
+  &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/clube-esparguete-1-v2.jpg&quot;&gt;
+  &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/clube%20esparguete%202%20v3.png&quot;&gt;
+  &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/sopa%20letras%201.png&quot;&gt;
+  &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/sopa%20letras%202.png&quot;&gt;
+  &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/sopa%20letras%203.png&quot;&gt;
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="2" name="Clube do Esparguete" tags="" position="637.5,350" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
   &lt;div class=&quot;img-container&quot;&gt;
-    &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/clube-esparguete-1-v2.jpg?raw=true&quot; style=&quot;max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0px 5px 20px rgba(0,0,0,0.8);&quot;&gt;
+    &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/clube-esparguete-1-v2.jpg&quot;&gt;
   &lt;/div&gt;
   
   &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
@@ -292,20 +383,20 @@ tw-passage {
 &lt;/div&gt;
 
 &lt;div class=&quot;preloader&quot;&gt;
-  &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/clube-esparguete-3-v2.png?raw=true&quot;&gt;
-  &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/clube%20do%20esparguete%2010%20v2.png?raw=true&quot;&gt;
-  &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/clube%20do%20esparguete%2011%20v2.png?raw=true&quot;&gt;
-  &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/clube%20do%20esparguete%2012%20v3.png?raw=true&quot;&gt;
-  &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/clube%20do%20esparguete%2013%20v2.png?raw=true&quot;&gt;
-  &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/clube%20do%20esparguete%2014%20v2.png?raw=true&quot;&gt;
-  &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/clube%20do%20esparguete%204%20v2.png?raw=true&quot;&gt;
-  &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/clube%20do%20esparguete%206%20v2.png?raw=true&quot;&gt;
-  &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/clube%20do%20esparguete%207%20v2.png?raw=true&quot;&gt;
-  &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/clube%20do%20esparguete%209%20v2.png?raw=true&quot;&gt;
+  &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/clube-esparguete-3-v2.png&quot;&gt;
+  &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/clube%20do%20esparguete%2010%20v2.png&quot;&gt;
+  &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/clube%20do%20esparguete%2011%20v2.png&quot;&gt;
+  &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/clube%20do%20esparguete%2012%20v3.png&quot;&gt;
+  &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/clube%20do%20esparguete%2013%20v2.png&quot;&gt;
+  &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/clube%20do%20esparguete%2014%20v2.png&quot;&gt;
+  &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/clube%20do%20esparguete%204%20v2.png&quot;&gt;
+  &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/clube%20do%20esparguete%206%20v2.png&quot;&gt;
+  &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/clube%20do%20esparguete%207%20v2.png&quot;&gt;
+  &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/clube%20do%20esparguete%209%20v2.png&quot;&gt;
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="3" name="Sopa de Letras" tags="" position="1175,225" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
   &lt;div class=&quot;img-container&quot;&gt;
-    &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%201.png?raw=true&quot; style=&quot;max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0px 5px 20px rgba(0,0,0,0.8);&quot;&gt;
+    &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/sopa%20letras%201.png&quot; &gt;
   &lt;/div&gt;
   
   &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
@@ -329,27 +420,27 @@ tw-passage {
 
 &lt;!-- Pré-carregamento seguro das imagens da Sopa de Letras --&gt;
 &lt;div class=&quot;preloader&quot;&gt;
-  &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%204.png?raw=true&quot;&gt;
-  &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%205.png?raw=true&quot;&gt;
-  &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%206.png?raw=true&quot;&gt;
-  &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%207.png?raw=true&quot;&gt;
-  &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%208.png?raw=true&quot;&gt;
-  &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%209.png?raw=true&quot;&gt;
-  &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%2010.png?raw=true&quot;&gt;
-  &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%2011.png?raw=true&quot;&gt;
-  &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%2012.png?raw=true&quot;&gt;
-  &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%2013.png?raw=true&quot;&gt;
-  &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%2014.png?raw=true&quot;&gt;
-  &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/Gemini_Generated_Image_dqqcnxdqqcnxdqqc.png?raw=true&quot;&gt;
-  &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%2016.png?raw=true&quot;&gt;
-  &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%2017.png?raw=true&quot;&gt;
-  &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%2018.png?raw=true&quot;&gt;
-  &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%2019.png?raw=true&quot;&gt;
-  &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%2020.png?raw=true&quot;&gt;
+  &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/sopa%20letras%204.png&quot;&gt;
+  &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/sopa%20letras%205.png&quot;&gt;
+  &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/sopa%20letras%206.png&quot;&gt;
+  &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/sopa%20letras%207.png&quot;&gt;
+  &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/sopa%20letras%208.png&quot;&gt;
+  &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/sopa%20letras%209.png&quot;&gt;
+  &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/sopa%20letras%2010.png&quot;&gt;
+  &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/sopa%20letras%2011.png&quot;&gt;
+  &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/sopa%20letras%2012.png&quot;&gt;
+  &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/sopa%20letras%2013.png&quot;&gt;
+  &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/sopa%20letras%2014.png&quot;&gt;
+  &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/Gemini_Generated_Image_dqqcnxdqqcnxdqqc.png&quot;&gt;
+  &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/sopa%20letras%2016.png&quot;&gt;
+  &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/sopa%20letras%2017.png&quot;&gt;
+  &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/sopa%20letras%2018.png&quot;&gt;
+  &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/sopa%20letras%2019.png&quot;&gt;
+  &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/sopa%20letras%2020.png&quot;&gt;
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="4" name="Procurar Brincar" tags="" position="575,475" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
   &lt;div class=&quot;img-container&quot;&gt;
-    &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/clube%20esparguete%202%20v3.png?raw=true&quot; style=&quot;max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0px 5px 20px rgba(0,0,0,0.8);&quot;&gt;
+    &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/clube%20esparguete%202%20v3.png&quot;&gt;
   &lt;/div&gt;
   
   &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
@@ -374,7 +465,7 @@ tw-passage {
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="5" name="Ficar Sozinho" tags="" position="700,475" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
   &lt;div class=&quot;img-container&quot;&gt;
-    &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/clube-esparguete-3-v2.png?raw=true&quot; style=&quot;max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0px 5px 20px rgba(0,0,0,0.8);&quot;&gt;
+    &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/clube-esparguete-3-v2.png&quot;&gt;
   &lt;/div&gt;
   
   &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
@@ -395,7 +486,7 @@ tw-passage {
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="6" name="Ação Responder" tags="" position="575,700" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
   &lt;div class=&quot;img-container&quot;&gt;
-    &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/clube%20do%20esparguete%205%20v2.png?raw=true&quot; style=&quot;max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0px 5px 20px rgba(0,0,0,0.8);&quot;&gt;
+    &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/clube%20do%20esparguete%205%20v2.png&quot; &gt;
   &lt;/div&gt;
   
   &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
@@ -417,7 +508,7 @@ tw-passage {
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="7" name="Ação Ignorar" tags="" position="800,675" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
   &lt;div class=&quot;img-container&quot;&gt;
-    &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/clube%20do%20esparguete%204%20v2.png?raw=true&quot; style=&quot;max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0px 5px 20px rgba(0,0,0,0.8);&quot;&gt;
+    &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/clube%20do%20esparguete%204%20v2.png&quot;&gt;
   &lt;/div&gt;
   
   &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
@@ -433,7 +524,7 @@ tw-passage {
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="8" name="Continuar" tags="" position="800,825" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
   &lt;div class=&quot;img-container&quot;&gt;
-    &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/clube%20do%20esparguete%206%20v2.png?raw=true&quot; style=&quot;max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0px 5px 20px rgba(0,0,0,0.8);&quot;&gt;
+    &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/clube%20do%20esparguete%206%20v2.png&quot; &gt;
   &lt;/div&gt;
   
   &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
@@ -456,7 +547,7 @@ tw-passage {
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="9" name="Sair" tags="" position="650,975" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
   &lt;div class=&quot;img-container&quot;&gt;
-    &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/clube%20do%20esparguete%208%20v2.png?raw=true&quot; style=&quot;max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0px 5px 20px rgba(0,0,0,0.8);&quot;&gt;
+    &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/clube%20do%20esparguete%208%20v2.png&quot; &gt;
   &lt;/div&gt;
   
   &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
@@ -476,7 +567,7 @@ tw-passage {
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="10" name="Tentar integrar-se" tags="" position="875,975" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
   &lt;div class=&quot;img-container&quot;&gt;
-    &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/clube%20do%20esparguete%207%20v2.png?raw=true&quot; style=&quot;max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0px 5px 20px rgba(0,0,0,0.8);&quot;&gt;
+    &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/clube%20do%20esparguete%207%20v2.png&quot; &gt;
   &lt;/div&gt;
   
   &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
@@ -494,7 +585,7 @@ tw-passage {
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="11" name="Continuar Esticar" tags="" position="800,1150" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
   &lt;div class=&quot;img-container&quot;&gt;
-    &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/clube%20do%20esparguete%209%20v2.png?raw=true&quot; style=&quot;max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0px 5px 20px rgba(0,0,0,0.8);&quot;&gt;
+    &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/clube%20do%20esparguete%209%20v2.png&quot;&gt;
   &lt;/div&gt;
   
   &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
@@ -512,7 +603,7 @@ tw-passage {
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="12" name="Regresso à Escola" tags="" position="825,1275" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
   &lt;div class=&quot;img-container&quot;&gt;
-    &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/clube%20do%20esparguete%2010%20v2.png?raw=true&quot; style=&quot;max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0px 5px 20px rgba(0,0,0,0.8);&quot;&gt;
+    &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/clube%20do%20esparguete%2010%20v2.png&quot;&gt;
   &lt;/div&gt;
   
   &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
@@ -539,7 +630,7 @@ tw-passage {
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="13" name="Ouvir Espiral" tags="" position="650,1450" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
   &lt;div class=&quot;img-container&quot;&gt;
-    &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/clube%20do%20esparguete%2011%20v2.png?raw=true&quot; style=&quot;max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0px 5px 20px rgba(0,0,0,0.8);&quot;&gt;
+    &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/clube%20do%20esparguete%2011%20v2.png&quot; &gt;
   &lt;/div&gt;
   
   &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
@@ -552,7 +643,7 @@ tw-passage {
 
     &lt;p&gt;O Leo percebeu, afinal, que não devia ter-se esticado tanto ao ponto de se magoar para que pudesse ser incluído num grupo.&lt;/p&gt;
 
-    &lt;p style=&quot;margin-bottom: 5px !important;&quot;&gt;— &quot;Os esparguetes precisam de uma lição, para que não voltem a fazer isto com mais ninguém&quot; — decidiu o Leo.&lt;/p&gt;
+    &lt;p &gt;— &quot;Os esparguetes precisam de uma lição, para que não voltem a fazer isto com mais ninguém&quot; — decidiu o Leo.&lt;/p&gt;
     
     &lt;div class=&quot;meus-botoes&quot;&gt;
       [[Procurar os esparguetes-&gt;Procurar Esparguetes]]
@@ -563,7 +654,7 @@ tw-passage {
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="14" name="Procurar Esparguetes" tags="" position="850,1425" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
   &lt;div class=&quot;img-container&quot;&gt;
-    &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/clube%20do%20esparguete%2012%20v3.png?raw=true&quot; style=&quot;max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0px 5px 20px rgba(0,0,0,0.8);&quot;&gt;
+    &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/clube%20do%20esparguete%2012%20v3.png&quot;&gt;
   &lt;/div&gt;
   
   &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
@@ -582,7 +673,7 @@ tw-passage {
     
     &lt;p&gt;— &quot;Sim, qual é o problema?&quot; — perguntou o &lt;i&gt;penne&lt;/i&gt;.&lt;/p&gt;
 
-    &lt;p style=&quot;margin-bottom: 5px !important;&quot;&gt;— &quot;Mete-te com gente do teu tamanho!&quot; — protestou a &lt;i&gt;tagliatelle&lt;/i&gt;.&lt;/p&gt;
+    &lt;p &gt;— &quot;Mete-te com gente do teu tamanho!&quot; — protestou a &lt;i&gt;tagliatelle&lt;/i&gt;.&lt;/p&gt;
     
     &lt;div class=&quot;meus-botoes&quot;&gt;
       [[Continuar-&gt;Desfecho Final]]
@@ -592,9 +683,24 @@ tw-passage {
   &lt;/div&gt;
 
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="15" name="Desfecho Final" tags="" position="475,1675" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
-  
+  &lt;div class=&quot;confetti-container&quot;&gt;
+  &lt;div class=&quot;confetti c1 p1&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;confetti c2 p2&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;confetti c3 p3&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;confetti c4 p4&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;confetti c5 p1&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;confetti c6 p2&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;confetti c7 p3&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;confetti c8 p4&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;confetti c9 p1&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;confetti c10 p2&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;audio autoplay&gt;
+  &lt;source src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/vitoria.wav&quot; type=&quot;audio/wav&quot;&gt;
+&lt;/audio&gt;
   &lt;div class=&quot;img-container&quot;&gt;
-    &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/clube%20do%20esparguete%2013%20v2.png?raw=true&quot; style=&quot;max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0px 5px 20px rgba(0,0,0,0.8);&quot;&gt;
+    &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/clube%20do%20esparguete%2013%20v2.png&quot; &gt;
   &lt;/div&gt;
   
   &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
@@ -614,8 +720,18 @@ tw-passage {
 
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="16" name="Desatar à Pancada" tags="" position="1025,1625" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
+ &lt;div class=&quot;smoke-container&quot;&gt;
+  &lt;div class=&quot;smoke-particle p1 c1&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;smoke-particle p2 c2&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;smoke-particle p3 c3&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;smoke-particle p1 c4&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;smoke-particle p2 c5&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+  &lt;audio autoplay&gt;
+  &lt;source src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/perder.wav&quot; type=&quot;audio/wav&quot;&gt;
+&lt;/audio&gt;
   &lt;div class=&quot;img-container&quot;&gt;
-    &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/clube%20do%20esparguete%2014%20v2.png?raw=true&quot; style=&quot;max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0px 5px 20px rgba(0,0,0,0.8);&quot;&gt;
+    &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/clube%20do%20esparguete%2014%20v2.png&quot; &gt;
   &lt;/div&gt;
   
   &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
@@ -637,7 +753,7 @@ tw-passage {
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="17" name="Natacao" tags="" position="1125,350" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
   &lt;div class=&quot;img-container&quot;&gt;
-    &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%202.png?raw=true&quot; style=&quot;max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0px 5px 20px rgba(0,0,0,0.8);&quot;&gt;
+    &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/sopa%20letras%202.png&quot; &gt;
   &lt;/div&gt;
   
   &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
@@ -657,7 +773,7 @@ tw-passage {
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="18" name="Ginastica" tags="" position="1450,350" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
   &lt;div class=&quot;img-container&quot;&gt;
-    &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%203.png?raw=true&quot; style=&quot;max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0px 5px 20px rgba(0,0,0,0.8);&quot;&gt;
+    &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/sopa%20letras%203.png&quot; &gt;
   &lt;/div&gt;
   
   &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
@@ -677,7 +793,7 @@ tw-passage {
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="19" name="MiaNatacaoContinua" tags="" position="1100,550" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
   &lt;div class=&quot;img-container&quot;&gt;
-    &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%204.png?raw=true&quot; style=&quot;max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0px 5px 20px rgba(0,0,0,0.8);&quot;&gt;
+    &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/sopa%20letras%204.png&quot; &gt;
   &lt;/div&gt;
   
   &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
@@ -698,7 +814,7 @@ tw-passage {
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="20" name="TreinoMacarroes" tags="" position="1037.5,675" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
   &lt;div class=&quot;img-container&quot;&gt;
-    &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%205.png?raw=true&quot; style=&quot;max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0px 5px 20px rgba(0,0,0,0.8);&quot;&gt;
+    &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/sopa%20letras%205.png&quot; &gt;
   &lt;/div&gt;
   
   &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
@@ -718,7 +834,7 @@ tw-passage {
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="21" name="TreinoLetras" tags="" position="1162.5,675" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
   &lt;div class=&quot;img-container&quot;&gt;
-    &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%207.png?raw=true&quot; style=&quot;max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0px 5px 20px rgba(0,0,0,0.8);&quot;&gt;
+    &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/sopa%20letras%207.png&quot;&gt;
   &lt;/div&gt;
   
   &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
@@ -738,7 +854,7 @@ tw-passage {
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="22" name="Nadam" tags="" position="1037.5,800" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
   &lt;div class=&quot;img-container&quot;&gt;
-    &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%208.png?raw=true&quot; style=&quot;max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0px 5px 20px rgba(0,0,0,0.8);&quot;&gt;
+    &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/sopa%20letras%208.png&quot; &gt;
   &lt;/div&gt;
   
   &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
@@ -760,7 +876,7 @@ tw-passage {
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="23" name="OuvirMacarroes" tags="" position="1075,1025" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
   &lt;div class=&quot;img-container&quot;&gt;
-    &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%209.png?raw=true&quot; style=&quot;max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0px 5px 20px rgba(0,0,0,0.8);&quot;&gt;
+    &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/sopa%20letras%209.png&quot; &gt;
   &lt;/div&gt;
   
   &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
@@ -780,7 +896,7 @@ tw-passage {
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="24" name="OuvirConchas" tags="" position="1275,1050" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
   &lt;div class=&quot;img-container&quot;&gt;
-    &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%2010.png?raw=true&quot;&gt;
+    &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/sopa%20letras%2010.png&quot;&gt;
   &lt;/div&gt;
   
   &lt;div class=&quot;caixa-texto&quot;&gt;
@@ -800,7 +916,7 @@ tw-passage {
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="25" name="OuvirLetras" tags="" position="1500,975" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
   &lt;div class=&quot;img-container&quot;&gt;
-    &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%2011.png?raw=true&quot; style=&quot;max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0px 5px 20px rgba(0,0,0,0.8);&quot;&gt;
+    &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/sopa%20letras%2011.png&quot; &gt;
   &lt;/div&gt;
   
   &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
@@ -824,7 +940,7 @@ tw-passage {
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="26" name="ConversaLetrasContinua" tags="" position="1500,1100" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
   &lt;div class=&quot;img-container&quot;&gt;
-    &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%2012.png?raw=true&quot; style=&quot;max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0px 5px 20px rgba(0,0,0,0.8);&quot;&gt;
+    &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/sopa%20letras%2012.png&quot;&gt;
   &lt;/div&gt;
   
   &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
@@ -845,7 +961,7 @@ tw-passage {
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="27" name="DesistirNatacao" tags="" position="1275,1275" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
   &lt;div class=&quot;img-container&quot;&gt;
-    &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%2013.png?raw=true&quot; style=&quot;max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0px 5px 20px rgba(0,0,0,0.8);&quot;&gt;
+    &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/sopa%20letras%2013.png?&quot;&gt;
   &lt;/div&gt;
   
   &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
@@ -865,7 +981,7 @@ tw-passage {
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="28" name="ProximaAula" tags="" position="1625,1275" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
   &lt;div class=&quot;img-container&quot;&gt;
-    &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%2014.png?raw=true&quot; style=&quot;max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0px 5px 20px rgba(0,0,0,0.8);&quot;&gt;
+    &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/sopa%20letras%2014.png&quot;&gt;
   &lt;/div&gt;
   
   &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
@@ -879,10 +995,10 @@ tw-passage {
 
   &lt;/div&gt;
 
-&lt;/div&gt;</tw-passagedata><tw-passagedata pid="29" name="PalavraFeia" tags="" position="1562.5,1400" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
+&lt;/div&gt;</tw-passagedata><tw-passagedata pid="29" name="PalavraFeia" tags="" position="1575,1400" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
   &lt;div class=&quot;img-container&quot;&gt;
-    &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/Gemini_Generated_Image_dqqcnxdqqcnxdqqc.png?raw=true&quot; style=&quot;max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0px 5px 20px rgba(0,0,0,0.8);&quot;&gt;
+    &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/blob/main/Gemini_Generated_Image_dqqcnxdqqcnxdqqc.png&quot;&gt;
   &lt;/div&gt;
   
   &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
@@ -902,7 +1018,7 @@ tw-passage {
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="30" name="PalavraRidicula" tags="" position="1687.5,1400" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
   &lt;div class=&quot;img-container&quot;&gt;
-    &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/Gemini_Generated_Image_dqqcnxdqqcnxdqqc.png?raw=true&quot; style=&quot;max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0px 5px 20px rgba(0,0,0,0.8);&quot;&gt;
+    &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/Gemini_Generated_Image_dqqcnxdqqcnxdqqc.png&quot;&gt;
   &lt;/div&gt;
   
   &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
@@ -922,7 +1038,7 @@ tw-passage {
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="31" name="SaiDaqui" tags="" position="1562.5,1525" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
   &lt;div class=&quot;img-container&quot;&gt;
-    &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%2016.png?raw=true&quot; style=&quot;max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0px 5px 20px rgba(0,0,0,0.8);&quot;&gt;
+    &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/sopa%20letras%2016.png&quot;&gt;
   &lt;/div&gt;
   
   &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
@@ -940,7 +1056,7 @@ tw-passage {
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="32" name="ContinuarIgnorando" tags="" position="1562.5,1650" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
   &lt;div class=&quot;img-container&quot;&gt;
-    &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%2017.png?raw=true&quot; style=&quot;max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0px 5px 20px rgba(0,0,0,0.8);&quot;&gt;
+    &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/sopa%20letras%2017.png&quot;&gt;
   &lt;/div&gt;
   
   &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
@@ -957,9 +1073,20 @@ tw-passage {
   &lt;/div&gt;
 
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="33" name="FingirNaoVer" tags="" position="1500,1775" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
-  
+  &lt;div class=&quot;smoke-container&quot;&gt;
+  &lt;div class=&quot;smoke-particle p1 c1&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;smoke-particle p2 c2&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;smoke-particle p3 c3&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;smoke-particle p1 c4&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;smoke-particle p2 c5&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+ &lt;audio autoplay&gt;
+  &lt;source src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/perder.wav&quot; type=&quot;audio/wav&quot;&gt;
+&lt;/audio&gt;
+
   &lt;div class=&quot;img-container&quot;&gt;
-    &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%2018.png?raw=true&quot; style=&quot;max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0px 5px 20px rgba(0,0,0,0.8);&quot;&gt;
+    &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/sopa%20letras%2018.png&quot;&gt;
   &lt;/div&gt;
   
   &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh; text-align: center;&quot;&gt;
@@ -981,7 +1108,7 @@ tw-passage {
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="34" name="AjudarMia" tags="" position="1625,1775" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
   &lt;div class=&quot;img-container&quot;&gt;
-    &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%2019.png?raw=true&quot; style=&quot;max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0px 5px 20px rgba(0,0,0,0.8);&quot;&gt;
+    &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/sopa%20letras%2019.png&quot;&gt;
   &lt;/div&gt;
   
   &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
@@ -997,9 +1124,25 @@ tw-passage {
   &lt;/div&gt;
 
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="35" name="DesculpaMia" tags="" position="1625,1900" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
-  
+  &lt;div class=&quot;confetti-container&quot;&gt;
+  &lt;div class=&quot;confetti c1 p1&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;confetti c2 p2&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;confetti c3 p3&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;confetti c4 p4&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;confetti c5 p1&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;confetti c6 p2&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;confetti c7 p3&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;confetti c8 p4&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;confetti c9 p1&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;confetti c10 p2&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;audio autoplay&gt;
+  &lt;source src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/vitoria.wav&quot; type=&quot;audio/wav&quot;&gt;
+&lt;/audio&gt;
+
   &lt;div class=&quot;img-container&quot;&gt;
-    &lt;img src=&quot;https://github.com/Lauracrcamacho/massador/blob/main/sopa%20letras%2020.png?raw=true&quot; style=&quot;max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0px 5px 20px rgba(0,0,0,0.8);&quot;&gt;
+    &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/sopa%20letras%2020.png&quot;&gt;
   &lt;/div&gt;
   
   &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh; text-align: center;&quot;&gt;
