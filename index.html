@@ -111,8 +111,9 @@ tw-passage {
   box-shadow: 0 4px 6px rgba(0,0,0,0.3) !important;
   box-sizing: border-box !important; 
   text-align: center !important;
-  -webkit-tap-highlight-color: transparent !important; /* Tira o piscar azul/cinzento automático */
-  outline: none !important;
+  animation: none !important; 
+  -webkit-touch-callout: none !important; /* Evita menus de contexto ao clicar muito tempo */
+  user-select: none !important;
 }
 
 .meus-botoes tw-link:hover {
@@ -120,6 +121,18 @@ tw-passage {
   background-color: #A0522D !important; 
   box-shadow: 0 6px 12px rgba(0,0,0,0.5) !important;
 }
+
+
+.meus-botoes tw-link:focus,
+.meus-botoes tw-link:focus-visible,
+.meus-botoes tw-link:visited {
+  outline: none !important;
+  background-color: #8B4513 !important; /* Força a voltar sempre à cor original */
+  color: white !important;
+  transform: translateY(0) scale(1) !important; /* Garante que não fica "encolhido" */
+  box-shadow: 0 4px 6px rgba(0,0,0,0.3) !important; /* Repõe a sombra original */
+}
+
 
 @media (hover: hover) and (pointer: fine) {
   .meus-botoes tw-link:hover {
@@ -228,7 +241,6 @@ tw-passage {
     min-height: 35px !important;
   }
 }
-
 
 .preloader {
   position: absolute;
