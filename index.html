@@ -9,12 +9,15 @@
 </head>
 <body>
 <tw-story><noscript><tw-noscript>JavaScript needs to be enabled to play Massador.</tw-noscript></noscript></tw-story>
-<tw-storydata name="Massador" startnode="1" creator="Twine" creator-version="2.12.0" format="Harlowe" format-version="3.3.9" ifid="6F2E34F5-B821-4000-963A-CCC1FECF3762" options="" tags="" zoom="1" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">/* 1. Esconder a barra lateral do Twine */
+<tw-storydata name="Massador" startnode="1" creator="Twine" creator-version="2.12.0" format="Harlowe" format-version="3.3.9" ifid="6F2E34F5-B821-4000-963A-CCC1FECF3762" options="" tags="" zoom="1" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">/* ==========================================================================
+   1. DEFINIÇÕES GERAIS E FUNDO
+   ========================================================================== */
+/* Esconder a barra lateral do Twine */
 tw-sidebar {
   display: none !important;
 }
 
-/* 2. Estrutura base da página */
+/* Estrutura base da página */
 tw-story {
   padding: 0 !important;
   margin: 0 !important;
@@ -28,7 +31,7 @@ tw-story {
   overflow: hidden !important; /* Previne scrollbar global irritante */
 }
 
-/* 3. A MAGIA DO FUNDO (A imagem desfocada) */
+/* A MAGIA DO FUNDO (A imagem desfocada) */
 tw-story::before {
   content: "" !important;
   position: fixed !important; 
@@ -43,7 +46,6 @@ tw-story::before {
   z-index: -1 !important;
 }
 
-
 tw-passage {
   width: 100% !important;
   height: 100% !important;
@@ -54,33 +56,102 @@ tw-passage {
   align-items: center !important;
 }
 
+.preloader {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  z-index: -100;
+  opacity: 0;
+}
+
+/* ==========================================================================
+   2. ESTRUTURA GLOBAL E IMAGENS (Base para Telemóveis em Pé)
+   ========================================================================== */
+.content-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  justify-content: center; /* Mantém a imagem e o texto juntos no centro do ecrã */
+  align-items: center;
+  gap: 1vh !important; /* Espaço reduzido entre imagem e texto */
+  box-sizing: border-box;
+  padding: 5px;
+}
+
+.img-container {
+  flex: 0 1 auto !important; /* A caixa abraça a foto e não cria espaços vazios */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.img-container img {
+  width: 100% !important;
+  height: 100% !important;
+  max-height: 45vh !important; 
+  aspect-ratio: 4 / 3 !important; /* Formato perfeito para telemóvel */
+  object-fit: cover !important; /* Preenche fazendo zoom e recortando as bordas */
+  border-radius: 10px !important;
+  box-shadow: 0px 5px 30px rgba(0,0,0,0.8) !important;
+}
+
+/* ==========================================================================
+   3. CAIXA DE TEXTO E PARÁGRAFOS (Base)
+   ========================================================================== */
 .caixa-texto {
+  flex: 0 1 auto !important;
+  height: auto !important; 
   background-color: rgba(70, 35, 15, 0.85);
-  padding: 1vh 1vw;
-  line-height: 1.2;
+  padding: 1.5vh 1.5vw !important;
   border-radius: 15px;
-  font-size: 0 !important;
   color: white;
   text-align: center;
   box-shadow: 0px 4px 10px rgba(0,0,0,0.5);
-  max-height: 45vh; 
-  overflow-y: auto; 
-  box-sizing: border-box;
- 
-  width: 90%;
+  width: 95%; 
   max-width: 1200px;
+  max-height: 50vh;
+  overflow-y: auto;
+  box-sizing: border-box;
   margin: 0 auto;
+}
+
+/* Scrollbar fina e elegante caso o texto seja mesmo muito longo */
+.caixa-texto::-webkit-scrollbar {
+  width: 6px;
+}
+.caixa-texto::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.4);
+  border-radius: 10px;
+}
+
+.caixa-texto p, 
+.caixa-texto tw-passagedata {
+  font-size: clamp(9px, 1.8vw, 16px) !important;
+  margin-top: 0.2vh !important; 
+  margin-bottom: 0.2vh !important; /* Margem quase invisível entre parágrafos */
+  line-height: 1.2 !important; /* Reduz o espaço entre as linhas do mesmo parágrafo */
+}
+
+.caixa-texto tw-consecutive-br {
+  display: block !important;
+  height: 0.8vh !important; /* Controla exatamente a altura dos espaços vazios */
+  line-height: 0 !important;
+}
+.caixa-texto br {
+  display: none !important;
 }
 
 .texto-destaque {
   color: #FFD700;
   font-weight: bold;
 }
-.meus-botoes tw-link,
-.meus-botoes tw-link * {
-  font-size: clamp(8px, 1.8vw, 14px) !important;
-  line-height: 1.3 !important;
-}
+
+/* ==========================================================================
+   4. BOTÕES
+   ========================================================================== */
 .meus-botoes {
   display: flex;
   justify-content: center;
@@ -89,6 +160,13 @@ tw-passage {
   flex-wrap: wrap; 
   margin-top: 20px;
 }
+
+.meus-botoes tw-link,
+.meus-botoes tw-link * {
+  font-size: clamp(8px, 1.8vw, 14px) !important;
+  line-height: 1.3 !important;
+}
+
 .meus-botoes tw-link {
   display: inline-flex !important; 
   justify-content: center !important;
@@ -103,7 +181,6 @@ tw-passage {
   font-weight: bold !important;
   text-decoration: none !important;
   
-  /* Carga base cravada no lugar para não haver dúvidas */
   transition: all 0.3s ease !important;
   transform: translateY(0) scale(1) !important; 
   border: 1px solid rgba(255,255,255,0.4) !important;
@@ -116,19 +193,13 @@ tw-passage {
   outline: none !important; 
 }
 
-
-@media (hover: none), (pointer: coarse) {
-  .meus-botoes tw-link:hover,
-  .meus-botoes tw-link:focus,
-  .meus-botoes tw-link:active,
-  .meus-botoes tw-link:visited {
-    transform: translateY(0) scale(1) !important; /* Nunca cresce */
-    background-color: #8B4513 !important; /* Nunca muda de cor */
-    box-shadow: 0 4px 6px rgba(0,0,0,0.3) !important; /* Sombra inalterada */
-    color: white !important;
-  }
+/* Efeito rápido ao clicar */
+.meus-botoes tw-link:active {
+  transform: scale(0.95) !important;
+  background-color: #70300B !important;
 }
 
+/* Efeito de Rato apenas para Computador */
 @media (hover: hover) and (pointer: fine) {
   .meus-botoes tw-link:hover {
     transform: translateY(-3px) scale(1.05) !important;
@@ -137,146 +208,124 @@ tw-passage {
   }
 }
 
-/* Efeito rápido ao clicar (Para dar feedback sem ficar preso no telemóvel) */
-.meus-botoes tw-link:active {
-  transform: scale(0.95) !important;
-  background-color: #70300B !important;
+/* Proteção contra botão preso no Mobile */
+@media (hover: none), (pointer: coarse) {
+  .meus-botoes tw-link:hover,
+  .meus-botoes tw-link:focus,
+  .meus-botoes tw-link:visited {
+    transform: translateY(0) scale(1) !important; 
+    background-color: #8B4513 !important; 
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3) !important; 
+    color: white !important;
+  }
 }
+
+/* Layout dos botões em ecrãs pequenos */
 @media screen and (max-width: 768px) {
   .meus-botoes {
     flex-direction: row !important; 
-    flex-wrap: wrap !important;
-    justify-content: center !important;
     width: 100% !important;
-    gap: 12px !important; 
+    gap: 5px !important; 
   }
-  
   .meus-botoes tw-link {
-   
     white-space: normal !important; 
     flex: 0 1 auto !important; 
     min-height: 38px !important;
-    padding: 8px 16px !important;
-  }
-  .img-container img {
-    aspect-ratio: 4 / 3 !important;
-    object-fit: cover !important; 
-    width: 100% !important; 
-    max-height: 40vh !important; 
-  }
-
-  .caixa-texto {
-    padding: 15px !important; 
-    width: 95% !important; 
-    max-height: 55vh !important; 
+    padding: 5px 16px !important;
   }
 }
 
-
-.content-container {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-  gap: 1vh;
-  box-sizing: border-box;
-  padding: 10px;
-}
-
-.img-container {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  width: 100%;
-  overflow: hidden;
-}
-
-.img-container img {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-  border-radius: 10px;
-  box-shadow: 0px 5px 20px rgba(0,0,0,0.8);
-}
-
-
+/* ==========================================================================
+   5. MODO PAISAGEM / DEITADO (Telemóveis e Tablets)
+   ========================================================================== */
 @media screen and (max-height: 500px) and (orientation: landscape) {
   .content-container {
-    flex-direction: row !important; 
+    flex-direction: row !important; /* Lado a lado */
     height: 100vh !important;
-    gap: 2vw !important;
+    gap: 1vw !important;
     padding: 2vh !important;
   }
 
   .img-container {
-    flex: 1 !important;
-    align-items: center !important; 
+    flex: 1 1 50% !important;
     height: 100% !important;
-  }
-.img-container img {
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover !important; 
-    aspect-ratio: auto !important;
-  }
-  .caixa-texto {
-    flex: 1 !important;
-    max-height: 90vh !important; 
-    overflow-y: auto !important;  
-    margin-bottom: 0 !important;
   }
   
- 
-  .meus-botoes tw-link {
-    font-size: clamp(9px, 2.5vh, 12px) !important; 
-    padding: 1vh 1.5vw !important;
-    min-height: 35px !important;
+  .img-container img {
+    width: 100% !important;
+    height: 100% !important;
+    max-height: 90vh !important;
+    aspect-ratio: auto !important; /* Desliga o formato do telemóvel em pé */
+    object-fit: cover !important; 
+  }
+  
+  .caixa-texto {
+    flex: 1 1 50% !important;
+    max-height: 90vh !important; 
+    margin-bottom: 0 !important;
   }
 }
 
-.preloader {
-  position: absolute;
-  width: 0;
-  height: 0;
-  overflow: hidden;
-  z-index: -100;
-  opacity: 0;
+/* ==========================================================================
+   6. COMPUTADOR (Modo Imersivo e Alinhado)
+   ========================================================================== */
+@media screen and (min-width: 769px) and (min-height: 501px) {
+  .content-container {
+    /* 1. Reduzimos o espaço entre a imagem e a caixa de texto ao mínimo */
+    gap: 1vh !important; 
+    
+    /* 2. Reduzimos o espaço no topo da página (1vh) para colar a imagem mais a cima. 
+          Mantemos os 2vh em baixo para os botões não baterem na borda do monitor */
+    padding: 1vh 2vw 2vh 2vw !important;
+  }
+
+  .img-container {
+    flex: 1 1 auto !important; 
+    min-height: 0 !important;  
+  }
+
+  .img-container img {
+    width: 95vw !important; 
+    max-width: 1800px !important; 
+    height: 100% !important; 
+    max-height: 65vh !important; /* Imagem respira se houver espaço */
+    aspect-ratio: auto !important; 
+    object-fit: cover !important; 
+  }
+
+  .caixa-texto {
+    flex: 0 0 auto !important; 
+    width: 95vw !important; 
+     max-height: 85vh !important;
+    max-width: 1800px !important; 
+    height: auto !important; 
+    
+    /* 3. Subimos o limite do texto para 75vh! 
+          Assim, em monitores mais pequenos (como portáteis), a caixa pode esticar quase até ao topo para evitar o scroll a todo o custo. */
+    max-height: 75vh !important; 
+  }
 }
-
-
-.caixa-texto p {
-  font-size: clamp(10px, 1.8vw, 18px) !important;
-  margin-top: 0 !important;
-  margin-bottom: 0 !important; 
-  line-height: 1.3 !important; 
-  padding: 0 !important;
-}
-
-.caixa-texto br {
-  display: none !important;
-}
-
-/*-----------fumo */
+/* ==========================================================================
+   7. EFEITOS ESPECIAIS (Fumo e Confetis)
+   ========================================================================== */
+/* FUMO */
 .smoke-container {
   position: absolute !important;
   top: 0 !important;
   left: 0 !important;
   width: 100vw !important;
   height: 100vh !important;
-  z-index: 9999 !important; /* Força a ficar mesmo à frente de tudo */
-  pointer-events: none !important; /* Não bloqueia os cliques nos botões */
+  z-index: 9999 !important; 
+  pointer-events: none !important; 
   overflow: hidden !important;
 }
 
 .smoke-particle {
   position: absolute !important;
-  background-color: rgba(255, 255, 255, 0.6) !important; /* Fumo ligeiramente mais denso */
+  background-color: rgba(255, 255, 255, 0.6) !important; 
   border-radius: 50% !important;
   filter: blur(15px) !important;
-  opacity: 0; /* Base invisível até a animação arrancar */
+  opacity: 0; 
   pointer-events: none !important;
 }
 
@@ -287,59 +336,47 @@ tw-passage {
   100% { transform: translateY(-20vh) scale(3); opacity: 0; }
 }
 
-/* Tamanhos e Tempos */
 .smoke-particle.p1 { width: 150px !important; height: 150px !important; animation: smokeRise 10s infinite linear !important; }
 .smoke-particle.p2 { width: 100px !important; height: 100px !important; animation: smokeRise 12s infinite linear !important; }
 .smoke-particle.p3 { width: 250px !important; height: 250px !important; animation: smokeRise 8s infinite linear !important; }
 
-/* Posições exatas e Atrasos (Para não subirem todos ao mesmo tempo) */
 .smoke-particle.c1 { left: 10% !important; animation-delay: 0s !important; }
 .smoke-particle.c2 { left: 30% !important; animation-delay: 2s !important; }
 .smoke-particle.c3 { left: 50% !important; animation-delay: 4s !important; }
 .smoke-particle.c4 { left: 70% !important; animation-delay: 1s !important; }
 .smoke-particle.c5 { left: 85% !important; animation-delay: 3s !important; }
 
-
-
-/* ==========================================================================
-   EFEITO DE CONFETIS CSS (PARA VITÓRIAS)
-   ========================================================================== */
-
-/* O Contentor invisível que segura os confetis */
+/* CONFETIS */
 .confetti-container {
   position: absolute !important;
   top: 0 !important;
   left: 0 !important;
   width: 100vw !important;
   height: 100vh !important;
-  z-index: 9999 !important; /* Sempre à frente de tudo */
-  pointer-events: none !important; /* Para não bloquear cliques */
+  z-index: 9999 !important; 
+  pointer-events: none !important; 
   overflow: hidden !important;
 }
 
-/* Base do formato do confeti (um pequeno retângulo) */
 .confetti {
   position: absolute !important;
-  top: -20px !important; /* Começam escondidos acima do ecrã */
+  top: -20px !important; 
   width: 12px !important;
   height: 24px !important;
   opacity: 0;
   pointer-events: none !important;
 }
 
-/* Animação: Cair até ao fundo do ecrã e rodar loucamente */
 @keyframes confettiFall {
   0% { transform: translateY(0) rotateX(0) rotateY(0); opacity: 1; }
   100% { transform: translateY(110vh) rotateX(720deg) rotateY(360deg); opacity: 1; }
 }
 
-/* --- AS CORES (Podes alterar os códigos HEX se quiseres outras) --- */
-.confetti.p1 { background-color: #FFD700 !important; } /* Dourado */
-.confetti.p2 { background-color: #FF6B6B !important; } /* Vermelho/Rosa */
-.confetti.p3 { background-color: #4ECDC4 !important; } /* Azul Ciano */
-.confetti.p4 { background-color: #A8E6CF !important; } /* Verde Claro */
+.confetti.p1 { background-color: #FFD700 !important; } 
+.confetti.p2 { background-color: #FF6B6B !important; } 
+.confetti.p3 { background-color: #4ECDC4 !important; } 
+.confetti.p4 { background-color: #A8E6CF !important; } 
 
-/* --- AS POSIÇÕES E VELOCIDADES (Para não caírem todos ao mesmo tempo) --- */
 .confetti.c1  { left: 10% !important; animation: confettiFall 3s infinite linear 0s !important; }
 .confetti.c2  { left: 20% !important; animation: confettiFall 4s infinite linear 0.5s !important; }
 .confetti.c3  { left: 30% !important; animation: confettiFall 3.5s infinite linear 1s !important; }
