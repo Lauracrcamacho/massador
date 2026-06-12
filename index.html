@@ -271,11 +271,10 @@ tw-passage {
    ========================================================================== */
 @media screen and (min-width: 769px) and (min-height: 501px) {
   .content-container {
-    /* 1. Reduzimos o espaço entre a imagem e a caixa de texto ao mínimo */
+  
     gap: 1vh !important; 
     
-    /* 2. Reduzimos o espaço no topo da página (1vh) para colar a imagem mais a cima. 
-          Mantemos os 2vh em baixo para os botões não baterem na borda do monitor */
+
     padding: 1vh 2vw 2vh 2vw !important;
   }
 
@@ -403,7 +402,26 @@ tw-passage {
 .imagem-inicial img {
   animation: zoomCinematografico 25s linear infinite alternate !important;
 }
-</style><script role="script" id="twine-user-script" type="text/twine-javascript"></script><tw-passagedata pid="1" name="Passagem sem Título" tags="" position="250,225" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
+</style><script role="script" id="twine-user-script" type="text/twine-javascript">if (!document.getElementById("musica-fundo")) {
+  var bgm = document.createElement("audio");
+  bgm.id = "musica-fundo";
+  
+  /* COLOCA AQUI O LINK DA TUA MÚSICA */
+  bgm.src = "https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/musicafundo.mp3"; 
+  
+  bgm.loop = true; /* Repete infinitamente */
+  
+
+  bgm.volume = 0.15; /* 15% do volume máximo (bem suave) */
+  
+  document.body.appendChild(bgm);
+
+  document.addEventListener("click", function() {
+    if (bgm.paused) {
+      bgm.play();
+    }
+  }, { once: true });
+}</script><tw-passagedata pid="1" name="Passagem sem Título" tags="" position="250,225" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
   &lt;div class=&quot;img-container&quot;&gt;
 &lt;div class=&quot;imagem-inicial&quot;&gt;
@@ -564,7 +582,9 @@ tw-passage {
   &lt;/div&gt;
 
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="6" name="Ação Responder" tags="" position="575,700" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
-  
+  &lt;audio autoplay&gt;
+  &lt;source src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/responder.wav&quot; type=&quot;audio/wav&quot;&gt;
+&lt;/audio&gt;
   &lt;div class=&quot;img-container&quot;&gt;
       &lt;div class=&quot;imagem-inicial&quot;&gt;
     &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/clube%20do%20esparguete%205%20v2.png&quot; &gt;
@@ -649,7 +669,9 @@ tw-passage {
   &lt;/div&gt;
 
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="10" name="Tentar integrar-se" tags="" position="875,975" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
-  
+  &lt;audio autoplay&gt;
+  &lt;source src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/scream.wav&quot; type=&quot;audio/wav&quot;&gt;
+&lt;/audio&gt;
   &lt;div class=&quot;img-container&quot;&gt;
    &lt;div class=&quot;imagem-inicial&quot;&gt;
     &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/clube%20do%20esparguete%207%20v2.png&quot; &gt;
@@ -723,11 +745,11 @@ tw-passage {
     &lt;/div&gt;
   &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
     
-    &lt;p&gt;— &quot;Não, Leo! Claro que não, tu não és um esparguete e nunca serás! Tu és um laço, agora deformado, mas continuas a ser um laço&quot; — esclareceu o Macarronete.&lt;/p&gt;
+    &lt;p&gt;— &quot;Não, Leo! Claro que não, tu não és um esparguete e nunca serás! Tu és um laço, agora deformado, mas continuas a ser um laço&quot; — esclareceu o macarronete.&lt;/p&gt;
     
     &lt;p&gt;— &quot;Não tens de deixar de ser quem és para ficares igual a alguém&quot; — justificou a Espiral.&lt;/p&gt;
 
-    &lt;p&gt;— &quot;Mudar-te a ti próprio só para agradar o outro nunca corre bem&quot; — acrescentou o Macarronete.&lt;/p&gt;
+    &lt;p&gt;— &quot;Mudar-te a ti próprio só para agradar o outro nunca corre bem&quot; — acrescentou o macarronete.&lt;/p&gt;
 
     &lt;p&gt;O Leo percebeu, afinal, que não devia ter-se esticado tanto ao ponto de se magoar para que pudesse ser incluído num grupo.&lt;/p&gt;
 
@@ -808,7 +830,7 @@ tw-passage {
 
   &lt;/div&gt;
 
-&lt;/div&gt;</tw-passagedata><tw-passagedata pid="16" name="Desatar à Pancada" tags="" position="1025,1625" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
+&lt;/div&gt;</tw-passagedata><tw-passagedata pid="16" name="Desatar à Pancada" tags="" position="1100,1675" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
  &lt;div class=&quot;smoke-container&quot;&gt;
   &lt;div class=&quot;smoke-particle p1 c1&quot;&gt;&lt;/div&gt;
@@ -927,7 +949,9 @@ tw-passage {
   &lt;/div&gt;
 
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="21" name="TreinoLetras" tags="" position="1162.5,675" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
-  
+  &lt;audio autoplay&gt;
+  &lt;source src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/mergulho.wav&quot; type=&quot;audio/wav&quot;&gt;
+&lt;/audio&gt;
   &lt;div class=&quot;img-container&quot;&gt;
       &lt;div class=&quot;imagem-inicial&quot;&gt;
     &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/sopa%20letras%207.png&quot;&gt;
@@ -1163,7 +1187,8 @@ tw-passage {
   
   &lt;div class=&quot;img-container&quot;&gt;
     &lt;div class=&quot;imagem-inicial&quot;&gt;
-    &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/sopa%20letras%2017.png&quot;&gt;
+    &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/sopa%20letras%2017_v3.png&quot;&gt;
+    
   &lt;/div&gt;
    &lt;/div&gt;
   &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
