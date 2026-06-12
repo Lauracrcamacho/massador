@@ -111,6 +111,8 @@ tw-passage {
   box-shadow: 0 4px 6px rgba(0,0,0,0.3) !important;
   box-sizing: border-box !important; 
   text-align: center !important;
+  -webkit-tap-highlight-color: transparent !important; /* Tira o piscar azul/cinzento automático */
+  outline: none !important;
 }
 
 .meus-botoes tw-link:hover {
@@ -119,7 +121,19 @@ tw-passage {
   box-shadow: 0 6px 12px rgba(0,0,0,0.5) !important;
 }
 
+@media (hover: hover) and (pointer: fine) {
+  .meus-botoes tw-link:hover {
+    transform: translateY(-3px) scale(1.05) !important;
+    background-color: #A0522D !important; 
+    box-shadow: 0 6px 12px rgba(0,0,0,0.5) !important;
+  }
+}
 
+/* Efeito rápido ao clicar (Para dar feedback sem ficar preso no telemóvel) */
+.meus-botoes tw-link:active {
+  transform: scale(0.95) !important;
+  background-color: #70300B !important;
+}
 @media screen and (max-width: 768px) {
   .meus-botoes {
     flex-direction: row !important; 
@@ -227,7 +241,7 @@ tw-passage {
 
 
 .caixa-texto p {
-  font-size: clamp(8px, 1.8vw, 14px) !important;
+  font-size: clamp(10px, 1.8vw, 18px) !important;
   margin-top: 0 !important;
   margin-bottom: 0 !important; 
   line-height: 1.3 !important; 
