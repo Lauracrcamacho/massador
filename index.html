@@ -406,21 +406,35 @@ tw-passage {
   var bgm = document.createElement("audio");
   bgm.id = "musica-fundo";
   
-  /* COLOCA AQUI O LINK DA TUA MÚSICA */
-  bgm.src = "https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/musicafundo.mp3"; 
+  bgm.src = "https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/musicafundo_v2.mp3"; 
   
-  bgm.loop = true; /* Repete infinitamente */
-  
-
-  bgm.volume = 0.15; /* 15% do volume máximo (bem suave) */
+  bgm.loop = true; 
+  bgm.volume = 0.15; 
+  bgm.preload = "auto"; 
   
   document.body.appendChild(bgm);
 
-  document.addEventListener("click", function() {
+  function iniciarMusica() {
     if (bgm.paused) {
-      bgm.play();
+      var promessa = bgm.play();
+      
+      if (promessa !== undefined) {
+        promessa.then(function() {
+          /* Sucesso! Limpa os controlos de alta velocidade */
+          window.removeEventListener("mousedown", iniciarMusica, true);
+          window.removeEventListener("touchstart", iniciarMusica, true);
+          window.removeEventListener("keydown", iniciarMusica, true);
+        }).catch(function(erro) {
+          console.log("A aguardar interação válida...");
+        });
+      }
     }
-  }, { once: true });
+  }
+
+  /* OS NOVOS GATILHOS: 'mousedown' em vez de 'click' */
+  window.addEventListener("mousedown", iniciarMusica, true); /* Deteta mal o rato desce */
+  window.addEventListener("touchstart", iniciarMusica, true); /* Deteta mal o dedo toca no ecrã */
+  window.addEventListener("keydown", iniciarMusica, true); /* Deteta mal a tecla afunda */
 }</script><tw-passagedata pid="1" name="Passagem sem Título" tags="" position="250,225" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
   &lt;div class=&quot;img-container&quot;&gt;
