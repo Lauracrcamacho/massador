@@ -138,6 +138,12 @@ tw-passage {
     min-height: 38px !important;
     padding: 8px 16px !important;
   }
+.img-container img {
+    aspect-ratio: 4 / 3 !important;
+    object-fit: cover !important; /* Preenche o novo formato 4:3 cortando o excesso lateral */
+    width: 100% !important; /* Garante que ocupa a largura disponível */
+    max-height: 40vh !important; /* Evita que a imagem empurre o texto para fora do ecrã */
+  }
 
   .caixa-texto {
     padding: 15px !important; 
@@ -190,7 +196,12 @@ tw-passage {
     align-items: center !important; 
     height: 100% !important;
   }
-
+.img-container img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important; /* Preenche a metade do ecrã cortando os excessos suavemente */
+    aspect-ratio: auto !important; /* Remove qualquer proporção forçada (como o 4:3 anterior) */
+  }
   .caixa-texto {
     flex: 1 !important;
     max-height: 90vh !important; 
