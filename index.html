@@ -386,12 +386,30 @@ tw-passage {
 .confetti.c7  { left: 70% !important; animation: confettiFall 3.2s infinite linear 1.2s !important; }
 .confetti.c8  { left: 80% !important; animation: confettiFall 4.2s infinite linear 0.4s !important; }
 .confetti.c9  { left: 90% !important; animation: confettiFall 3.8s infinite linear 1.8s !important; }
-.confetti.c10 { left: 95% !important; animation: confettiFall 3.5s infinite linear 0.9s !important; }</style><script role="script" id="twine-user-script" type="text/twine-javascript"></script><tw-passagedata pid="1" name="Passagem sem Título" tags="" position="250,225" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
+.confetti.c10 { left: 95% !important; animation: confettiFall 3.5s infinite linear 0.9s !important; }
+
+@keyframes zoomCinematografico {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.1); }
+}
+
+/* Colocas a tua imagem inicial dentro de <div class="imagem-inicial"> */
+.imagem-inicial {
+  overflow: hidden !important; /* Impede que a imagem saia da caixa enquanto cresce */
+  border-radius: 10px !important;
+  
+}
+
+.imagem-inicial img {
+  animation: zoomCinematografico 25s linear infinite alternate !important;
+}
+</style><script role="script" id="twine-user-script" type="text/twine-javascript"></script><tw-passagedata pid="1" name="Passagem sem Título" tags="" position="250,225" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
   &lt;div class=&quot;img-container&quot;&gt;
+&lt;div class=&quot;imagem-inicial&quot;&gt;
     &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/inicio%20v4.png&quot; &gt;
   &lt;/div&gt;
-  
+    &lt;/div&gt;
   &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
     
     &lt;p class=&quot;texto-destaque&quot;&gt;Olá! Que massada que aqui vai! No mundo das massas está tudo em alvoroço.&lt;/p&gt;
@@ -420,9 +438,10 @@ tw-passage {
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="2" name="Clube do Esparguete" tags="" position="637.5,350" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
   &lt;div class=&quot;img-container&quot;&gt;
+  &lt;div class=&quot;imagem-inicial&quot;&gt;
     &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/clube-esparguete-1-v2.jpg&quot;&gt;
   &lt;/div&gt;
-  
+    &lt;/div&gt;
   &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
     
     &lt;p&gt;Este lacinho que vocês veem aqui é o Leo. A espécie dele chama-se &lt;i&gt;Farfalle&lt;/i&gt; mas é o nosso laço, e Leo para os amigos. É um laço muito catita e bem-disposto, que adora mergulhar na piscina de molho de tomate que tem no recreio da sua escola.&lt;/p&gt;
@@ -454,9 +473,10 @@ tw-passage {
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="3" name="Sopa de Letras" tags="" position="1175,225" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
   &lt;div class=&quot;img-container&quot;&gt;
+        &lt;div class=&quot;imagem-inicial&quot;&gt;
     &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/sopa%20letras%201.png&quot; &gt;
   &lt;/div&gt;
-  
+    &lt;/div&gt;
   &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
     
     &lt;p&gt;Esta estrelinha que tu vês aqui é a &lt;strong&gt;Mia&lt;/strong&gt;.&lt;/p&gt;
@@ -498,9 +518,10 @@ tw-passage {
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="4" name="Procurar Brincar" tags="" position="575,475" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
   &lt;div class=&quot;img-container&quot;&gt;
+  &lt;div class=&quot;imagem-inicial&quot;&gt;
     &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/clube%20esparguete%202%20v3.png&quot;&gt;
   &lt;/div&gt;
-  
+  &lt;/div&gt;
   &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
     
     &lt;p&gt;A passear pelo recreio, o nosso lacinho encontrou um grupo de esparguetes a combinar ir mergulhar:&lt;/p&gt;
@@ -523,9 +544,10 @@ tw-passage {
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="5" name="Ficar Sozinho" tags="" position="700,475" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
   &lt;div class=&quot;img-container&quot;&gt;
+    &lt;div class=&quot;imagem-inicial&quot;&gt;
     &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/clube-esparguete-3-v2.png&quot;&gt;
   &lt;/div&gt;
-  
+    &lt;/div&gt;
   &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
     
     &lt;p&gt;Sentou-se no banco de jardim a pensar no quanto tinham sido boas as últimas férias, ansioso para fazer amigos e poder contar-lhes tudo. Até que aparecem um grupo de esparguetes:&lt;/p&gt;
@@ -544,9 +566,10 @@ tw-passage {
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="6" name="Ação Responder" tags="" position="575,700" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
   &lt;div class=&quot;img-container&quot;&gt;
+      &lt;div class=&quot;imagem-inicial&quot;&gt;
     &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/clube%20do%20esparguete%205%20v2.png&quot; &gt;
   &lt;/div&gt;
-  
+    &lt;/div&gt;
   &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
     
     &lt;p&gt;— &quot;Ei, com quem é que pensas que estás a falar?&quot; — respondeu o Leo. — &quot;Nem penses que lá porque és grande falas assim comigo!&quot;&lt;/p&gt;
@@ -566,9 +589,10 @@ tw-passage {
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="7" name="Ação Ignorar" tags="" position="800,675" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
   &lt;div class=&quot;img-container&quot;&gt;
+  &lt;div class=&quot;imagem-inicial&quot;&gt;
     &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/clube%20do%20esparguete%204%20v2.png&quot;&gt;
   &lt;/div&gt;
-  
+    &lt;/div&gt;
   &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
     
     &lt;p style=&quot;margin-bottom: 5px !important;&quot;&gt;O Leo nem lhes respondeu, sabia que nem valia a pena. A mãe já lhe tinha explicado que haviam massas mal-intencionadas, ou que então estavam num dia mau, e ele decidiu não dar importância a este Clube do Esparguete.&lt;/p&gt;
@@ -582,9 +606,10 @@ tw-passage {
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="8" name="Continuar" tags="" position="800,825" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
   &lt;div class=&quot;img-container&quot;&gt;
+    &lt;div class=&quot;imagem-inicial&quot;&gt;
     &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/clube%20do%20esparguete%206%20v2.png&quot; &gt;
   &lt;/div&gt;
-  
+    &lt;/div&gt;
   &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
     
     &lt;p&gt;No dia seguinte o Leo passou pela piscina de molho de tomate decidido a dar um mergulho. Estava um belo dia e parecia-lhe ser o momento ideal para conhecer amigos.&lt;/p&gt;
@@ -605,9 +630,10 @@ tw-passage {
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="9" name="Sair" tags="" position="650,975" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
   &lt;div class=&quot;img-container&quot;&gt;
+    &lt;div class=&quot;imagem-inicial&quot;&gt;
     &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/clube%20do%20esparguete%208%20v2.png&quot; &gt;
   &lt;/div&gt;
-  
+    &lt;/div&gt;
   &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
     
     &lt;p&gt;O Leo recolheu-se no canto da piscina, triste e sozinho. Não tinha feito nada para que o tratassem assim. Olhava à volta e havia muitos grupos de massas, mas eram todos uns iguais aos outros.&lt;/p&gt;
@@ -625,9 +651,10 @@ tw-passage {
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="10" name="Tentar integrar-se" tags="" position="875,975" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
   &lt;div class=&quot;img-container&quot;&gt;
+   &lt;div class=&quot;imagem-inicial&quot;&gt;
     &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/clube%20do%20esparguete%207%20v2.png&quot; &gt;
   &lt;/div&gt;
-  
+    &lt;/div&gt;
   &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
     
     &lt;p&gt;O Leo achou que o melhor seria ser igual aos outros para poder passar a pertencer ao Clube do Esparguete.&lt;/p&gt;
@@ -643,9 +670,10 @@ tw-passage {
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="11" name="Continuar Esticar" tags="" position="800,1150" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
   &lt;div class=&quot;img-container&quot;&gt;
+     &lt;div class=&quot;imagem-inicial&quot;&gt;
     &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/clube%20do%20esparguete%209%20v2.png&quot;&gt;
   &lt;/div&gt;
-  
+   &lt;/div&gt;
   &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
     
     &lt;p&gt;Até que ficou mesmo fininho. Olhou-se ao espelho e nem se reconheceu a si próprio.&lt;/p&gt;
@@ -661,9 +689,10 @@ tw-passage {
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="12" name="Regresso à Escola" tags="" position="825,1275" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
   &lt;div class=&quot;img-container&quot;&gt;
+     &lt;div class=&quot;imagem-inicial&quot;&gt;
     &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/clube%20do%20esparguete%2010%20v2.png&quot;&gt;
   &lt;/div&gt;
-  
+   &lt;/div&gt;
   &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
     
     &lt;p&gt;Quando voltou à escola, todos olhavam para si. &quot;Uau&quot; — pensou ele —, &quot;antes era invisível, agora que vou pertencer ao Clube do Esparguete, finalmente olham para mim. Fiz mesmo a escolha certa&quot;. Um grupo de espirais e de macarronetes veio abordá-lo.&lt;/p&gt;
@@ -688,9 +717,10 @@ tw-passage {
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="13" name="Ouvir Espiral" tags="" position="650,1450" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
   &lt;div class=&quot;img-container&quot;&gt;
+    &lt;div class=&quot;imagem-inicial&quot;&gt;
     &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/clube%20do%20esparguete%2011%20v2.png&quot; &gt;
   &lt;/div&gt;
-  
+    &lt;/div&gt;
   &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
     
     &lt;p&gt;— &quot;Não, Leo! Claro que não, tu não és um esparguete e nunca serás! Tu és um laço, agora deformado, mas continuas a ser um laço&quot; — esclareceu o Macarronete.&lt;/p&gt;
@@ -712,9 +742,10 @@ tw-passage {
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="14" name="Procurar Esparguetes" tags="" position="850,1425" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
   &lt;div class=&quot;img-container&quot;&gt;
+     &lt;div class=&quot;imagem-inicial&quot;&gt;
     &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/clube%20do%20esparguete%2012%20v3.png&quot;&gt;
   &lt;/div&gt;
-  
+    &lt;/div&gt;
   &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
     
     &lt;p&gt;O Leo encontrou os esparguetes reunidos à beira da piscina de molho de tomate, que quando o viram desataram a rir-se à gargalhada!&lt;/p&gt;
@@ -758,9 +789,10 @@ tw-passage {
   &lt;source src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/vitoria.wav&quot; type=&quot;audio/wav&quot;&gt;
 &lt;/audio&gt;
   &lt;div class=&quot;img-container&quot;&gt;
+      &lt;div class=&quot;imagem-inicial&quot;&gt;
     &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/clube%20do%20esparguete%2013%20v2.png&quot; &gt;
   &lt;/div&gt;
-  
+    &lt;/div&gt;
   &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
     
     &lt;p&gt;Os esparguetes ao aperceberem-se de que todas as outras massas estavam revoltadas, pediram desculpa ao Leo e reconheceram que não tinham o direito de o perturbá-lo, humilhá-lo e nem a bater-lhe.&lt;/p&gt;
@@ -789,9 +821,10 @@ tw-passage {
   &lt;source src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/perder.wav&quot; type=&quot;audio/wav&quot;&gt;
 &lt;/audio&gt;
   &lt;div class=&quot;img-container&quot;&gt;
+      &lt;div class=&quot;imagem-inicial&quot;&gt;
     &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/clube%20do%20esparguete%2014%20v2.png&quot; &gt;
   &lt;/div&gt;
-  
+    &lt;/div&gt;
   &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
     
     &lt;p style=&quot;color: #ffcccc; font-weight: bold;&quot;&gt;Oh não!!!&lt;/p&gt;
@@ -811,9 +844,10 @@ tw-passage {
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="17" name="Natacao" tags="" position="1125,350" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
   &lt;div class=&quot;img-container&quot;&gt;
+      &lt;div class=&quot;imagem-inicial&quot;&gt;
     &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/sopa%20letras%202.png&quot; &gt;
   &lt;/div&gt;
-  
+    &lt;/div&gt;
   &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
     
     &lt;p&gt;A &lt;strong&gt;Mia&lt;/strong&gt; adora natação e desliza na água com uma agilidade fantástica! Mesmo nos dias mais frios, a piscina aquecida recebe-a como um abraço quentinho.&lt;/p&gt;
@@ -831,9 +865,10 @@ tw-passage {
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="18" name="Ginastica" tags="" position="1450,350" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
   &lt;div class=&quot;img-container&quot;&gt;
+    &lt;div class=&quot;imagem-inicial&quot;&gt;
     &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/sopa%20letras%203.png&quot; &gt;
   &lt;/div&gt;
-  
+    &lt;/div&gt;
   &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
     
     &lt;p&gt;A &lt;strong&gt;Mia&lt;/strong&gt; é uma ginasta exímia, sabe fazer saltos e acrobacias e claro... adora fazer a estrela.&lt;/p&gt;
@@ -851,9 +886,10 @@ tw-passage {
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="19" name="MiaNatacaoContinua" tags="" position="1100,550" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
   &lt;div class=&quot;img-container&quot;&gt;
+    &lt;div class=&quot;imagem-inicial&quot;&gt;
     &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/sopa%20letras%204.png&quot; &gt;
   &lt;/div&gt;
-  
+  &lt;/div&gt;
   &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
     
     &lt;p&gt;A piscina onde a Mia treina tem estado muito mais concorrida, já que a piscina da cidade mais próxima fechou para obras.&lt;/p&gt;
@@ -872,9 +908,10 @@ tw-passage {
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="20" name="TreinoMacarroes" tags="" position="1037.5,675" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
   &lt;div class=&quot;img-container&quot;&gt;
+      &lt;div class=&quot;imagem-inicial&quot;&gt;
     &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/sopa%20letras%205.png&quot; &gt;
   &lt;/div&gt;
-  
+    &lt;/div&gt;
   &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
     
     &lt;p&gt;A Mia ficou fascinada a ver os macarrões nadar.&lt;/p&gt;
@@ -892,9 +929,10 @@ tw-passage {
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="21" name="TreinoLetras" tags="" position="1162.5,675" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
   &lt;div class=&quot;img-container&quot;&gt;
+      &lt;div class=&quot;imagem-inicial&quot;&gt;
     &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/sopa%20letras%207.png&quot;&gt;
   &lt;/div&gt;
-  
+    &lt;/div&gt;
   &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
     
     &lt;p&gt;A Mia aproximou-se da zona dos saltos para ver as Letrinhas mergulhar, mas... que grande confusão!!&lt;/p&gt;
@@ -912,9 +950,10 @@ tw-passage {
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="22" name="Nadam" tags="" position="1037.5,800" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
   &lt;div class=&quot;img-container&quot;&gt;
+        &lt;div class=&quot;imagem-inicial&quot;&gt;
     &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/sopa%20letras%208.png&quot; &gt;
   &lt;/div&gt;
-  
+   &lt;/div&gt;
   &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
     
     &lt;p&gt;Na sua aula a Mia também se sentiu observada. Da bancada, várias massas olhavam fascinadas para a forma como ela rodopiava e usava as suas cinco pontas para planar sobre a água.&lt;/p&gt;
@@ -934,9 +973,10 @@ tw-passage {
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="23" name="OuvirMacarroes" tags="" position="1075,1025" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
   &lt;div class=&quot;img-container&quot;&gt;
+     &lt;div class=&quot;imagem-inicial&quot;&gt;
     &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/sopa%20letras%209.png&quot; &gt;
   &lt;/div&gt;
-  
+    &lt;/div&gt;
   &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
     
     &lt;p&gt;— &quot;Uau estrelinha, estiveste maravilhosamente bem!!&quot; — disse-lhe um macarrão.&lt;/p&gt;
@@ -954,9 +994,10 @@ tw-passage {
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="24" name="OuvirConchas" tags="" position="1275,1050" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
   &lt;div class=&quot;img-container&quot;&gt;
+      &lt;div class=&quot;imagem-inicial&quot;&gt;
     &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/sopa%20letras%2010.png&quot;&gt;
   &lt;/div&gt;
-  
+   &lt;/div&gt;
   &lt;div class=&quot;caixa-texto&quot;&gt;
     
     &lt;p&gt;— &quot;Uau estrelinha, estiveste maravilhosamente bem!!&quot; — disse-lhe uma concha.&lt;/p&gt;
@@ -974,9 +1015,10 @@ tw-passage {
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="25" name="OuvirLetras" tags="" position="1500,975" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
   &lt;div class=&quot;img-container&quot;&gt;
+       &lt;div class=&quot;imagem-inicial&quot;&gt;
     &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/sopa%20letras%2011.png&quot; &gt;
   &lt;/div&gt;
-  
+    &lt;/div&gt;
   &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
     
     &lt;p&gt;— Olha quem é ela — disse a letra O, com um sorriso maldoso.&lt;/p&gt;
@@ -998,9 +1040,10 @@ tw-passage {
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="26" name="ConversaLetrasContinua" tags="" position="1500,1100" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
   &lt;div class=&quot;img-container&quot;&gt;
+   &lt;div class=&quot;imagem-inicial&quot;&gt;
     &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/sopa%20letras%2012.png&quot;&gt;
   &lt;/div&gt;
-  
+    &lt;/div&gt;
   &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
     
     &lt;p&gt;Nesse dia a Mia foi triste para casa, não era justo que a tratassem assim.&lt;/p&gt;
@@ -1019,9 +1062,10 @@ tw-passage {
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="27" name="DesistirNatacao" tags="" position="1275,1275" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
   &lt;div class=&quot;img-container&quot;&gt;
+   &lt;div class=&quot;imagem-inicial&quot;&gt;
     &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/sopa%20letras%2013.png?&quot;&gt;
   &lt;/div&gt;
-  
+    &lt;/div&gt;
   &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
     
     &lt;p&gt;Quando chegou a casa procurou a mãe e contou-lhe o que se tinha passado.&lt;/p&gt;
@@ -1039,9 +1083,10 @@ tw-passage {
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="28" name="ProximaAula" tags="" position="1625,1275" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
   &lt;div class=&quot;img-container&quot;&gt;
+   &lt;div class=&quot;imagem-inicial&quot;&gt;
     &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/sopa%20letras%2014.png&quot;&gt;
   &lt;/div&gt;
-  
+    &lt;/div&gt;
   &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
     
     &lt;p style=&quot;margin-bottom: 5px !important;&quot;&gt;Na aula seguinte, Mia estava decidida a não dar importância ao que tinha acontecido mas logo que entrou na piscina estavam as letras a cochilar entre elas e depressa se baralharam e formaram uma palavra na água:&lt;/p&gt;
@@ -1056,9 +1101,10 @@ tw-passage {
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="29" name="PalavraFeia" tags="" position="1575,1400" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
   &lt;div class=&quot;img-container&quot;&gt;
-    &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/blob/main/Gemini_Generated_Image_dqqcnxdqqcnxdqqc.png&quot;&gt;
+      &lt;div class=&quot;imagem-inicial&quot;&gt;
+    &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/Gemini_Generated_Image_dqqcnxdqqcnxdqqc.png&quot;&gt;
   &lt;/div&gt;
-  
+  &lt;/div&gt;
   &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
     
     &lt;p&gt;&quot;Feia? Como assim feia?&quot;&lt;/p&gt;
@@ -1076,9 +1122,10 @@ tw-passage {
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="30" name="PalavraRidicula" tags="" position="1700,1400" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
   &lt;div class=&quot;img-container&quot;&gt;
+      &lt;div class=&quot;imagem-inicial&quot;&gt;
     &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/Gemini_Generated_Image_dqqcnxdqqcnxdqqc.png&quot;&gt;
   &lt;/div&gt;
-  
+  &lt;/div&gt;
   &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
     
     &lt;p&gt;&quot;Ridícula? Como assim ridícula?&quot;&lt;/p&gt;
@@ -1096,9 +1143,10 @@ tw-passage {
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="31" name="SaiDaqui" tags="" position="1562.5,1525" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
   &lt;div class=&quot;img-container&quot;&gt;
+       &lt;div class=&quot;imagem-inicial&quot;&gt;
     &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/sopa%20letras%2016.png&quot;&gt;
   &lt;/div&gt;
-  
+  &lt;/div&gt;
   &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
     
     &lt;p&gt;Mia, aconselhada pela mãe estava decidida a não desistir da natação, só as letras estavam incomodadas com ela.&lt;/p&gt;
@@ -1114,9 +1162,10 @@ tw-passage {
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="32" name="ContinuarIgnorando" tags="" position="1562.5,1650" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
   &lt;div class=&quot;img-container&quot;&gt;
+    &lt;div class=&quot;imagem-inicial&quot;&gt;
     &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/sopa%20letras%2017.png&quot;&gt;
   &lt;/div&gt;
-  
+   &lt;/div&gt;
   &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
     
     &lt;p&gt;Mas um dia, muito cansada de ler tantos insultos sobre si, e sem conseguir ignorar mais, Mia encolheu as cinco pontas e começou a afundar-se na água.&lt;/p&gt;
@@ -1144,9 +1193,10 @@ tw-passage {
 &lt;/audio&gt;
 
   &lt;div class=&quot;img-container&quot;&gt;
+   &lt;div class=&quot;imagem-inicial&quot;&gt;
     &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/sopa%20letras%2018.png&quot;&gt;
   &lt;/div&gt;
-  
+    &lt;/div&gt;
   &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh; text-align: center;&quot;&gt;
     
     &lt;p style=&quot;color: #ff6b6b; font-weight: bold; font-size: 1.2em;&quot;&gt;Oh não!!&lt;/p&gt;
@@ -1166,9 +1216,10 @@ tw-passage {
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="34" name="AjudarMia" tags="" position="1625,1775" size="100,100">&lt;div class=&quot;content-container&quot;&gt;
   
   &lt;div class=&quot;img-container&quot;&gt;
+   &lt;div class=&quot;imagem-inicial&quot;&gt;
     &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/sopa%20letras%2019.png&quot;&gt;
   &lt;/div&gt;
-  
+   &lt;/div&gt;
   &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh;&quot;&gt;
     
     &lt;p&gt;O macarrão mergulhou o mais fundo que pôde e nadou até chegar à Mia.&lt;/p&gt;
@@ -1200,9 +1251,10 @@ tw-passage {
 &lt;/audio&gt;
 
   &lt;div class=&quot;img-container&quot;&gt;
+    &lt;div class=&quot;imagem-inicial&quot;&gt;
     &lt;img src=&quot;https://cdn.jsdelivr.net/gh/Lauracrcamacho/massador@main/sopa%20letras%2020.png&quot;&gt;
   &lt;/div&gt;
-  
+    &lt;/div&gt;
   &lt;div class=&quot;caixa-texto&quot; style=&quot;margin-bottom: 1vh; text-align: center;&quot;&gt;
     
     &lt;p&gt;Formaram a palavra DESCULPA e comprometeram-se a trabalhar melhor em equipa e de forma positiva!&lt;/p&gt;
